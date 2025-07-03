@@ -17,5 +17,17 @@ export class Auth {
   saveToken(token: string): void {
     localStorage.setItem('token', token);
   }
+  login(data: any): Observable<any> {
+    return this._HttpClient.post(`${environment.apiBaseUrl}/Auth/login`, data);
+  }
+  forgotPassword(email: string) {
+    return this._HttpClient.post(`${environment.apiBaseUrl}/Auth/forgot-password`, { email },{ responseType: 'text' as 'json' });
   
+  }
+
+  resetPassword(data: { token: string; newPassword: string }) {
+    return this._HttpClient.post(`${environment.apiBaseUrl}/Auth/reset-password`, data,{ responseType: 'text' as 'json' });
+  }
+
+
 }
