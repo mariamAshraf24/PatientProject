@@ -1,0 +1,19 @@
+.card {
+  border-radius: 1rem;
+}
+
+.card img {
+  object-fit: cover;
+  height: 100%;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.form-select, .form-control {
+  font-size: 0.95rem;
+  border-radius: 0.5rem;
+}
