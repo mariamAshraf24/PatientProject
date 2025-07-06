@@ -1,0 +1,20 @@
+.appointment-card {
+    background-color: #a8a8f8;
+    border-radius: 1.5rem;
+    color: white;
+}
+
+.doctor-img {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.date-box {
+    background-color: #fff;
+    display: inline-block;
+    min-width: 120px;
+    font-size: 0.85rem;
+    color: #333;
+}

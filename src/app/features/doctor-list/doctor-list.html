@@ -1,0 +1,97 @@
+<div class="container-fluid row">
+  <!-- Filters Sidebar -->
+  <div class="col-md-3 bg-light p-3 rounded shadow-sm">
+    <h5>حدد بحثك</h5>
+    <div class="mb-3">
+      <label>التخصص</label>
+      <select class="form-select" [(ngModel)]="filters.specializationId" (change)="onFilterChange()">
+        <option value="">الكل</option>
+        @for (spec of specializations; track spec.id) {
+          <option [value]="spec.id">{{ spec.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="mb-3">
+      <label>النوع</label>
+      <select class="form-select" [(ngModel)]="filters.gender" (change)="onFilterChange()">
+        <option value="">الكل</option>
+        <option value="0">ذكر</option>
+        <option value="1">أنثى</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label>الحد الأدنى للسعر</label>
+      <input type="number" class="form-control" [(ngModel)]="filters.minPrice" (input)="onFilterChange()">
+    </div>
+    <div class="mb-3">
+      <label>الحد الأقصى للسعر</label>
+      <input type="number" class="form-control" [(ngModel)]="filters.maxPrice" (input)="onFilterChange()">
+    </div>
+    <div class="mb-3">
+      <label>اسم الدكتور</label>
+      <input type="text" class="form-control" [(ngModel)]="filters.name" (input)="onFilterChange()">
+    </div>
+    <div class="mb-3 position-relative">
+      <label>المحافظة</label>
+      <input type="text" class="form-control" [(ngModel)]="filters.city" (input)="suggestCity(filters.city); onFilterChange()">
+      @if (citySuggestions.length > 0) {
+        <ul class="list-group position-absolute w-100 z-3">
+          @for (suggestion of citySuggestions; track suggestion) {
+            <li class="list-group-item list-group-item-action" (click)="filters.city = suggestion; citySuggestions = []; onFilterChange()">
+              {{ suggestion }}
+            </li>
+          }
+        </ul>
+      }
+    </div>
+    <div class="mb-3">
+      <label>المنطقة</label>
+      <input type="text" class="form-control" [(ngModel)]="filters.street" (input)="onFilterChange()">
+    </div>
+  </div>
+
+  <!-- Doctors List -->
+  <div class="col-md-9">
+    <div class="row">
+      @for (doctor of doctors; track doctor.id) {
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="row g-0">
+              <div class="col-4">
+                <img [src]="doctor.imageUrl" class="img-fluid rounded-start" alt="doctor" style="height: 100%">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{ doctor.name }}</h5>
+                  <p class="card-text"><strong>التخصص:</strong> {{ doctor.specialization }}</p>
+                  <p class="card-text"><strong>السعر:</strong> {{ doctor.bookingPrice }} جنيه</p>
+                  <p class="card-text"><strong>العنوان:</strong> {{ doctor.city }} - {{ doctor.street }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Pagination -->
+    @if (totalPages > 1) {
+      <nav>
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="filters.pageNumber === 1">
+            <button class="page-link" (click)="changePage(filters.pageNumber - 1)">السابق</button>
+          </li>
+         @for (page of pages; track page) {
+  <li class="page-item" [class.active]="filters.pageNumber === page">
+    <button class="page-link" (click)="changePage(page)">{{ page }}</button>
+  </li>
+}
+
+          <li class="page-item" [class.disabled]="filters.pageNumber === totalPages">
+            <button class="page-link" (click)="changePage(filters.pageNumber + 1)">التالي</button>
+          </li>
+        </ul>
+      </nav>
+    }
+  </div>
+</div>
