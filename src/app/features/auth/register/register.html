@@ -203,18 +203,18 @@
                 <!-- المدينة -->
                 <div class="mb-2">
                   <label for="City" class="form-label">المدينة</label>
-                  <input
+                  <!-- <input
                     type="text"
                     id="City"
                     formControlName="City"
                     class="form-control form-input"
-                  />
-                  <!-- <select id="City" formControlName="City" class="form-select-sm form-control custom-city-select form-input">
+                  /> -->
+                  <select id="City" formControlName="City" class="form-select-sm form-control custom-city-select form-input">
                     <option value="" disabled >اختر المدينة</option>
                     @for ( city of Cities; track city) {
                     <option [value]="city">{{ city }}</option>
                     }
-                  </select> -->
+                  </select>
 
                   @if (registerForm.get('City')?.touched &&
                   registerForm.get('City')?.invalid) {

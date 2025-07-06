@@ -5,9 +5,9 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import { Auth } from './../../../core/services/auth';
-import { Component } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FirebaseMessaging } from '../../../core/services/firebase-messaging';
+import { cities } from '../../../core/constants/cities';
 
 @Component({
   selector: 'app-register',
@@ -16,18 +16,18 @@ import { Router } from '@angular/router';
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
-
-export class Register {
+export class Register implements OnInit {
   registerForm!: FormGroup;
   selectedImage: File | null = null;
   usernameError: string = '';
+  Cities = cities;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: Auth,
-    private _router: Router
+    private _FirebaseMessaging: FirebaseMessaging
   ) {}
-  
+
   ngOnInit(): void {
     this.registerForm = this._formBuilder.group({
       Email: [null, [Validators.required, Validators.email]],
@@ -56,12 +56,7 @@ export class Register {
         [Validators.required, Validators.pattern(/^[\u0600-\u06FFa-zA-Z ]+$/)],
       ],
       City: [''],
-      Street: [
-        '',
-        [
-          Validators.pattern(/^[\u0600-\u06FFa-zA-Z0-9\s\-]*$/),
-        ],
-      ],
+      Street: ['', [Validators.pattern(/^[\u0600-\u06FFa-zA-Z0-9\s\-]*$/)]],
       Country: ['مصر'],
       DateOfBirth: [null, [Validators.required]],
       gender: [null, Validators.required],
@@ -79,50 +74,64 @@ export class Register {
     });
   }
 
-  registerSubmit(): void {
+  async registerSubmit(): Promise<void> {
     this.usernameError = '';
 
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
       return;
     }
-    const formData = new FormData();
 
-    Object.keys(this.registerForm.value).forEach((key) => {
-    const value = this.registerForm.get(key)?.value;
+    try {
+      // 1. Get FCM token
+      const fcmToken =
+        await this._FirebaseMessaging.requestPermissionAndGetToken();
 
-    if (key === 'DateOfBirth' && value) {
-      const date = new Date(value);
-      if (!isNaN(date.getTime())) {
-        formData.append(key, date.toISOString());
-      }
-    } else {
-      formData.append(key, value ?? '');
-    }
-  });
+      const formData = new FormData();
 
-    // const formData = this.registerForm.value;
-    this._authService.register(formData).subscribe({
-      next: (res: any) => {
-        if (res.isSuccess && res.token) {
-          this._authService.saveToken(res.token);
-          this.registerForm.reset();
-          alert('succesful');
-          // this._router.navigate(['/home']);
+      Object.keys(this.registerForm.value).forEach((key) => {
+        const value = this.registerForm.get(key)?.value;
+
+        if (key === 'DateOfBirth' && value) {
+          const date = new Date(value);
+          if (!isNaN(date.getTime())) {
+            formData.append(key, date.toISOString());
+          }
         } else {
-          alert('حدث خطأ أثناء التسجيل');
+          formData.append(key, value ?? '');
         }
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error(err);
-        if (err.error?.message?.includes('Username already exists')) {
-          this.usernameError = 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر';
-          this.registerForm.get('userName')?.setErrors({ notUnique: true });
-          this.registerForm.get('userName')?.markAsTouched();
-        }
-        // alert('حدث خطأ أثناء التسجيل');
-      },
-    });
-  }
+      });
+      const res: any = await this._authService.register(formData).toPromise();
 
+      if (res.isSuccess && res.token) {
+        this._authService.saveToken(res.token);
+        this.registerForm.reset();
+        if (fcmToken) {
+          try {
+            await this._FirebaseMessaging
+              .sendTokenToBackend(fcmToken, res.token)
+              .toPromise();
+            console.log('✅ FCM token sent to backend');
+          } catch (error) {
+            console.error('❌ Error sending FCM token:', error);
+          }
+        }
+
+        alert('succesful');
+        // this._router.navigate(['/home']);
+      } else {
+        alert('حدث خطأ أثناء التسجيل');
+      }
+    } catch (err: any) {
+      console.error('❌ Error during registration:', err);
+
+      if (err.error?.message?.includes('Username already exists')) {
+        this.usernameError = 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر';
+        this.registerForm.get('userName')?.setErrors({ notUnique: true });
+        this.registerForm.get('userName')?.markAsTouched();
+      } else {
+        alert('❌ حدث خطأ أثناء التسجيل');
+      }
+    }
+  }
 }
