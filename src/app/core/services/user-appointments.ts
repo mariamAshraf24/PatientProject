@@ -10,6 +10,6 @@ export class UserAppointments {
 
   constructor(private _httpClient: HttpClient) { }
   getAppointments(): Observable<any> {
-    return this._httpClient.get<any>(`${environment.apiBaseUrl}/api/Appointment`);
+    return this._httpClient.get<any>(`${environment.apiBaseUrl}/Appointment`);
   }
 }

@@ -12,7 +12,7 @@ import { cities } from './../../core/constants/cities'; // عدّل المسار
 export class DoctorList {
   doctors: any[] = [];
   specializations: any[] = [];
-   cities: string[] = cities;
+  cities: string[] = cities;
   citySuggestions: string[] = [];
   filters = {
     specializationId: '',
@@ -32,9 +32,9 @@ export class DoctorList {
     this.getDoctors();
     this.getSpecializations();
   }
-get pages(): number[] {
-  return Array.from({ length: this.totalPages }, (_, i) => i + 1);
-}
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
 
   getSpecializations() {
     this._HttpClient.get<any>('https://nazzem.runasp.net/api/Specializations')

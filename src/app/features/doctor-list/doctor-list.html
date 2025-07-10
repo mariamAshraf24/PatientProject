@@ -1,97 +1,138 @@
-<div class="container-fluid row">
-  <!-- Filters Sidebar -->
-  <div class="col-md-3 bg-light p-3 rounded shadow-sm">
-    <h5>حدد بحثك</h5>
-    <div class="mb-3">
-      <label>التخصص</label>
-      <select class="form-select" [(ngModel)]="filters.specializationId" (change)="onFilterChange()">
-        <option value="">الكل</option>
-        @for (spec of specializations; track spec.id) {
+<!-- doctor-list.component.html -->
+<div class="container-fluid">
+  <!-- 🔍 شريط البحث الرئيسي -->
+  <div class="search-header">
+    <h2 class="search-title">ابحث عن دكتورك المناسب</h2>
+    <div class="search-form">
+      <div class="search-input-group">
+        <input type="text" class="search-input" placeholder="أنا أبحث عن دكتور..." [(ngModel)]="filters.name"
+          (input)="onFilterChange()">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+
+      <div class="search-filters">
+        <select class="filter-select" [(ngModel)]="filters.specializationId" (change)="onFilterChange()">
+          <option value="">اختر التخصص</option>
+          @for (spec of specializations; track spec.id) {
           <option [value]="spec.id">{{ spec.name }}</option>
-        }
-      </select>
-    </div>
-    <div class="mb-3">
-      <label>النوع</label>
-      <select class="form-select" [(ngModel)]="filters.gender" (change)="onFilterChange()">
-        <option value="">الكل</option>
-        <option value="0">ذكر</option>
-        <option value="1">أنثى</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label>الحد الأدنى للسعر</label>
-      <input type="number" class="form-control" [(ngModel)]="filters.minPrice" (input)="onFilterChange()">
-    </div>
-    <div class="mb-3">
-      <label>الحد الأقصى للسعر</label>
-      <input type="number" class="form-control" [(ngModel)]="filters.maxPrice" (input)="onFilterChange()">
-    </div>
-    <div class="mb-3">
-      <label>اسم الدكتور</label>
-      <input type="text" class="form-control" [(ngModel)]="filters.name" (input)="onFilterChange()">
-    </div>
-    <div class="mb-3 position-relative">
-      <label>المحافظة</label>
-      <input type="text" class="form-control" [(ngModel)]="filters.city" (input)="suggestCity(filters.city); onFilterChange()">
-      @if (citySuggestions.length > 0) {
-        <ul class="list-group position-absolute w-100 z-3">
-          @for (suggestion of citySuggestions; track suggestion) {
-            <li class="list-group-item list-group-item-action" (click)="filters.city = suggestion; citySuggestions = []; onFilterChange()">
-              {{ suggestion }}
-            </li>
           }
-        </ul>
-      }
-    </div>
-    <div class="mb-3">
-      <label>المنطقة</label>
-      <input type="text" class="form-control" [(ngModel)]="filters.street" (input)="onFilterChange()">
+        </select>
+
+        <!--  للمحافظة -->
+        <select class="filter-select" [(ngModel)]="filters.city" (change)="onFilterChange()">
+          <option value="">اختر المحافظة</option>
+          @for (city of cities; track city) {
+          <option [value]="city">{{ city }}</option>
+          }
+        </select>
+
+        <input type="text" class="filter-input" placeholder="المنطقة" [(ngModel)]="filters.street"
+          (input)="onFilterChange()">
+
+        <button class="search-btn" (click)="getDoctors()">
+          <i class="fas fa-search"></i> بحث
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- Doctors List -->
-  <div class="col-md-9">
-    <div class="row">
-      @for (doctor of doctors; track doctor.id) {
-        <div class="col-md-6 mb-4">
-          <div class="card shadow-sm">
-            <div class="row g-0">
-              <div class="col-4">
-                <img [src]="doctor.imageUrl" class="img-fluid rounded-start" alt="doctor" style="height: 100%">
-              </div>
-              <div class="col-8">
-                <div class="card-body">
-                  <h5 class="card-title">{{ doctor.name }}</h5>
-                  <p class="card-text"><strong>التخصص:</strong> {{ doctor.specialization }}</p>
-                  <p class="card-text"><strong>السعر:</strong> {{ doctor.bookingPrice }} جنيه</p>
-                  <p class="card-text"><strong>العنوان:</strong> {{ doctor.city }} - {{ doctor.street }}</p>
-                </div>
-              </div>
-            </div>
+  <!-- 📊 إحصائيات البحث -->
+
+
+  <div class="row">
+    <!-- 🧭 القائمة الجانبية -->
+    <div class="col-md-3 sidebar">
+      <div class="filter-section">
+        <h4 class="filter-title"><i class="fas fa-filter"></i>حدد بحثك</h4>
+
+        <div class="filter-group">
+          <label>النوع</label>
+          <select class="form-control" [(ngModel)]="filters.gender" (change)="onFilterChange()">
+            <option value="">الكل</option>
+            <option value="0">ذكر</option>
+            <option value="1">أنثى</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>نطاق السعر (جنيه)</label>
+          <div class="price-range">
+            <input type="number" class="form-control" placeholder="الحد الأدنى" [(ngModel)]="filters.minPrice"
+              (input)="onFilterChange()">
+            <span>إلى</span>
+            <input type="number" class="form-control" placeholder="الحد الأقصى" [(ngModel)]="filters.maxPrice"
+              (input)="onFilterChange()">
           </div>
         </div>
-      }
+
+
+      </div>
     </div>
 
-    <!-- Pagination -->
-    @if (totalPages > 1) {
-      <nav>
-        <ul class="pagination justify-content-center">
-          <li class="page-item" [class.disabled]="filters.pageNumber === 1">
-            <button class="page-link" (click)="changePage(filters.pageNumber - 1)">السابق</button>
-          </li>
-         @for (page of pages; track page) {
-  <li class="page-item" [class.active]="filters.pageNumber === page">
-    <button class="page-link" (click)="changePage(page)">{{ page }}</button>
-  </li>
-}
+    <!-- 🧑‍⚕️ قائمة الأطباء -->
+    <div class="col-md-9 doctors-list">
+      <!-- <div class="doctors-header">
+        <h3><i class="fas fa-user-md"></i> كل التخصصات ({{ doctors.length }} دكتور)</h3>
+        <div class="sort-options">
+          <select class="sort-select">
+            <option>الأكثر تطابقاً</option>
+            <option>الأعلى تقييماً</option>
+            <option>الأقل سعراً</option>
+          </select>
+        </div>
+      </div> -->
 
-          <li class="page-item" [class.disabled]="filters.pageNumber === totalPages">
-            <button class="page-link" (click)="changePage(filters.pageNumber + 1)">التالي</button>
-          </li>
-        </ul>
-      </nav>
-    }
+      <!-- بطاقات الأطباء -->
+      @for (doctor of doctors; track doctor.id) {
+      <div class="doctor-card">
+        <div class="doctor-image">
+          <img [src]="doctor.imageUrl" alt="{{ doctor.name }}">
+
+        </div>
+
+        <div class="doctor-info">
+          <h4 class="doctor-name">دكتور {{ doctor.name }}</h4>
+          <p class="doctor-specialty">{{ doctor.specialization }}</p>
+  
+
+          <div class="doctor-meta">
+            <div class="meta-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{{ doctor.city }} - {{ doctor.street }}</span>
+            </div>
+
+          </div>
+
+          <div class="doctor-pricing">
+            <div class="price">
+              <span class="price-value">{{ doctor.bookingPrice }} جنيه</span>
+              <span class="price-label">سعر الكشف</span>
+            </div>
+            <button class="book-btn">حجز موعد</button>
+          </div>
+        </div>
+      </div>
+      }
+
+      <!-- الترقيم الصفحي -->
+      @if (totalPages > 1) {
+      <div class="pagination">
+        <button class="page-btn" [disabled]="filters.pageNumber === 1" (click)="changePage(filters.pageNumber - 1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+
+        @for (page of pages; track page) {
+        <button class="page-btn" [class.active]="filters.pageNumber === page" (click)="changePage(page)">
+          {{ page }}
+        </button>
+        }
+
+        <button class="page-btn" [disabled]="filters.pageNumber === totalPages"
+          (click)="changePage(filters.pageNumber + 1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+      }
+    </div>
   </div>
 </div>
