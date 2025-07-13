@@ -138,9 +138,16 @@
               <span class="price-label">سعر الكشف</span>
             </div>
             <button class="book-btn">حجز موعد</button>
+            <!-- <button
+              class="book-btn"
+              [routerLink]="['/doctorProfile', doctor.id]"
+            >
+              عرض التفاصيل
+            </button> -->
             <button
               class="book-btn"
               [routerLink]="['/doctorProfile', doctor.id]"
+              [queryParams]="{ date: todayDate }"
             >
               عرض التفاصيل
             </button>

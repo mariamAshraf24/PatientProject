@@ -81,3 +81,48 @@
     font-style: italic;
   }
 }
+
+.slots-section {
+  margin-top: 30px;
+  background-color: #f4f6fa;
+  padding: 20px;
+  border-radius: 12px;
+
+  .section-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #003366;
+  }
+
+  .slot-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .slot-item {
+      background-color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      font-size: 15px;
+      font-weight: 500;
+      color: #005b96;
+      white-space: nowrap; // لمنع كسر السطر داخل العنصر
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #e6f0ff;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .no-schedule {
+    color: #999;
+    font-style: italic;
+    margin-top: 10px;
+  }
+}

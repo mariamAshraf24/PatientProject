@@ -27,6 +27,9 @@ export class DoctorList {
     pageSize: 6
   };
   totalPages: number = 0;
+
+  todayDate = new Date().toISOString().split('T')[0];
+  
   constructor(private _HttpClient: HttpClient) { }
 
   ngOnInit(): void {

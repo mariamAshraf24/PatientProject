@@ -7,24 +7,52 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-doctor-profile',
-  imports: [CommonModule , FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './doctor-profile.html',
   styleUrl: './doctor-profile.scss',
 })
 export class DoctorProfile implements OnInit {
   doctor: IDoctor | null = null;
-  weekOrder: string[] = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-
+  weekOrder: string[] = [
+    'Saturday',
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+  ];
+  availableSlots: string[] = [];
 
   constructor(
     private _DoctorFilter: DoctorFilter,
     private route: ActivatedRoute
   ) {}
 
+  // ngOnInit(): void {
+  //   const doctorId = this.route.snapshot.paramMap.get('id');
+  //   console.log('Doctor ID:', doctorId);
+  //   if (doctorId) {
+  //     this._DoctorFilter.getDoctorProfile(doctorId).subscribe({
+  //       next: (res) => {
+  //         if (res.success) {
+  //           this.doctor = res.data;
+  //         }
+  //       },
+  //       error: (err) => {
+  //         console.error('فشل تحميل بيانات الدكتور', err);
+  //       },
+  //     });
+  //   }
+  // }
+
   ngOnInit(): void {
     const doctorId = this.route.snapshot.paramMap.get('id');
-    console.log('Doctor ID:', doctorId);
+    const date =
+      this.route.snapshot.queryParamMap.get('date') || this.getTodayDate();
+
     if (doctorId) {
+      // تحميل بيانات الدكتور
       this._DoctorFilter.getDoctorProfile(doctorId).subscribe({
         next: (res) => {
           if (res.success) {
@@ -35,9 +63,23 @@ export class DoctorProfile implements OnInit {
           console.error('فشل تحميل بيانات الدكتور', err);
         },
       });
+
+      // تحميل المواعيد المتاحة
+      this._DoctorFilter.getDoctorSlots(doctorId, date).subscribe({
+        next: (res) => {
+          this.availableSlots = res.map((slot) => slot.slotTime);
+        },
+        error: (err) => {
+          console.error('فشل تحميل مواعيد الدكتور', err);
+        },
+      });
     }
   }
-  
+  getTodayDate(): string {
+    const today = new Date();
+    return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+  }
+
   getAge(dateOfBirth: string): number {
     const birthDate = new Date(dateOfBirth);
     const today = new Date();
@@ -56,23 +98,22 @@ export class DoctorProfile implements OnInit {
   }
 
   getArabicDay(day: string): string {
-  const days: Record<string, string> = {
-    Sunday: 'الأحد',
-    Monday: 'الإثنين',
-    Tuesday: 'الثلاثاء',
-    Wednesday: 'الأربعاء',
-    Thursday: 'الخميس',
-    Friday: 'الجمعة',
-    Saturday: 'السبت',
-  };
-  return days[day] || day;
-}
+    const days: Record<string, string> = {
+      Sunday: 'الأحد',
+      Monday: 'الإثنين',
+      Tuesday: 'الثلاثاء',
+      Wednesday: 'الأربعاء',
+      Thursday: 'الخميس',
+      Friday: 'الجمعة',
+      Saturday: 'السبت',
+    };
+    return days[day] || day;
+  }
 
-get sortedSchedules(): Schedule[] {
-  if (!this.doctor?.schedules) return [];
-  return this.weekOrder
-    .map(day => this.doctor!.schedules.find(s => s.dayOfWeek === day))
-    .filter((s): s is Schedule => !!s);
-}
-
+  get sortedSchedules(): Schedule[] {
+    if (!this.doctor?.schedules) return [];
+    return this.weekOrder
+      .map((day) => this.doctor!.schedules.find((s) => s.dayOfWeek === day))
+      .filter((s): s is Schedule => !!s);
+  }
 }
