@@ -1,0 +1,41 @@
+.doctor-profile-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #ccc;
+  direction: rtl;
+  text-align: right;
+}
+
+.doctor-header {
+  text-align: center;
+  margin-bottom: 20px;
+
+  .doctor-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .doctor-name {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .doctor-specialty {
+    color: #6c63ff;
+    font-weight: 500;
+  }
+}
+
+.doctor-details {
+  font-size: 16px;
+
+  p {
+    margin-bottom: 10px;
+  }
+}

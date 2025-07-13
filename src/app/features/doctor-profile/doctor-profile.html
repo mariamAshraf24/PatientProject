@@ -1,0 +1,20 @@
+@if (doctor) {
+  <div class="doctor-profile-container">
+    <div class="doctor-header">
+      <img [src]="doctor.imageUrl" alt="{{ doctor.fullName }}" class="doctor-img" />
+      <div class="header-info">
+        <h2 class="doctor-name">{{ doctor.fullName }}</h2>
+        <p class="doctor-specialty">{{ doctor.specializationName }}</p>
+      </div>
+    </div>
+
+    <div class="doctor-details">
+      <p><strong>السعر:</strong> {{ doctor.bookingPrice }} جنيه</p>
+      <p><strong>العنوان:</strong> {{ doctor.address }}</p>
+      <p><strong>النوع:</strong> {{ doctor.gender === 'Male' ? 'ذكر' : 'أنثى' }}</p>
+      <p><strong>العمر:</strong> {{ getAge(doctor.dateOfBirth) }} سنة</p>
+    </div>
+
+    
+  </div>
+}

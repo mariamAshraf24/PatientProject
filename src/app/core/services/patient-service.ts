@@ -4,16 +4,35 @@ import { PatientProfileResponse } from '../models/IPatient';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class PatientService {
+export interface INotification {
+  message: string;
+  type: number;
+  doctorName: string;
+}
 
-  constructor(private _HttpClient: HttpClient) { }
+@Injectable({
+  providedIn: 'root',
+})
+
+export class PatientService {
+  constructor(private _HttpClient: HttpClient) {}
 
   getPatientProfile(): Observable<PatientProfileResponse> {
     return this._HttpClient.get<PatientProfileResponse>(
       `${environment.apiBaseUrl}/Patient/patient-profile`
+    );
+  }
+
+  updatePatientProfile(data: any): Observable<any> {
+    return this._HttpClient.put(
+      `${environment.apiBaseUrl}/Patient/update-patient-profile`,
+      data
+    );
+  }
+
+  getNotifications(): Observable<{ data: INotification[] }> {
+    return this._HttpClient.get<{ data: INotification[] }>(
+      `${environment.apiBaseUrl}/Patient/Get Notifications`
     );
   }
 }

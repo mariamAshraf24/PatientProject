@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <ul>
+    <span class="nav-left">
+      <li><a routerLink="/home">الرئيسية</a></li>
+      <li><a routerLink="/contact">تواصل معنا</a></li>
+    </span>
+    <span class="nav-right">
+      @if (!isLoggedIn()) {
+        <li><a routerLink="/login">تسجيل دخول</a></li>
+      } @else {
+        <li>
+          <a class="user-icon" routerLink="/profile">
+            <i class="fa fa-user-circle"></i>
+          </a>
+        </li>
+        <li><a (click)="logout()">تسجيل خروج</a></li>
+      }
+    </span>
+  </ul>
+</nav>

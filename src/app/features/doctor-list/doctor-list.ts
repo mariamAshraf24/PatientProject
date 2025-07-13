@@ -2,10 +2,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { cities } from './../../core/constants/cities'; // عدّل المسار حسب مكان الملف
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-doctor-list',
-  imports: [FormsModule],
+  imports: [FormsModule , RouterLink],
   templateUrl: './doctor-list.html',
   styleUrl: './doctor-list.scss'
 })

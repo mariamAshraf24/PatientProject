@@ -1,0 +1,44 @@
+<p>update-profile works!</p>
+@if (!loading) {
+  <div class="update-container">
+    <h1 class="title">تعديل البيانات الشخصية</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="update-form">
+      <div class="form-group">
+        <label for="fName">الاسم الأول</label>
+        <input id="fName" type="text" formControlName="fName" />
+      </div>
+
+      <div class="form-group">
+        <label for="lName">اسم العائلة</label>
+        <input id="lName" type="text" formControlName="lName" />
+      </div>
+
+      <div class="form-group">
+        <label for="city">المدينة</label>
+        <input id="city" type="text" formControlName="city" />
+      </div>
+
+      <div class="form-group">
+        <label for="street">الشارع</label>
+        <input id="street" type="text" formControlName="street" />
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">رقم الهاتف</label>
+        <input id="phoneNumber" type="text" formControlName="phoneNumber" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">البريد الإلكتروني</label>
+        <input id="email" type="email" formControlName="email" />
+      </div>
+
+      <button type="submit" class="submit-btn">تحديث البيانات</button>
+      <button type="button" [routerLink]="['/profile']" class="submit-btn">إلغاء</button>
+
+    </form>
+  </div>
+} @else {
+  <div class="loading">جاري تحميل البيانات...</div>
+}

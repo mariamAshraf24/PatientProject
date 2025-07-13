@@ -5,13 +5,23 @@
     <h2 class="search-title">ابحث عن دكتورك المناسب</h2>
     <div class="search-form">
       <div class="search-input-group">
-        <input type="text" class="search-input" placeholder="أنا أبحث عن دكتور..." [(ngModel)]="filters.name"
-          (input)="onFilterChange()">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="أنا أبحث عن دكتور..."
+          [(ngModel)]="filters.name"
+          (input)="onFilterChange()"
+        />
         <i class="fas fa-search search-icon"></i>
       </div>
 
       <div class="search-filters">
-        <select class="filter-select" [(ngModel)]="filters.specializationId" (change)="onFilterChange()">
+        <select
+          title="اختر التخصص"
+          class="filter-select"
+          [(ngModel)]="filters.specializationId"
+          (change)="onFilterChange()"
+        >
           <option value="">اختر التخصص</option>
           @for (spec of specializations; track spec.id) {
           <option [value]="spec.id">{{ spec.name }}</option>
@@ -19,15 +29,25 @@
         </select>
 
         <!--  للمحافظة -->
-        <select class="filter-select" [(ngModel)]="filters.city" (change)="onFilterChange()">
+        <select
+          title="اختر المحافظة"
+          class="filter-select"
+          [(ngModel)]="filters.city"
+          (change)="onFilterChange()"
+        >
           <option value="">اختر المحافظة</option>
           @for (city of cities; track city) {
           <option [value]="city">{{ city }}</option>
           }
         </select>
 
-        <input type="text" class="filter-input" placeholder="المنطقة" [(ngModel)]="filters.street"
-          (input)="onFilterChange()">
+        <input
+          type="text"
+          class="filter-input"
+          placeholder="المنطقة"
+          [(ngModel)]="filters.street"
+          (input)="onFilterChange()"
+        />
 
         <button class="search-btn" (click)="getDoctors()">
           <i class="fas fa-search"></i> بحث
@@ -38,7 +58,6 @@
 
   <!-- 📊 إحصائيات البحث -->
 
-
   <div class="row">
     <!-- 🧭 القائمة الجانبية -->
     <div class="col-md-3 sidebar">
@@ -47,7 +66,12 @@
 
         <div class="filter-group">
           <label>النوع</label>
-          <select class="form-control" [(ngModel)]="filters.gender" (change)="onFilterChange()">
+          <select
+            title="اختر النوع"
+            class="form-control"
+            [(ngModel)]="filters.gender"
+            (change)="onFilterChange()"
+          >
             <option value="">الكل</option>
             <option value="0">ذكر</option>
             <option value="1">أنثى</option>
@@ -57,15 +81,23 @@
         <div class="filter-group">
           <label>نطاق السعر (جنيه)</label>
           <div class="price-range">
-            <input type="number" class="form-control" placeholder="الحد الأدنى" [(ngModel)]="filters.minPrice"
-              (input)="onFilterChange()">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="الحد الأدنى"
+              [(ngModel)]="filters.minPrice"
+              (input)="onFilterChange()"
+            />
             <span>إلى</span>
-            <input type="number" class="form-control" placeholder="الحد الأقصى" [(ngModel)]="filters.maxPrice"
-              (input)="onFilterChange()">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="الحد الأقصى"
+              [(ngModel)]="filters.maxPrice"
+              (input)="onFilterChange()"
+            />
           </div>
         </div>
-
-
       </div>
     </div>
 
@@ -86,21 +118,18 @@
       @for (doctor of doctors; track doctor.id) {
       <div class="doctor-card">
         <div class="doctor-image">
-          <img [src]="doctor.imageUrl" alt="{{ doctor.name }}">
-
+          <img [src]="doctor.imageUrl" alt="{{ doctor.name }}" />
         </div>
 
         <div class="doctor-info">
           <h4 class="doctor-name">دكتور {{ doctor.name }}</h4>
           <p class="doctor-specialty">{{ doctor.specialization }}</p>
-  
 
           <div class="doctor-meta">
             <div class="meta-item">
               <i class="fas fa-map-marker-alt"></i>
               <span>{{ doctor.city }} - {{ doctor.street }}</span>
             </div>
-
           </div>
 
           <div class="doctor-pricing">
@@ -109,6 +138,12 @@
               <span class="price-label">سعر الكشف</span>
             </div>
             <button class="book-btn">حجز موعد</button>
+            <button
+              class="book-btn"
+              [routerLink]="['/doctorProfile', doctor.id]"
+            >
+              عرض التفاصيل
+            </button>
           </div>
         </div>
       </div>
@@ -117,18 +152,31 @@
       <!-- الترقيم الصفحي -->
       @if (totalPages > 1) {
       <div class="pagination">
-        <button class="page-btn" [disabled]="filters.pageNumber === 1" (click)="changePage(filters.pageNumber - 1)">
+        <button
+          title="الصفحة السابقة"
+          class="page-btn"
+          [disabled]="filters.pageNumber === 1"
+          (click)="changePage(filters.pageNumber - 1)"
+        >
           <i class="fas fa-chevron-right"></i>
         </button>
 
         @for (page of pages; track page) {
-        <button class="page-btn" [class.active]="filters.pageNumber === page" (click)="changePage(page)">
+        <button
+          class="page-btn"
+          [class.active]="filters.pageNumber === page"
+          (click)="changePage(page)"
+        >
           {{ page }}
         </button>
         }
 
-        <button class="page-btn" [disabled]="filters.pageNumber === totalPages"
-          (click)="changePage(filters.pageNumber + 1)">
+        <button
+          title="الصفحة التالية"
+          class="page-btn"
+          [disabled]="filters.pageNumber === totalPages"
+          (click)="changePage(filters.pageNumber + 1)"
+        >
           <i class="fas fa-chevron-left"></i>
         </button>
       </div>

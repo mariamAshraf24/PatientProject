@@ -1,0 +1,55 @@
+import { ActivatedRoute } from '@angular/router';
+import { IDoctor } from '../../core/models/IDoctor';
+import { DoctorFilter } from './../../core/services/doctor-filter';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-doctor-profile',
+  imports: [CommonModule , FormsModule],
+  templateUrl: './doctor-profile.html',
+  styleUrl: './doctor-profile.scss',
+})
+export class DoctorProfile implements OnInit {
+  doctor: IDoctor | null = null;
+
+  constructor(
+    private _DoctorFilter: DoctorFilter,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    const doctorId = this.route.snapshot.paramMap.get('id');
+    console.log('Doctor ID:', doctorId);
+    if (doctorId) {
+      this._DoctorFilter.getDoctorProfile(doctorId).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.doctor = res.data;
+          }
+        },
+        error: (err) => {
+          console.error('فشل تحميل بيانات الدكتور', err);
+        },
+      });
+    }
+  }
+
+  getAge(dateOfBirth: string): number {
+    const birthDate = new Date(dateOfBirth);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  }
+}
