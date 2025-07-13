@@ -27,7 +27,7 @@
   }
 
   .doctor-specialty {
-    color: #6c63ff;
+    color: #680980;
     font-weight: 500;
   }
 }
@@ -37,5 +37,47 @@
 
   p {
     margin-bottom: 10px;
+  }
+}
+
+.schedule-section {
+  margin-top: 30px;
+  background-color: #f4f6fa;
+  padding: 20px;
+  border-radius: 12px;
+
+  .section-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #5e0202;
+  }
+
+  .schedule-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .schedule-item {
+      background-color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      white-space: nowrap; // 👈 يمنع انقسام الكلام
+      .day {
+        font-weight: 600;
+        color: #8f0b7b;
+      }
+    }
+  }
+
+  .no-schedule {
+    color: #999;
+    font-style: italic;
   }
 }

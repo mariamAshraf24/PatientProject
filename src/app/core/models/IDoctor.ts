@@ -10,7 +10,12 @@ export interface IDoctor {
   schedules: Schedule[]; 
 }
 
-export interface Schedule {}
+export interface Schedule {
+   dayOfWeek: string;
+  startTime: string;
+  endTime: string;
+  slotDuration: string;
+}
 
 export interface DoctorProfileResponse {
   success: boolean;

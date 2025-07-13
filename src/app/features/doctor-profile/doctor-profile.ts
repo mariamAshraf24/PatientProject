@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { IDoctor } from '../../core/models/IDoctor';
+import { IDoctor, Schedule } from '../../core/models/IDoctor';
 import { DoctorFilter } from './../../core/services/doctor-filter';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class DoctorProfile implements OnInit {
   doctor: IDoctor | null = null;
+  weekOrder: string[] = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
 
   constructor(
     private _DoctorFilter: DoctorFilter,
@@ -35,7 +37,7 @@ export class DoctorProfile implements OnInit {
       });
     }
   }
-
+  
   getAge(dateOfBirth: string): number {
     const birthDate = new Date(dateOfBirth);
     const today = new Date();
@@ -52,4 +54,25 @@ export class DoctorProfile implements OnInit {
 
     return age;
   }
+
+  getArabicDay(day: string): string {
+  const days: Record<string, string> = {
+    Sunday: 'الأحد',
+    Monday: 'الإثنين',
+    Tuesday: 'الثلاثاء',
+    Wednesday: 'الأربعاء',
+    Thursday: 'الخميس',
+    Friday: 'الجمعة',
+    Saturday: 'السبت',
+  };
+  return days[day] || day;
+}
+
+get sortedSchedules(): Schedule[] {
+  if (!this.doctor?.schedules) return [];
+  return this.weekOrder
+    .map(day => this.doctor!.schedules.find(s => s.dayOfWeek === day))
+    .filter((s): s is Schedule => !!s);
+}
+
 }

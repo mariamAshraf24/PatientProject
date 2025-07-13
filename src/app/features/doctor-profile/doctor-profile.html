@@ -1,20 +1,38 @@
 @if (doctor) {
-  <div class="doctor-profile-container">
-    <div class="doctor-header">
-      <img [src]="doctor.imageUrl" alt="{{ doctor.fullName }}" class="doctor-img" />
-      <div class="header-info">
-        <h2 class="doctor-name">{{ doctor.fullName }}</h2>
-        <p class="doctor-specialty">{{ doctor.specializationName }}</p>
-      </div>
+<div class="doctor-profile-container">
+  <div class="doctor-header">
+    <img
+      [src]="doctor.imageUrl"
+      alt="{{ doctor.fullName }}"
+      class="doctor-img"
+    />
+    <div class="header-info">
+      <h2 class="doctor-name">{{ doctor.fullName }}</h2>
+      <p class="doctor-specialty">{{ doctor.specializationName }}</p>
     </div>
-
-    <div class="doctor-details">
-      <p><strong>السعر:</strong> {{ doctor.bookingPrice }} جنيه</p>
-      <p><strong>العنوان:</strong> {{ doctor.address }}</p>
-      <p><strong>النوع:</strong> {{ doctor.gender === 'Male' ? 'ذكر' : 'أنثى' }}</p>
-      <p><strong>العمر:</strong> {{ getAge(doctor.dateOfBirth) }} سنة</p>
-    </div>
-
-    
   </div>
+
+  <div class="doctor-details">
+    <p><strong>السعر:</strong> {{ doctor.bookingPrice }} جنيه</p>
+    <p><strong>العنوان:</strong> {{ doctor.address }}</p>
+    <p>
+      <strong>النوع:</strong> {{ doctor.gender === "Male" ? "ذكر" : "أنثى" }}
+    </p>
+    <p><strong>العمر:</strong> {{ getAge(doctor.dateOfBirth) }} سنة</p>
+  </div>
+@if (sortedSchedules.length > 0) {
+  <div class="schedule-section">
+    <h2 class="section-title">أيام العمل</h2>
+    <ul class="schedule-list">
+      @for (schedule of sortedSchedules; track schedule.dayOfWeek) {
+        <li class="schedule-item">
+          <span class="day">{{ getArabicDay(schedule.dayOfWeek) }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+} @else {
+  <p class="no-schedule">لا توجد مواعيد حالياً.</p>
+}
+</div>
 }

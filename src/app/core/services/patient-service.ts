@@ -1,14 +1,9 @@
+import { NotificationResponse } from './../models/INotification';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PatientProfileResponse } from '../models/IPatient';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-
-export interface INotification {
-  message: string;
-  type: number;
-  doctorName: string;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +25,8 @@ export class PatientService {
     );
   }
 
-  getNotifications(): Observable<{ data: INotification[] }> {
-    return this._HttpClient.get<{ data: INotification[] }>(
+  getNotifications(): Observable<NotificationResponse> {
+    return this._HttpClient.get<NotificationResponse>(
       `${environment.apiBaseUrl}/Patient/Get Notifications`
     );
   }

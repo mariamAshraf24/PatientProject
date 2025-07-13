@@ -1,1 +1,15 @@
-<p>notification works!</p>
+<div class="notifications-wrapper">
+  <h2>الإشعارات</h2>
+  @for (notification of visibleNotifications; track notification) {
+    <div class="notification-card">
+      <span class="type">{{ getTypeLabel(notification.type) }}</span>
+      <p class="message">{{ notification.message }}</p>
+      <p class="doctor">د. {{ notification.doctorName }}</p>
+    </div>
+  }
+  @if (visibleNotifications.length < allNotifications.length) {
+    <button class="load-more" (click)="loadMore()">
+      تحميل المزيد
+    </button>
+  }
+</div>
