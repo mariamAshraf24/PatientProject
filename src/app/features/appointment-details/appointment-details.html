@@ -3,11 +3,11 @@
 
     <div class="row mb-2">
         <div class="col-md-6">
-            <strong>👨‍⚕️ اسم الدكتور:</strong>
+            <strong> اسم الدكتور:</strong>
             {{ appointment?.doctorName }} <small>({{ appointment?.doctorSpecialization }})</small>
         </div>
         <div class="col-md-6">
-            <strong>👤 اسم المريض:</strong> {{ appointment?.patientName }}
+            <strong> اسم المريض:</strong> {{ appointment?.patientName }}
         </div>
     </div>
 
@@ -31,7 +31,7 @@
 
     @if (updatedTurnNumber !== null) {
     <div class="alert alert-info text-center fw-semibold">
-        ✅ تم تحديث دورك إلى: <strong>{{ updatedTurnNumber }}</strong>
+        تم تحديث دورك إلى: <strong>{{ updatedTurnNumber }}</strong>
     </div>
     }
 
