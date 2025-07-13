@@ -6,6 +6,8 @@ import { Login } from './features/auth/login/login';
 import { Profile } from './features/profile/profile';
 import { UpdateProfile } from './features/update-profile/update-profile';
 import { Notification } from './features/notification/notification';
+import { UserAppointment } from './features/user-appointment/user-appointment';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,6 +16,7 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: 'register', component: Register },
   { path: 'profile', component: Profile },
+  { path: 'userAppointment', component: UserAppointment},
   { path: 'update-profile', component: UpdateProfile },
   { path: 'notification', component: Notification }
 ];

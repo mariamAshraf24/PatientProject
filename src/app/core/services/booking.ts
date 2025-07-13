@@ -15,14 +15,14 @@ export class Booking {
     startTime: string,
     appointmentType: number
   }) {
-    return this._http.post<any>(`${environment.apiBaseUrl}/api/Booking`, data);
+    return this._http.post<any>(`${environment.apiBaseUrl}/Booking`, data);
   }
 
     getBookingById(id: number) {
-    return this._http.get<any>(`${environment.apiBaseUrl}/api/Booking/${id}`);
+    return this._http.get<any>(`${environment.apiBaseUrl}/Booking/${id}`);
   }
 
    deleteBooking(id: number) {
-    return this._http.delete(`${environment.apiBaseUrl}/api/Booking/${id}`);
+    return this._http.delete(`${environment.apiBaseUrl}/Booking/${id}`);
   }
 }
