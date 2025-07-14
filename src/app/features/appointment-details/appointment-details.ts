@@ -88,7 +88,7 @@ export class AppointmentDetails implements OnInit, OnDestroy {
     this.hubConnection
       .start()
       .then(() => {
-        console.log('✅ SignalR Connected');
+        console.log('SignalR Connected');
 
         this.hubConnection
           .invoke('JoinAppointmentGroup', this.appointmentId)
@@ -136,7 +136,7 @@ export class AppointmentDetails implements OnInit, OnDestroy {
       });
   }
 
-  // ✅ ترجمة نوع المعاد للعربية
+  
   getAppointmentTypeArabic(type: string): string {
     switch (type?.toLowerCase()) {
       case 'CheckUp':
@@ -148,7 +148,6 @@ export class AppointmentDetails implements OnInit, OnDestroy {
     }
   }
 
-  // ✅ تنسيق الوقت من "23:00:00" إلى "١١:٠٠ مساءً"
   getFormattedTime(timeStr: string): string {
     if (!timeStr) return '—';
     const date = new Date(`1970-01-01T${timeStr}`);

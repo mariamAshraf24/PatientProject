@@ -7,12 +7,14 @@
     @for (appointment of appointments; track appointment.id) {
       <div
         class="card mb-4 shadow-sm rounded-4 px-3 py-3 appointment-card"
+        (click)="goToDetails(appointment.id)"
         [ngClass]="{ 'highlight': appointment.id === highlightedId }"
+        style="cursor: pointer;"
       >
         <div class="d-flex align-items-center justify-content-between">
           <div class="text-start">
             <h6 class="fw-bold mb-1">{{ appointment.doctorName }}</h6>
-            <small class="text-muted">{{ appointment.specialization }}</small>
+            <small class="text-muted">{{ appointment.specialization || '' }}</small>
           </div>
           <img
             [src]="appointment.doctorImage"

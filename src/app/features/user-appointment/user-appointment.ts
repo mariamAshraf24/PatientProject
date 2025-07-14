@@ -3,6 +3,7 @@ import { UserAppointments } from '../../core/services/user-appointments';
 import { AppointmentNotifierService } from '../../core/services/appointment-notifier';
 import { Subscription } from 'rxjs';
 import { NgClass } from '@angular/common';
+import { Router } from '@angular/router'; // ✅ استيراد Router
 
 @Component({
   selector: 'app-user-appointment',
@@ -18,7 +19,8 @@ export class UserAppointment implements OnInit, OnDestroy {
 
   constructor(
     private _appointmentService: UserAppointments,
-    private _notifier: AppointmentNotifierService
+    private _notifier: AppointmentNotifierService,
+    private _router: Router // ✅ إضافة Router هنا
   ) {}
 
   ngOnInit(): void {
@@ -70,5 +72,12 @@ export class UserAppointment implements OnInit, OnDestroy {
       month: 'long',
       day: 'numeric'
     });
+  }
+
+  // ✅ دالة فتح صفحة تفاصيل الحجز
+  goToDetails(id: number) {
+    if (id) {
+      this._router.navigate(['/appointmentDetails', id]);
+    }
   }
 }
