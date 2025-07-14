@@ -1,513 +1,376 @@
-/* الألوان الأساسية - محفوظة كما هي */
-$primary: #8e24aa;
-$secondary: #ce93d8;
-$light-bg: #f3e5f5;
-$dark-text: #4a148c;
-$glass-white: rgba(255, 255, 255, 0.92);
+/* doctor-list.component.scss */
+$primary: #633c84;
+$secondary: #c6a4d6;
+$light: #f8f6fb;
+$text-dark: #2e144e;
+$text-muted: #666;
 
-/* خط خاص */
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-
-/* التصميم العام */
-body {
-  font-family: 'Tajawal', 'Cairo', sans-serif;
-  background: #ece3ed;
-  min-height: 100vh;
-  padding: 25px;
+.medical-booking-app {
   direction: rtl;
-  line-height: 1.6;
-  letter-spacing: -0.2px;
-}
 
-.container-fluid {
-  max-width: 1400px;
+  padding: 0;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 25px;
 }
 
-/* 🔍 شريط البحث - تصميم زجاجي محسّن */
-.search-header {
-  background: $glass-white;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba($primary, 0.18);
-  color: black;
-  border-radius: 24px;
-  padding: 28px 32px;
-  margin-bottom: 35px;
-  box-shadow: 0 12px 40px rgba($primary, 0.1);
+/* 🎯 Fixed Hero Slider */
 
-  .search-title {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 25px;
-    color: black;
+
+.hero-slider {
+  height: 500px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  position: relative;
+
+  .carousel-inner {
+    height: 100%;
   }
 
-  .search-form {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
+  .carousel-item {
+    height: 100%;
   }
+.slider-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top right; // ✅ ده بيرفع الصورة لفوق
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
-  .search-input-group {
+  .slider-container {
+    width: 100%;
+    height: 100%;
+    background-size: cover; // 👈 يعرض الصورة كاملة بدون قص
+    background-repeat: no-repeat;
+    background-position:right ;
     position: relative;
+    
 
-    .search-input {
-      width: 100%;
-      padding: 16px 55px 16px 25px;
-      border-radius: 14px;
-      border: 1px solid rgba($primary, 0.25);
-      font-size: 1.15rem;
-      font-weight: 500;
-      background: rgba(255, 255, 255, 0.85);
-      transition: all 0.35s;
-
-      &:focus {
-        outline: none;
-        box-shadow: 0 0 0 4px rgba(rgb(244, 114, 218), 0.2);
-        border-color: $primary;
-      }
-
-      &::placeholder {
-        color: rgba(black, 0.4);
-      }
+    &.bg-1 {
+      background-image: url('/images/slider1.png');
+      
     }
 
-    .search-icon {
-      position: absolute;
-      left: 25px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: black;
-      font-size: 1.2rem;
+    &.bg-2 {
+      background-image: url('/images/slider3.png');
+    }
+
+    &.bg-3 {
+      background-image: url('/images/slider4.jpg');
     }
   }
 
-  .search-filters {
-    display: flex;
-    gap: 18px;
+  .slider-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right,#633c84,45%, rgba(249, 246, 246, 0.128));
+    z-index: 1;
+  }
 
-    .filter-select,
-    .filter-input {
-      flex: 1;
-      padding: 14px 18px;
-      border-radius: 14px;
-      border: 1px solid rgba($primary, 0.25);
-      font-size: 1.05rem;
-      font-weight: 500;
-      background: rgba(255, 255, 255, 0.85);
+  .slider-content {
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    transform: translateY(-50%);
+    z-index: 2;
+    color: white;
+    text-align: right;
+    max-width: 500px;
 
-      &:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(rgb(244, 114, 218), 0.2);
-        border-color: $primary;
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+
+      strong {
+        font-weight: 800;
       }
     }
 
-    .search-btn {
-      background: linear-gradient(135deg, $dark-text, darken($dark-text, 8%));
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 25px;
+    }
+
+    .btn-book-now {
+      background: #633c84;
       color: white;
       border: none;
-      padding: 0 30px;
-      border-radius: 14px;
+      padding: 12px 30px;
+      border-radius: 8px;
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 1rem;
       cursor: pointer;
-      transition: all 0.35s;
-      box-shadow: 0 6px 20px rgba($dark-text, 0.25);
+      transition: all 0.3s ease;
 
       &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba($dark-text, 0.35);
-      }
-
-      i {
-        margin-left: 8px;
-      }
-    }
-  }
-}
-
-/* 🧭 القائمة الجانبية - تصميم متكامل */
-.sidebar {
-  position: sticky;
-  top: 30px;
-  align-self: start;
-  height: fit-content;
-
-  .filter-section {
-    background: $glass-white;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba($primary, 0.18);
-    border-radius: 24px;
-    padding: 28px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-
-    .filter-title {
-      color: black;
-      font-size: 1.5rem;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba($primary, 0.12);
-      font-weight: 700;
-
-      i {
-        margin-left: 12px;
-        color: black;
-      }
-    }
-
-    .filter-group {
-      margin-bottom: 28px;
-
-      label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: 600;
-        color: black;
-        font-size: 1.05rem;
-      }
-
-      .form-control {
-        width: 100%;
-        padding: 12px 16px;
-        border-radius: 12px;
-        border: 1px solid rgba($primary, 0.25);
-        background: rgba(255, 255, 255, 0.85);
-        font-size: 1rem;
-        font-weight: 500;
-
-        &:focus {
-          border-color: $primary;
-          outline: none;
-          box-shadow: 0 0 0 3px rgba($primary, 0.15);
-        }
-      }
-
-      select.form-control {
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg fill='black' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: left 1rem center;
-        background-size: 1.1rem;
-        padding-left: 2.5rem; // مساحة للسهم
-      }
-
-      .price-range {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-
-        input {
-          flex: 1;
-        }
-
-        span {
-          color: rgba(black, 0.6);
-          font-weight: 500;
-        }
-      }
-    }
-  }
-}
-
-/* 🧑‍⚕️ بطاقات الأطباء - تصميم متكامل */
-.doctors-list {
-  .doctor-card {
-    display: flex;
-    gap: 30px;
-    background: $glass-white;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba($primary, 0.18);
-    border-radius: 24px;
-    padding: 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 12px 40px rgba($primary, 0.1);
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-
-    /* إطار داخلي ناعم */
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-radius: 22px;
-      border: 1px solid rgba($primary, 0.1);
-      pointer-events: none;
-    }
-
-    &:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 45px rgba($primary, 0.15);
-    }
-
-    .doctor-image {
-      position: relative;
-      flex: 0 0 160px;
-
-      img {
-        width: 160px;
-        height: 160px;
-        object-fit: cover;
-        border-radius: 18px;
-        border: 2px solid rgba($primary, 0.2);
-        transition: all 0.4s;
-        box-shadow: 0 8px 25px rgba($primary, 0.15);
-
-        &:hover {
-          transform: scale(1.03);
-          border-color: rgba($primary, 0.35);
-        }
-      }
-    }
-
-    .doctor-info {
-      flex: 1;
-      padding-top: 8px;
-
-      .doctor-name {
-        font-size: 1.7rem;
-        color: black;
-        margin-bottom: 8px;
-        position: relative;
-        display: inline-block;
-        font-weight: 700;
-
-        &::after {
-          content: '';
-          position: absolute;
-          bottom: -6px;
-          right: 0;
-          width: 60px;
-          height: 3px;
-
-          border-radius: 3px;
-          transition: width 0.3s;
-        }
-
-        &:hover::after {
-          width: 80px;
-        }
-      }
-
-      .doctor-specialty {
-        color: black;
-        font-weight: 700;
-        margin-bottom: 12px;
-        font-size: 1.2rem;
-      }
-
-      .doctor-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 22px;
-        margin-bottom: 22px;
-
-        .meta-item {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          color: rgba(black, 0.8);
-          font-weight: 500;
-
-          i {
-            color: black;
-            font-size: 1.1rem;
-          }
-        }
-      }
-
-      .doctor-pricing {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        .price {
-          .price-value {
-            font-size: 1.7rem;
-            font-weight: 800;
-            color: $dark-text;
-          }
-
-          .price-label {
-            display: block;
-            font-size: 0.95rem;
-            color: rgba(black, 0.6);
-            margin-top: 2px;
-          }
-        }
-
-        .book-btn {
-          background: linear-gradient(135deg, $dark-text, darken($dark-text, 8%));
-          color: white;
-          border: none;
-          padding: 14px 34px;
-          border-radius: 14px;
-          font-weight: 700;
-          font-size: 1.05rem;
-          cursor: pointer;
-          transition: all 0.35s;
-          box-shadow: 0 6px 20px rgba($dark-text, 0.25);
-
-          &:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba($dark-text, 0.35);
-          }
-        }
-      }
-    }
-  }
-
-  .pagination {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 45px;
-
-    .page-btn {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 14px;
-      border: none;
-      background: $glass-white;
-      backdrop-filter: blur(8px);
-      color: $dark-text;
-      font-weight: 700;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-      border: 1px solid rgba($dark-text, 0.15);
-
-      &:hover:not(:disabled) {
-        background: rgba($dark-text, 0.1);
         transform: translateY(-2px);
-      }
-
-      &.active {
-        background: linear-gradient(135deg, $dark-text, darken($dark-text, 8%));
-        color: white;
-        box-shadow: 0 6px 20px rgba($primary, 0.3);
-      }
-
-      &:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
     }
   }
-}
 
-/* التكيف مع الشاشات الصغيرة */
-@media (max-width: 992px) {
-  .search-filters {
-    flex-wrap: wrap;
-
-    .filter-select,
-    .filter-input,
-    .search-btn {
-      flex: 1 1 100% !important;
-      margin-bottom: 12px;
-    }
-  }
-
-  .doctor-card {
-    flex-direction: column;
-    text-align: right;
-    gap: 20px;
-    padding: 25px;
-
-    .doctor-image {
-      flex: 0 0 140px;
-      margin: 0 auto 20px;
-
-      img {
-        width: 140px;
-        height: 140px;
-      }
-    }
-
-    .doctor-name::after {
-      right: 0;
-      transform: none;
-    }
-
-    .doctor-pricing {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 20px;
-
-      .book-btn {
-        width: 100%;
-      }
-    }
-  }
-}
-
-@media (max-width: 576px) {
-  body {
-    padding: 15px;
-  }
-
-  .container-fluid {
-    padding: 0 15px;
-  }
-
-  .search-header {
-    padding: 24px;
-
-    .search-title {
-      font-size: 1.8rem;
-    }
-
-    .search-input {
-      padding: 14px 50px 14px 20px;
-    }
-  }
-
-  .sidebar .filter-section {
-    padding: 22px;
-  }
-
-  .pagination .page-btn {
+  .carousel-control-prev,
+  .carousel-control-next {
     width: 40px;
     height: 40px;
-    font-size: 1rem;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 1;
+
+    &-icon {
+      filter: invert(20%) sepia(15%) saturate(2000%) hue-rotate(240deg) brightness(90%) contrast(90%);
+    }
   }
 }
 
-/* تأثيرات الظهور */
-@keyframes cardEntrance {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+/* 🔍 Search Section */
+.search-section {
+  padding: 0 20px;
+  margin-bottom: 30px;
+
+  .search-tabs {
+    display: flex;
+    margin-bottom: 10px;
+    
+    span {
+      padding: 8px 20px;
+      cursor: pointer;
+      color: $text-muted;
+      border-bottom: 2px solid transparent;
+      
+      &.active {
+        color: $primary;
+        border-bottom: 2px solid $primary;
+        font-weight: 600;
+      }
+    }
   }
+  
+  .search-bar-glass {
+    background: white;
+    border-radius: 12px;
+    padding: 15px 20px;
+    
+    box-shadow: 0 8px 24px rgba($primary, 0.1);
+    
+    .form-control, .form-select {
+      border-radius: 8px;
+      border: 1px solid rgba($primary, 0.2);
+      padding: 12px 15px;
+      
+      &::placeholder {
+        color: rgba($primary, 0.5);
+      }
+    }
+    
+    .btn-primary {
+      background: $primary;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-weight: 600;
+    }
+  }
+}
+
+.sticky-sidebar {
+  position: sticky;
+  top: 20px; /* المسافة من الأعلى - ممكن تعدليها حسب الهيدر */
+  z-index: 99;
+ box-shadow: 0 8px 24px rgba($primary, 0.5);
+  
+}
+
+/* 🧑‍⚕️ Doctors List */
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 30px 20px 20px;
+  color: $primary;
+}
+
+.doctors-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 20px;
 }
 
 .doctor-card {
-  animation: cardEntrance 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  opacity: 0;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 
-  @for $i from 1 through 10 {
-    &:nth-child(#{$i}) {
-      animation-delay: #{$i * 0.1s};
+  img.doctor-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 2px #633c84;
+  }
+
+  .doctor-info {
+    flex-grow: 1;
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: $primary;
+    }
+
+    .specialty, .location {
+      font-size: 0.9rem;
+      color: $text-muted;
+    }
+  }
+
+  .doctor-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .book-button {
+      background: $primary;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      color: $primary;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+ 
+    }
+  }
+}
+
+.doctor-actions {
+  padding-top: 8px;
+  border-top: 1px solid #eee;
+}
+
+.doctor-actions .price-container {
+  display: flex;
+  align-items: center; // ده اللي هيخلي السعر ف نُص الزرار
+  height: 100%;
+}
+.doctor-actions .price {
+  font-size: 1rem;
+  color: $primary;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+.icon{
+  color: #633c84;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #633c84 !important;
+  box-shadow: 0 0 0 0.2rem rgba(99, 60, 132, 0.25); // ظل ناعم بلون بنفسجي
+  outline: none; // علشان نشيل البوردر الأزرق الافتراضي
+}
+select.form-select {
+  background-position: left 0.75rem center; // 🟣 السهم على الشمال
+  padding-left: 2rem; // 🟣 مساحة تمنع تداخل السهم مع النص
+  direction: rtl;
+ color: #633c84;
+}
+
+/* 🔢 Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+  gap: 10px;
+  
+  button {
+    border: none;
+    background: white;
+    color: $primary;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    
+    &.active {
+      background: $primary;
+      color: white;
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.verified-doctors-badge {
+  text-align: center;
+  margin: 30px 0;
+  color: $primary;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-slider {
+    height: 300px;
+    
+    .slider-content {
+      right: 5%;
+      width: 90%;
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  .doctors-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .search-bar-glass {
+    .row {
+      flex-wrap: wrap;
+    }
+    
+    .col-md-1 {
+      display: none;
+    }
+    
+    .col-md-5, .col-md-3 {
+      width: 100%;
+      margin-bottom: 10px;
     }
   }
 }

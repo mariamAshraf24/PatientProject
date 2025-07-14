@@ -11,6 +11,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './doctor-list.scss'
 })
 export class DoctorList {
+ 
   doctors: any[] = [];
   specializations: any[] = [];
   cities: string[] = cities;
