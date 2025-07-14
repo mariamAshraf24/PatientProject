@@ -60,15 +60,15 @@ export class UpdateProfile {
     this._PatientService.updatePatientProfile(this.form.value).subscribe({
       next: (res) => {
         if (res.success) {
-          alert('✅ تم تحديث البيانات بنجاح');
+          alert(' تم تحديث البيانات بنجاح');
           this._Router.navigate(['/profile']);
         } else {
-          alert('❌ فشل التحديث');
+          alert(' فشل التحديث');
         }
       },
       error: (err) => {
-        console.error('❌ Error updating profile:', err);
-        alert('❌ حدث خطأ أثناء التحديث');
+        console.error(' Error updating profile:', err);
+        alert(' حدث خطأ أثناء التحديث');
       },
     });
   }

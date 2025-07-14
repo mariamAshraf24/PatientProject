@@ -1,24 +1,34 @@
-<div class="container p-3 text-center">
-    <h4 class="mb-4 fw-bold">الحجوزات التي قمت بها</h4>
+<div class="container p-4 text-center">
+  <h4 class="mb-4 fw-bold">حجوزاتي الطبية</h4>
 
-    @if (appointments.length === 0) {
-    <p>لا يوجد حجوزات حتى الآن</p>
-    } @else {
+  @if (appointments.length === 0) {
+    <p class="empty-message">لا توجد حجوزات مسجلة حالياً</p>
+  } @else {
     @for (appointment of appointments; track appointment.id) {
-    <div class="card mb-3 shadow-sm px-3 py-2 appointment-card">
+      <div
+        class="card mb-4 shadow-sm rounded-4 px-3 py-3 appointment-card"
+        [ngClass]="{ 'highlight': appointment.id === highlightedId }"
+      >
         <div class="d-flex align-items-center justify-content-between">
-            <div class="text-start">
-                <h6 class="fw-bold">{{ appointment.doctorName }}</h6>
-                <small class="text-muted">{{ appointment.specialization }}</small>
-            </div>
-            <img [src]="appointment.doctorImage" alt="دكتور" class="rounded-circle doctor-img">
+          <div class="text-start">
+            <h6 class="fw-bold mb-1">{{ appointment.doctorName }}</h6>
+            <small class="text-muted">{{ appointment.specialization }}</small>
+          </div>
+          <img
+            [src]="appointment.doctorImage"
+            alt="صورة الطبيب"
+            class="rounded-circle doctor-img"
+            width="50"
+            height="50"
+          />
         </div>
-        <div class="bg-white text-center mt-2 py-1 rounded-pill date-box">
-            <small class="text-dark">
-                {{ appointment.dayName }}، {{ appointment.date }}، {{ appointment.time }}
-            </small>
+
+        <div class="date-box mt-2 text-end">
+          <i class="far fa-calendar-alt me-2"></i>
+          {{ getFormattedDate(appointment.date) }} -
+          {{ getFormattedTime(appointment.startTime) }}
         </div>
-    </div>
+      </div>
     }
-    }
+  }
 </div>

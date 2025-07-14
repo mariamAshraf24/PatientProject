@@ -1,128 +1,147 @@
 .doctor-profile-container {
-  padding: 20px;
-  max-width: 600px;
+  padding: 24px;
+  max-width: 650px;
   margin: auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 0 10px #ccc;
+  background: linear-gradient(145deg, #ffffff, #f7f7f7);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   direction: rtl;
   text-align: right;
+  font-family: 'Tajawal', sans-serif;
 }
 
 .doctor-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 
   .doctor-img {
     width: 120px;
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    border: 3px solid #9c27b0;
+    box-shadow: 0 0 8px rgba(156, 39, 176, 0.3);
   }
 
   .doctor-name {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 26px;
+    font-weight: 800;
+    color: #333;
   }
 
   .doctor-specialty {
-    color: #680980;
-    font-weight: 500;
+    color: #8e24aa;
+    font-weight: 600;
+    font-size: 17px;
   }
 }
 
 .doctor-details {
-  font-size: 16px;
+  font-size: 17px;
+  margin-bottom: 25px;
 
   p {
     margin-bottom: 10px;
-  }
-}
+    line-height: 1.6;
 
-.schedule-section {
-  margin-top: 30px;
-  background-color: #f4f6fa;
-  padding: 20px;
-  border-radius: 12px;
-
-  .section-title {
-    font-size: 22px;
-    margin-bottom: 15px;
-    color: #5e0202;
-  }
-
-  .schedule-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-
-    .schedule-item {
-      background-color: #ffffff;
-      padding: 10px 16px;
-      border-radius: 8px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-      display: flex;
-      align-items: center;
-      font-size: 16px;
-      white-space: nowrap; // 👈 يمنع انقسام الكلام
-      .day {
-        font-weight: 600;
-        color: #8f0b7b;
-      }
+    strong {
+      color: #6a1b9a;
     }
   }
-
-  .no-schedule {
-    color: #999;
-    font-style: italic;
-  }
 }
 
+.schedule-section,
 .slots-section {
-  margin-top: 30px;
-  background-color: #f4f6fa;
+  background: #f9f9fc;
   padding: 20px;
   border-radius: 12px;
+  margin-bottom: 25px;
 
   .section-title {
-    font-size: 22px;
+    font-size: 20px;
+    font-weight: 700;
     margin-bottom: 15px;
-    color: #003366;
+    color: #5e35b1;
   }
 
+  .schedule-list,
   .slot-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 
+    .schedule-item,
     .slot-item {
-      background-color: #ffffff;
-      padding: 10px 16px;
-      border-radius: 8px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      padding: 10px 18px;
+      border-radius: 10px;
+      background-color: #fff;
       font-size: 15px;
       font-weight: 500;
-      color: #005b96;
-      white-space: nowrap; // لمنع كسر السطر داخل العنصر
-      transition: background-color 0.3s;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+      color: #5c6bc0;
 
       &:hover {
-        background-color: #e6f0ff;
+        background-color: #ede7f6;
         cursor: pointer;
+      }
+
+      &.selected {
+        background-color: #8e24aa;
+        color: #fff;
+        font-weight: bold;
+        transform: scale(1.05);
+        box-shadow: 0 0 8px rgba(142, 36, 170, 0.3);
       }
     }
   }
+}
 
-  .no-schedule {
-    color: #999;
-    font-style: italic;
-    margin-top: 10px;
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #4a148c;
+
+  input[type='radio'] {
+    accent-color: #8e24aa;
+    width: 18px;
+    height: 18px;
   }
+
+  span {
+    font-size: 16px;
+  }
+}
+
+.btn.btn-success {
+  background: linear-gradient(to right, #8e24aa, #6a1b9a);
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(142, 36, 170, 0.3);
+
+  &:hover {
+    background: linear-gradient(to right, #7b1fa2, #4a148c);
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.no-schedule {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  margin-top: 15px;
 }
