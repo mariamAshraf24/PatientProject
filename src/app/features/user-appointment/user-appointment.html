@@ -5,7 +5,7 @@
     <p>لا يوجد حجوزات حتى الآن</p>
     } @else {
     @for (appointment of appointments; track appointment.id) {
-    <div class="card mb-3 shadow-sm rounded-pill px-3 py-2 appointment-card">
+    <div class="card mb-3 shadow-sm px-3 py-2 appointment-card">
         <div class="d-flex align-items-center justify-content-between">
             <div class="text-start">
                 <h6 class="fw-bold">{{ appointment.doctorName }}</h6>
