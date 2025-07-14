@@ -1,9 +1,12 @@
-import { ActivatedRoute } from '@angular/router';
+// import { ActivatedRoute, Router } from '@angular/router';
 import { IDoctor, Schedule } from '../../core/models/IDoctor';
 import { DoctorFilter } from './../../core/services/doctor-filter';
+import { Booking } from './../../core/services/booking'; // ✅ تأكد من المسار الصحيح
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AppointmentNotifierService } from './../../core/services/appointment-notifier';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -13,68 +16,47 @@ import { FormsModule } from '@angular/forms';
 })
 export class DoctorProfile implements OnInit {
   doctor: IDoctor | null = null;
-  weekOrder: string[] = [
-    'Saturday',
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-  ];
   availableSlots: string[] = [];
+  selectedSlot: string | null = null;
+  selectedType: number | null = null;
+
+
+  weekOrder: string[] = [
+    'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+  ];
+
+  private doctorId: string = '';
+  private date: string = '';
 
   constructor(
     private _DoctorFilter: DoctorFilter,
-    private route: ActivatedRoute
-  ) {}
-
-  // ngOnInit(): void {
-  //   const doctorId = this.route.snapshot.paramMap.get('id');
-  //   console.log('Doctor ID:', doctorId);
-  //   if (doctorId) {
-  //     this._DoctorFilter.getDoctorProfile(doctorId).subscribe({
-  //       next: (res) => {
-  //         if (res.success) {
-  //           this.doctor = res.data;
-  //         }
-  //       },
-  //       error: (err) => {
-  //         console.error('فشل تحميل بيانات الدكتور', err);
-  //       },
-  //     });
-  //   }
-  // }
+    private _Booking: Booking,
+    private route: ActivatedRoute,
+    private _Router: Router,
+    private _notifier: AppointmentNotifierService
+  ) { }
 
   ngOnInit(): void {
-    const doctorId = this.route.snapshot.paramMap.get('id');
-    const date =
-      this.route.snapshot.queryParamMap.get('date') || this.getTodayDate();
+    this.doctorId = this.route.snapshot.paramMap.get('id') || '';
+    this.date = this.route.snapshot.queryParamMap.get('date') || this.getTodayDate();
 
-    if (doctorId) {
-      // تحميل بيانات الدكتور
-      this._DoctorFilter.getDoctorProfile(doctorId).subscribe({
+    if (this.doctorId) {
+      this._DoctorFilter.getDoctorProfile(this.doctorId).subscribe({
         next: (res) => {
-          if (res.success) {
-            this.doctor = res.data;
-          }
+          if (res.success) this.doctor = res.data;
         },
-        error: (err) => {
-          console.error('فشل تحميل بيانات الدكتور', err);
-        },
+        error: (err) => console.error('فشل تحميل بيانات الدكتور', err),
       });
 
-      // تحميل المواعيد المتاحة
-      this._DoctorFilter.getDoctorSlots(doctorId, date).subscribe({
+      this._DoctorFilter.getDoctorSlots(this.doctorId, this.date).subscribe({
         next: (res) => {
           this.availableSlots = res.map((slot) => slot.slotTime);
         },
-        error: (err) => {
-          console.error('فشل تحميل مواعيد الدكتور', err);
-        },
+        error: (err) => console.error('فشل تحميل مواعيد الدكتور', err),
       });
     }
   }
+
   getTodayDate(): string {
     const today = new Date();
     return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
@@ -83,17 +65,11 @@ export class DoctorProfile implements OnInit {
   getAge(dateOfBirth: string): number {
     const birthDate = new Date(dateOfBirth);
     const today = new Date();
-
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birthDate.getDate())
-    ) {
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
-
     return age;
   }
 
@@ -116,4 +92,42 @@ export class DoctorProfile implements OnInit {
       .map((day) => this.doctor!.schedules.find((s) => s.dayOfWeek === day))
       .filter((s): s is Schedule => !!s);
   }
+
+  bookNow() {
+    if (!this.selectedSlot || this.selectedType === null) {
+      alert("يرجى اختيار موعد ونوع الكشف");
+      return;
+    }
+
+    const bookingData = {
+      doctorId: this.doctorId,
+      date: this.date,
+      startTime: this.selectedSlot,
+      appointmentType: this.selectedType,
+    };
+
+    this._Booking.bookAppointment(bookingData).subscribe({
+      next: (res) => {
+        console.log("🚀 Booking Response:", res);
+
+        const appointmentId = res.appointment?.appointment?.id;
+        if (!appointmentId) {
+          alert("❌ لم يتم استلام رقم الحجز!");
+          return;
+        }
+
+        alert("✅ تم الحجز بنجاح");
+        this._Router.navigate(['/appointmentDetails', appointmentId]);
+        this._notifier.notifyNewAppointment(appointmentId);
+
+
+      },
+      error: (err) => {
+        console.error('❌ فشل في الحجز', err);
+        alert('حدث خطأ أثناء محاولة الحجز');
+      }
+    });
+  }
+
+
 }

@@ -1,3 +1,4 @@
+import { AppointmentDetails } from './features/appointment-details/appointment-details';
 import { Routes } from '@angular/router';
 import { DoctorList } from './features/doctor-list/doctor-list';
 import { DoctorProfile } from './features/doctor-profile/doctor-profile';
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'register', component: Register },
   { path: 'profile', component: Profile },
   { path: 'userAppointment', component: UserAppointment},
+  { path:  'appointmentDetails/:id', component: AppointmentDetails},
   { path: 'update-profile', component: UpdateProfile },
   { path: 'notification', component: Notification }
 ];

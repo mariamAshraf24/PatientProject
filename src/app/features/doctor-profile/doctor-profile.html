@@ -1,4 +1,4 @@
-@if (doctor) {
+<!-- @if (doctor) {
 <div class="doctor-profile-container">
   <div class="doctor-header">
     <img
@@ -45,5 +45,89 @@
   } @else {
   <p class="no-schedule">لا توجد مواعيد متاحة اليوم.</p>
   }
+</div>
+} -->
+@if (doctor) {
+<div class="doctor-profile-container">
+  <!-- رأس الدكتور -->
+  <div class="doctor-header d-flex align-items-center mb-4">
+    <img
+      [src]="doctor.imageUrl"
+      alt="{{ doctor.fullName }}"
+      class="doctor-img me-3"
+    />
+    <div class="header-info">
+      <h2 class="doctor-name">{{ doctor.fullName }}</h2>
+      <p class="doctor-specialty">{{ doctor.specializationName }}</p>
+    </div>
+  </div>
+
+  <!-- التفاصيل -->
+  <div class="doctor-details mb-4">
+    <p><strong>💵 السعر:</strong> {{ doctor.bookingPrice }} جنيه</p>
+    <p><strong>📍 العنوان:</strong> {{ doctor.address }}</p>
+    <p><strong>👤 النوع:</strong> {{ doctor.gender === "Male" ? "ذكر" : "أنثى" }}</p>
+    <p><strong>🎂 العمر:</strong> {{ getAge(doctor.dateOfBirth) }} سنة</p>
+  </div>
+
+  <!-- جدول الأيام -->
+  @if (sortedSchedules.length > 0) {
+    <div class="schedule-section mb-4">
+      <h3 class="section-title">🗓️ أيام العمل</h3>
+      <ul class="schedule-list d-flex flex-wrap gap-2">
+        @for (schedule of sortedSchedules; track schedule.dayOfWeek) {
+          <li class="schedule-item bg-light border rounded px-3 py-1">
+            {{ getArabicDay(schedule.dayOfWeek) }}
+          </li>
+        }
+      </ul>
+    </div>
+  } @else {
+    <p class="no-schedule">لا توجد مواعيد حالياً.</p>
+  }
+
+  <!-- المواعيد المتاحة -->
+  @if (availableSlots.length > 0) {
+    <div class="slots-section mb-4">
+      <h3 class="section-title">🕒 المواعيد المتاحة اليوم</h3>
+      <ul class="slot-list d-flex flex-wrap gap-3 mt-2">
+        @for (slot of availableSlots; track slot) {
+          <li
+            class="slot-item px-3 py-2 rounded border"
+            [class.selected]="slot === selectedSlot"
+            (click)="selectedSlot = slot"
+            style="cursor: pointer;"
+          >
+            {{ slot }}
+          </li>
+        }
+      </ul>
+    </div>
+  } @else {
+    <p class="no-schedule">لا توجد مواعيد متاحة اليوم.</p>
+  }
+
+  <!-- اختيار نوع الكشف -->
+  <div class="d-flex justify-content-center gap-4 my-3">
+    <label class="radio-label">
+      <input type="radio" name="type" [(ngModel)]="selectedType" [value]="0" />
+      <span>كشف</span>
+    </label>
+    <label class="radio-label">
+      <input type="radio" name="type" [(ngModel)]="selectedType" [value]="1" />
+      <span>متابعة</span>
+    </label>
+  </div>
+
+  <!-- زر الحجز -->
+  <div class="text-center mt-4">
+    <button
+      class="btn btn-success btn-lg px-5 py-2 rounded-pill"
+      [disabled]="!selectedSlot || selectedType === null"
+      (click)="bookNow()" 
+    >
+      <i class="fa fa-calendar-check me-2"></i> احجز الآن
+    </button>
+  </div>
 </div>
 }

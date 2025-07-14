@@ -1,51 +1,55 @@
 <div class="appointment-details card shadow-lg p-4 border-0 rounded-4">
-    <h2 class="text-center mb-4 text-primary fw-bold">📝 تفاصيل المعاد</h2>
+  <h2 class="text-center mb-4 text-primary fw-bold">تفاصيل المعاد</h2>
 
-    <div class="row mb-2">
-        <div class="col-md-6">
-            <strong> اسم الدكتور:</strong>
-            {{ appointment?.doctorName }} <small>({{ appointment?.doctorSpecialization }})</small>
-        </div>
-        <div class="col-md-6">
-            <strong> اسم المريض:</strong> {{ appointment?.patientName }}
-        </div>
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <strong>اسم الدكتور:</strong>
+      {{ appointment?.doctorName }} <small>({{ appointment?.doctorSpecialization }})</small>
     </div>
+    <div class="col-md-6">
+      <strong>اسم المريض:</strong> {{ appointment?.patientName }}
+    </div>
+  </div>
 
-    <div class="row mb-2">
-        <div class="col-md-6">
-            <strong> التاريخ:</strong> {{ appointment?.date | date:'fullDate' }}
-        </div>
-        <div class="col-md-6">
-            <strong> الساعة:</strong> {{ appointment?.startTime }} - {{ appointment?.endTime }}
-        </div>
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <strong>التاريخ:</strong> {{ appointment?.date | date:'fullDate' }}
     </div>
+    <div class="col-md-6">
+      <strong>الساعة:</strong> {{ getFormattedTime(appointment?.startTime) }}
+    </div>
+  </div>
 
-    <div class="row mb-2">
-        <div class="col-md-6"><strong>نوع المعاد:</strong> {{ appointment?.appointmentType }}</div>
-        <div class="col-md-6"><strong> الحالة:</strong> {{ appointment?.status }}</div>
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <strong>نوع المعاد:</strong> {{ getAppointmentTypeArabic(appointment?.appointmentType) }}
     </div>
+  </div>
 
-    <div class="row mb-3">
-        <div class="col-md-6"><strong>🔢 الدور الحالي:</strong> {{ appointment?.turnNumber }}</div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong>الدور الحالي:</strong> {{ appointment?.turnNumber }}
     </div>
+  </div>
 
-    @if (updatedTurnNumber !== null) {
-    <div class="alert alert-info text-center fw-semibold">
-        تم تحديث دورك إلى: <strong>{{ updatedTurnNumber }}</strong>
-    </div>
-    }
+  @if (updatedTurnNumber !== null) {
+  <div class="alert alert-info text-center fw-semibold">
+    تم تحديث دورك إلى: <strong>{{ updatedTurnNumber }}</strong>
+  </div>
+  }
 
-    @if (appointment?.qrImage) {
-    <div class="text-center mt-4">
-        <img [src]="'data:image/png;base64,' + appointment.qrImage" alt="QR Code" width="200"
-            class="img-fluid rounded-3 border shadow-sm" />
-    </div>
-    }
+  @if (appointment?.qrImage) {
+  <div class="text-center mt-4">
+    <img [src]="'data:image/png;base64,' + appointment.qrImage" alt="QR Code" width="200"
+      class="img-fluid rounded-3 border shadow-sm" />
+  </div>
+  }
 </div>
+
 @if (appointment?.id) {
 <div class="text-center mt-4">
-    <button class="btn btn-danger px-4 py-2 fw-semibold" (click)="cancelBooking()">
-        إلغاء الحجز
-    </button>
+  <button class="btn btn-danger px-4 py-2 fw-semibold" (click)="cancelBooking()">
+    إلغاء الحجز
+  </button>
 </div>
 }
