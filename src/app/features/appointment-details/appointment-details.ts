@@ -7,12 +7,12 @@ import {
   HubConnectionState
 } from '@microsoft/signalr';
 import { environment } from '../../../environments/environment';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-appointment-details',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, CommonModule],
   templateUrl: './appointment-details.html',
   styleUrl: './appointment-details.scss'
 })
