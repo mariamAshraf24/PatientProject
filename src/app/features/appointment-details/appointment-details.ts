@@ -79,7 +79,8 @@ export class AppointmentDetails implements OnInit, OnDestroy {
 
   startSignalR() {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(`${environment.apiBaseUrl}/hubs/appointment`, {
+      .withUrl(`${environment.signalRHubUrl
+}`, {
         accessTokenFactory: () => localStorage.getItem('token') || ''
       })
       .withAutomaticReconnect()

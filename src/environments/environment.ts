@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   apiBaseUrl: 'https://nazzem.runasp.net/api',
+  signalRHubUrl: 'https://nazzem.runasp.net/hubs/appointment',
   firebase: {
     apiKey: "AIzaSyB9saUlUIZyeIvyLInZijWfHMGLdnE2oVk",
     authDomain: "nazzem-5424a.firebaseapp.com",
