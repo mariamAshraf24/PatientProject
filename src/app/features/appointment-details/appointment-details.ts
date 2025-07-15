@@ -140,7 +140,7 @@ export class AppointmentDetails implements OnInit, OnDestroy {
   
   getAppointmentTypeArabic(type: string): string {
     switch (type?.toLowerCase()) {
-      case 'CheckUp':
+      case 'checkup':
         return 'كشف';
       case 'followup':
         return 'إعادة';

@@ -108,22 +108,22 @@ export class DoctorProfile implements OnInit {
 
     this._Booking.bookAppointment(bookingData).subscribe({
       next: (res) => {
-        console.log("🚀 Booking Response:", res);
+        console.log(" Booking Response:", res);
 
         const appointmentId = res.appointment?.appointment?.id;
         if (!appointmentId) {
-          alert("❌ لم يتم استلام رقم الحجز!");
+          alert("لم يتم استلام رقم الحجز!");
           return;
         }
 
-        alert("✅ تم الحجز بنجاح");
+        alert(" تم الحجز بنجاح");
         this._Router.navigate(['/appointmentDetails', appointmentId]);
         this._notifier.notifyNewAppointment(appointmentId);
 
 
       },
       error: (err) => {
-        console.error('❌ فشل في الحجز', err);
+        console.error(' فشل في الحجز', err);
         alert('حدث خطأ أثناء محاولة الحجز');
       }
     });
