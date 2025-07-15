@@ -159,4 +159,18 @@ export class AppointmentDetails implements OnInit, OnDestroy {
       hour12: true
     });
   }
+  getStatusInArabic(status: string | null | undefined): string {
+  if (!status) return '—';
+
+  const statusMap: Record<string, string> = {
+    Confirmed: 'تم التأكيد',
+    Delayed: 'مؤجل',
+    Completed: 'مكتمل',
+    Canceled: 'ملغي',
+    missed: 'لم يحضر'
+  };
+
+  return statusMap[status] || status;
+}
+
 }
