@@ -8,6 +8,32 @@
   margin: 0 auto;
   box-shadow: 0 4px 12px rgba(100, 60, 132, 0.685); 
 
+/* الخط الطولي بين بيانات الدكتور و QR */
+.vertical-divider {
+  border-left: 3px solid #ccc;
+  height: 100%;
+}
+
+/* الخط الأفقي بين صف الدكتور و صف المعاد */
+.horizontal-divider {
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* الخط بين نوع المعاد و التاريخ */
+.inner-vertical-divider {
+  border-left: 2px solid #ddd;
+}
+
+/* ضبط حجم الصورة */
+.qr-code-img {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
 
 
  .card-header {
@@ -74,4 +100,8 @@
   .border-bottom {
     border-bottom: 1px solid #eee !important;
   }
+}
+.col-6 {
+    flex: 0 0 auto;
+    width: 40%;
 }
