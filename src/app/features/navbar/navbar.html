@@ -1,32 +1,39 @@
 <nav class="navbar">
   <ul>
     <span class="nav-left">
-      <li><a routerLink="/home">الرئيسية</a></li>
-      <li><a routerLink="/contact">تواصل معنا</a></li>
-      
-      <!-- <button class="notification-icon">
-        🔔 @if (notificationCount > 0) {
-        <span class="badge">{{ notificationCount }}</span>
-        }
-      </button> -->
+      <li routerLinkActive="active-link" >
+        <a routerLink="/home">الرئيسية</a>
+      </li>
+      <li routerLinkActive="active-link">
+        <a routerLink="/contact">تواصل معنا</a>
+      </li>
     </span>
+
     <span class="nav-right">
       @if (!isLoggedIn()) {
-      <li><a routerLink="/login">تسجيل دخول</a></li>
+        <li routerLinkActive="active-link">
+          <a routerLink="/login">تسجيل دخول</a>
+        </li>
       } @else {
+        <li routerLinkActive="active-link">
+          <a routerLink="/notification" class="user-icon">
+            <i class="fa-solid fa-bell"></i>
+          </a>
+        </li>
+        <li routerLinkActive="active-link">
+          <a routerLink="/userAppointment">حجوزاتك</a>
+        </li>
+        <li routerLinkActive="active-link">
+          <a routerLink="/appointmentDetails">QR CODE</a>
+        </li>
+        <li routerLinkActive="active-link">
+          <a routerLink="/profile" class="user-icon">
+            <i class="fa fa-user-circle"></i>
+          </a>
+        </li>
         <li>
-        <a class="user-icon" routerLink="/notification">
-          <i class="fa-solid fa-bell"></i>
-        </a>
-      </li>
-      <li><a routerLink="/userAppointment">لحجوزات التي قمت بها</a></li>
-      <li><a routerLink="/appointmentDetails">QR CODE</a></li>
-      <li>
-        <a class="user-icon" routerLink="/profile">
-          <i class="fa fa-user-circle"></i>
-        </a>
-      </li>
-      <li><a (click)="logout()">تسجيل خروج</a></li>
+          <a (click)="logout()">تسجيل خروج</a>
+        </li>
       }
     </span>
   </ul>
