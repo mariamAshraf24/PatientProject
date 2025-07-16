@@ -8,11 +8,12 @@ import { Auth } from './../../../core/services/auth';
 import { Component, OnInit } from '@angular/core';
 import { FirebaseMessaging } from '../../../core/services/firebase-messaging';
 import { cities } from '../../../core/constants/cities';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule , RouterLink],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
