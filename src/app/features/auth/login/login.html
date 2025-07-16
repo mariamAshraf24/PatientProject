@@ -17,10 +17,7 @@
         <div class="mb-3">
           <label for="name" class="form-label">اسم المستخدم</label>
           <input type="text" id="name" formControlName="userName"
-            [ngClass]="{
-              'is-valid': !loginForm.get('userName')?.errors && loginForm.get('userName')?.touched,
-              'is-invalid': loginForm.get('userName')?.errors && loginForm.get('userName')?.touched
-            }"
+            
             class="form-control form-input" />
           @if (loginForm.get('userName')?.touched && loginForm.get('userName')?.invalid) {
             <div class="form-error">
@@ -56,6 +53,11 @@
               }
             </div>
           }
+            @if (serverErrorMessage && loginForm.get('password')?.touched) {
+                                <div class="invalid-feedback d-block">
+                                    <span>{{serverErrorMessage}}</span>
+                                </div>
+                                }
         </div>
 
         <!-- هل نسيت كلمة المرور؟ -->
@@ -74,3 +76,11 @@
     </div>
   </div>
 </div>
+            <!-- [ngClass]="{
+              'is-valid': !loginForm.get('password')?.errors && loginForm.get('password')?.touched,
+              'is-invalid': loginForm.get('password')?.errors && loginForm.get('password')?.touched
+            }" -->
+            <!-- [ngClass]="{
+              'is-valid': !loginForm.get('userName')?.errors && loginForm.get('userName')?.touched,
+              'is-invalid': loginForm.get('userName')?.errors && loginForm.get('userName')?.touched
+            }" -->
