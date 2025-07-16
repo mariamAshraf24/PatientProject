@@ -43,12 +43,17 @@
                   type="text"
                   formControlName="userName"
                   class="form-control form-input"
-                  [class.is-invalid]="usernameError"
+                  [class.is-invalid]="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched"
                 />
-                @if (usernameError) {
+                @if (registerForm.get('userName')?.hasError('required') && registerForm.get('userName')?.touched) {
+                <div class="invalid-feedback">اسم المستخدم مطلوب.</div>
+                } @else if (registerForm.get('userName')?.hasError('pattern') && registerForm.get('userName')?.touched) {
+                <div class="invalid-feedback">يجب أن يتكون اسم المستخدم من أحرف أو أرقام فقط.</div>
+                } @else if (usernameError) {
                 <div class="invalid-feedback">{{ usernameError }}</div>
                 }
               </div>
+
               <!-- First Name -->
               <div class="mb-2">
                 <label for="FName" class="form-label"
@@ -59,8 +64,15 @@
                   type="text"
                   formControlName="FName"
                   class="form-control form-input"
+                  [class.is-invalid]="registerForm.get('FName')?.invalid && registerForm.get('FName')?.touched"
                 />
+                @if (registerForm.get('FName')?.hasError('required') && registerForm.get('FName')?.touched) {
+                <div class="invalid-feedback">الاسم الأول مطلوب.</div>
+                } @else if (registerForm.get('FName')?.hasError('pattern') && registerForm.get('FName')?.touched) {
+                <div class="invalid-feedback">يجب أن يحتوي الاسم الأول على أحرف فقط.</div>
+                }
               </div>
+
               <!-- Last Name -->
               <div class="mb-2">
                 <label for="LName" class="form-label"
@@ -71,8 +83,15 @@
                   type="text"
                   formControlName="LName"
                   class="form-control form-input"
+                  [class.is-invalid]="registerForm.get('LName')?.invalid && registerForm.get('LName')?.touched"
                 />
+                @if (registerForm.get('LName')?.hasError('required') && registerForm.get('LName')?.touched) {
+                <div class="invalid-feedback">الاسم الأخير مطلوب.</div>
+                } @else if (registerForm.get('LName')?.hasError('pattern') && registerForm.get('LName')?.touched) {
+                <div class="invalid-feedback">يجب أن يحتوي الاسم الأخير على أحرف فقط.</div>
+                }
               </div>
+
               <!-- Email -->
               <div class="mb-2">
                 <label for="email" class="form-label"
@@ -83,8 +102,15 @@
                   type="email"
                   formControlName="Email"
                   class="form-control form-input"
+                  [class.is-invalid]="registerForm.get('Email')?.invalid && registerForm.get('Email')?.touched"
                 />
+                @if (registerForm.get('Email')?.hasError('required') && registerForm.get('Email')?.touched) {
+                <div class="invalid-feedback">البريد الإلكتروني مطلوب.</div>
+                } @else if (registerForm.get('Email')?.hasError('email') && registerForm.get('Email')?.touched) {
+                <div class="invalid-feedback">يرجى إدخال بريد إلكتروني صحيح.</div>
+                }
               </div>
+
               <!-- Password -->
               <div class="mb-2">
                 <label for="password" class="form-label"
@@ -95,9 +121,18 @@
                   type="password"
                   formControlName="Password"
                   class="form-control form-input"
+                  [class.is-invalid]="registerForm.get('Password')?.invalid && registerForm.get('Password')?.touched"
                 />
+                @if (registerForm.get('Password')?.hasError('required') && registerForm.get('Password')?.touched) {
+                <div class="invalid-feedback">كلمة المرور مطلوبة.</div>
+                } @else if (registerForm.get('Password')?.hasError('minlength') && registerForm.get('Password')?.touched) {
+                <div class="invalid-feedback">يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.</div>
+                } @else if (registerForm.get('Password')?.hasError('pattern') && registerForm.get('Password')?.touched) {
+                <div class="invalid-feedback">كلمة المرور يجب أن تحتوي على حرف كبير ورقم ورمز خاص.</div>
+                }
               </div>
             </div>
+
             <div class="col-md-6">
               <!-- Phone -->
               <div class="mb-2">
@@ -109,8 +144,15 @@
                   type="text"
                   formControlName="Phone"
                   class="form-control form-input"
+                  [class.is-invalid]="registerForm.get('Phone')?.invalid && registerForm.get('Phone')?.touched"
                 />
+                @if (registerForm.get('Phone')?.hasError('required') && registerForm.get('Phone')?.touched) {
+                <div class="invalid-feedback">رقم الهاتف مطلوب.</div>
+                } @else if (registerForm.get('Phone')?.hasError('pattern') && registerForm.get('Phone')?.touched) {
+                <div class="invalid-feedback">رقم الهاتف يجب أن يبدأ بـ 010/011/012/015 ويكون 11 رقمًا.</div>
+                }
               </div>
+
               <!-- Date of Birth -->
               <div class="mb-2">
                 <label for="date" class="form-label"
@@ -121,18 +163,32 @@
                   type="date"
                   formControlName="DateOfBirth"
                   class="form-control form-input"
+                  [class.is-invalid]="registerForm.get('DateOfBirth')?.invalid && registerForm.get('DateOfBirth')?.touched"
                 />
+                @if (registerForm.get('DateOfBirth')?.hasError('required') && registerForm.get('DateOfBirth')?.touched) {
+                <div class="invalid-feedback">تاريخ الميلاد مطلوب.</div>
+                }
               </div>
+
               <!-- City -->
               <div class="mb-2">
                 <label class="form-label">المدينة</label>
-                <select title="city" formControlName="City" class="form-select form-input">
+                <select
+                  title="city"
+                  formControlName="City"
+                  class="form-select form-input"
+                  [class.is-invalid]="registerForm.get('City')?.invalid && registerForm.get('City')?.touched"
+                >
                   <option value="">اختر المدينة</option>
                   @for (city of Cities; track city) {
                   <option [value]="city">{{ city }}</option>
                   }
                 </select>
+                @if (registerForm.get('City')?.hasError('required') && registerForm.get('City')?.touched) {
+                <div class="invalid-feedback">اختر المدينة.</div>
+                }
               </div>
+
               <!-- Street -->
               <div class="mb-2">
                 <label class="form-label">الشارع</label>
@@ -141,8 +197,13 @@
                   formControlName="Street"
                   class="form-control form-input"
                   placeholder="اسم المنطقة ورقم العمارة (مثال: مدينة نصر 15)"
+                  [class.is-invalid]="registerForm.get('Street')?.invalid && registerForm.get('Street')?.touched"
                 />
+                @if (registerForm.get('Street')?.hasError('pattern') && registerForm.get('Street')?.touched) {
+                <div class="invalid-feedback">يجب أن يحتوي الشارع على أحرف وأرقام فقط.</div>
+                }
               </div>
+
               <!-- Gender -->
               <div class="mb-2">
                 <label class="form-label"
@@ -174,13 +235,18 @@
                     أنثى
                   </button>
                 </div>
+                @if (registerForm.get('gender')?.hasError('required') && registerForm.get('gender')?.touched) {
+                <div class="invalid-feedback d-block mt-1">النوع مطلوب.</div>
+                }
               </div>
             </div>
           </div>
+
           <div class="text-center mt-3">
             <button
               type="submit"
               class="btn gradient-button text-white w-100 py-2"
+              [disabled]="registerForm.pending"
             >
               تسجيل
             </button>
