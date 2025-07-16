@@ -7,10 +7,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppointmentNotifierService } from './../../core/services/appointment-notifier';
+import { ReplaceAmPmPipe } from "../../shared/replace-am-pm-pipe";
 
 @Component({
   selector: 'app-doctor-profile',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReplaceAmPmPipe],
   templateUrl: './doctor-profile.html',
   styleUrl: './doctor-profile.scss',
 })
@@ -50,7 +51,17 @@ export class DoctorProfile implements OnInit {
 
       this._DoctorFilter.getDoctorSlots(this.doctorId, this.date).subscribe({
         next: (res) => {
-          this.availableSlots = res.map((slot) => slot.slotTime);
+this.availableSlots = res
+  .filter(slot => {
+    const now = new Date();
+    const [hours, minutes, seconds] = slot.slotTime.split(':').map(Number);
+
+    const slotTime = new Date();
+    slotTime.setHours(hours, minutes, seconds || 0, 0);
+
+    return slotTime.getTime() >= now.getTime();
+  })
+  .map(slot => slot.slotTime); // هنا بنرجّع الوقت فقط بدون تاريخ
         },
         error: (err) => console.error('فشل تحميل مواعيد الدكتور', err),
       });

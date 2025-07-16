@@ -1,59 +1,102 @@
-<div class="appointment-details card shadow-lg p-4 border-0 rounded-4">
-  <h2 class="text-center mb-4 text-primary fw-bold">تفاصيل المعاد</h2>
+<div class="main-content">
 
-  <div class="row mb-2">
-    <div class="col-md-6">
-      <strong>اسم الدكتور:</strong>
-      {{ appointment?.doctorName }} <small>({{ appointment?.doctorSpecialization }})</small>
+  <div class="appointment-details" dir="rtl">
+    <!-- العنوان -->
+    <div class="card-header">
+      <h3 class="text-center fw-bold mb-0">تفاصيل الحجز الطبي</h3>
     </div>
-    <div class="col-md-6">
-      <strong>اسم المريض:</strong> {{ appointment?.patientName }}
+
+    <!-- القسم الأعلى: بيانات + QR -->
+    <div class="top-section d-flex position-relative">
+      <!-- بيانات الدكتور والمريض -->
+      <div class="info-section flex-grow-1 pe-4">
+        <!-- صف الدكتور -->
+        <div class="pb-3 mb-3">
+          <h4 class="fw-bold mb-1">د.{{ appointment?.doctorName }}</h4>
+          <small class="text-muted d-block">{{ appointment?.doctorSpecialization
+            }}</small>
+          <p class="mb-0 mt-2">مع {{ appointment?.patientName }}</p>
+        </div>
+        <hr style="width: 90%;  border-top: 2px solid #633c84;" />
+
+        <!-- صف النوع والتاريخ -->
+        <div class="d-flex">
+          <div class="flex-fill">
+            <div class="text-muted small">نوع المعاد</div>
+            <div class="fw-semibold " style="color: #633c84;">{{
+              getAppointmentTypeArabic(appointment?.appointmentType) }}</div>
+          </div>
+          <div class="flex-fill ps-3">
+            <div class="text-muted small">تاريخ المعاد</div>
+            <div class="fw-semibold"  style="color: #633c84;">{{ appointment?.date | date: 'fullDate'
+              }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR -->
+      <div
+        class="qr-section ps-4 d-flex justify-content-center align-items-center">
+        <img
+          [src]="'data:image/png;base64,' + appointment.qrImage"
+          alt="رمز الاستجابة السريعة"
+          class="qr-code-img" />
+      </div>
+      <div class="vertical-divider"></div>
     </div>
+
+    <hr
+      style="width: 90%; margin-inline: 40px; border-top: 2px solid #633c84;" />
+
+    <!-- حالة الحجز + نوع الخدمة -->
+    <div class="px-5 py-3">
+      <div class="row">
+        <div class="col-6">
+          <div class="text-muted small">حالة الحجز</div>
+          <div class="fw-semibold"  style="color: #633c84;">{{ getStatusInArabic(appointment?.status)
+            }}</div>
+        </div>
+        <div class="col-6">
+          <div class="text-muted small">نوع الخدمة</div>
+          <div class="fw-semibold"  style="color: #633c84;">{{
+            getAppointmentTypeArabic(appointment?.appointmentType) }}</div>
+        </div>
+      </div>
+    </div>
+
+    <hr
+      style="width: 90%; margin-inline: 40px; border-top: 2px solid #633c84;" />
+
+    <!-- الدور الحالي + زر الإلغاء في صف واحد -->
+    <!-- الدور الحالي + زر الإلغاء في صف واحد -->
+    <div class="px-5 py-3">
+      <div class="row align-items-center">
+        <!-- الدور الحالي -->
+        <div class="col-6">
+          <div class="text-muted small">الدور الحالي</div>
+          <div class="current-turn-box pulse mt-1">
+            {{ appointment?.turnNumber }}
+          </div>
+        </div>
+
+        <!-- زر إلغاء الحجز -->
+        @if (appointment?.id) {
+        <div class="col-6 d-flex justify-content-end pe-5">
+          <button class="btn px-4 py-2  rounded-3" (click)="cancelBooking()">
+            إلغاء الحجز
+          </button>
+        </div>
+
+        }
+      </div>
+    </div>
+
+    <!-- تنبيه -->
+    @if (updatedTurnNumber !== null) {
+    <div
+      class="alert alert-info text-center fw-semibold my-3 mx-4 py-2 rounded-3">
+      تم تحديث دورك إلى: <strong>{{ updatedTurnNumber }}</strong>
+    </div>
+    }
+
   </div>
-
-  <div class="row mb-2">
-    <div class="col-md-6">
-      <strong>التاريخ:</strong> {{ appointment?.date | date:'fullDate' }}
-    </div>
-    <div class="col-md-6">
-      <strong>الساعة:</strong> {{ getFormattedTime(appointment?.startTime) }}
-    </div>
-  </div>
-
-  <div class="row mb-2">
-    <div class="col-md-6">
-      <strong>نوع المعاد:</strong> {{ getAppointmentTypeArabic(appointment?.appointmentType) }}
-    </div>
-    <div class="col-md-6">
-      <strong>الحالة:</strong> {{ getStatusInArabic(appointment?.status) }}
-    </div>
-  </div>
-
-
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <strong>الدور الحالي:</strong> {{ appointment?.turnNumber }}
-    </div>
-  </div>
-
-  @if (updatedTurnNumber !== null) {
-  <div class="alert alert-info text-center fw-semibold">
-    تم تحديث دورك إلى: <strong>{{ updatedTurnNumber }}</strong>
-  </div>
-  }
-
-  @if (appointment?.qrImage) {
-  <div class="text-center mt-4">
-    <img [src]="'data:image/png;base64,' + appointment.qrImage" alt="QR Code" width="200"
-      class="img-fluid rounded-3 border shadow-sm" />
-  </div>
-  }
-</div>
-
-@if (appointment?.id) {
-<div class="text-center mt-4">
-  <button class="btn btn-danger px-4 py-2 fw-semibold" (click)="cancelBooking()">
-    إلغاء الحجز
-  </button>
-</div>
-}
