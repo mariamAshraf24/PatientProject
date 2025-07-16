@@ -1,74 +1,80 @@
 @if (doctor) {
-  <main class="doctor-profile-full-page">
-    <!-- القسم العلوي: صورة وبيانات -->
-    <div class="row-section">
-      <div class="image-section">
-        <img [src]="doctor.imageUrl" alt="{{ doctor.fullName }}" class="doctor-img" />
-      </div>
-      <div class="info-section">
-        <h2 class="doctor-name">{{ doctor.fullName }}</h2>
-        <p class="doctor-specialty">{{ doctor.specializationName }}</p>
+<main class="doctor-profile-full-page">
+  <div class="profile-card">
+    <div class="top-section">
+      <img [src]="doctor.imageUrl" alt="{{ doctor.fullName }}"
+        class="doctor-img" />
+      <div class="info">
+        <h2 class="doctor-name">د.{{ doctor.fullName }}</h2>
 
-        <div class="doctor-details">
-          <p><i class="fa-solid fa-money-bill-wave icon money"></i> السعر: {{ doctor.bookingPrice }} جنيه</p>
-          <p><i class="fa-solid fa-location-dot icon location"></i> العنوان: {{ doctor.address }}</p>
-          <p><i class="fa-solid fa-user icon gender"></i> النوع: {{ doctor.gender === "Male" ? "ذكر" : "أنثى" }}</p>
-          <p><i class="fa-solid fa-cake-candles icon age"></i> العمر: {{ getAge(doctor.dateOfBirth) }} سنة</p>
-        </div>
+        <p class="doctor-specialty">
+          <i class="fa fa-stethoscope icon"></i> {{ doctor.specializationName }}
+        </p>
+
+        <p class="doctor-price">
+          <i class="fa-solid fa-coins"></i> {{ doctor.bookingPrice }}
+          ج.م
+        </p>
+
+        <p class="doctor-address">
+          <i class="fa fa-map-marker-alt icon"></i> {{ doctor.address }}
+        </p>
+
+        <p class="doctor-age">
+         <i class="fa-solid fa-cake-candles"></i> {{ getAge(doctor.dateOfBirth) }} سنة
+        </p>
+
       </div>
     </div>
 
     <!-- أيام العمل -->
-    @if (sortedSchedules.length > 0) {
-      <div class="section">
-        <h3 class="section-title"><i class="fa-regular fa-calendar-days"></i> أيام العمل</h3>
-        <ul class="schedule-list">
-          @for (schedule of sortedSchedules; track schedule.dayOfWeek) {
-            <li class="schedule-item">{{ getArabicDay(schedule.dayOfWeek) }}</li>
-          }
-        </ul>
+    <div class="section">
+      <p class="section-title">أيام العمل</p>
+      <div class="days-wrapper">
+        @for (schedule of sortedSchedules; track schedule.dayOfWeek) {
+        <span class="day-box">{{ getArabicDay(schedule.dayOfWeek) }}</span>
+        }
       </div>
-    } @else {
-      <p class="no-schedule">لا توجد مواعيد حالياً.</p>
-    }
+    </div>
 
     <!-- المواعيد المتاحة -->
-    @if (availableSlots.length > 0) {
-      <div class="section">
-        <h3 class="section-title"><i class="fa-regular fa-clock"></i> المواعيد المتاحة اليوم</h3>
-        <ul class="slot-list">
-          @for (slot of availableSlots; track slot) {
-            <li class="slot-item" [class.selected]="slot === selectedSlot" (click)="selectedSlot = slot">
-              {{ slot }}
-            </li>
-          }
-        </ul>
+    <div class="section">
+      <p class="section-title">المواعيد المتاحة اليوم</p>
+      <div class="slots-wrapper">
+        @for (slot of availableSlots; track slot) {
+        <span class="slot-box" [class.selected]="slot === selectedSlot"
+          (click)="selectedSlot = slot">{{ slot }}</span>
+        }
       </div>
-    } @else {
-      <p class="no-schedule">لا توجد مواعيد متاحة اليوم.</p>
-    }
+    </div>
 
-    <!-- اختيار نوع الكشف -->
-    <div class="check-type-section">
-      <label class="radio-label">
+<!-- نوع الزيارة + زر الحجز في نفس السطر -->
+<div class="section horizontal-booking">
+  <p class="section-title">نوع الزيارة</p>
+  <div class="visit-type-and-button">
+    <div class="visit-type-wrapper">
+      <label>
         <input type="radio" name="type" [(ngModel)]="selectedType" [value]="0" />
-        <span>كشف</span>
-      </label>
-      <label class="radio-label">
-        <input type="radio" name="type" [(ngModel)]="selectedType" [value]="1" />
         <span>متابعة</span>
+      </label>
+      <label>
+        <input type="radio" name="type" [(ngModel)]="selectedType" [value]="1" />
+        <span>استشارة</span>
       </label>
     </div>
 
-    <!-- زر الحجز -->
-    <div class="btn-wrapper">
+    <div class="btn-wrapper inline">
       <button
-        class="btn btn-success"
+        class="btn btn-primary"
         [disabled]="!selectedSlot || selectedType === null"
         (click)="bookNow()"
       >
-        <i class="fa fa-calendar-check me-2"></i> احجز الآن
+        احجز الآن
       </button>
     </div>
-  </main>
+  </div>
+</div>
+
+  </div>
+</main>
 }

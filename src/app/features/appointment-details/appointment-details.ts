@@ -7,12 +7,12 @@ import {
   HubConnectionState
 } from '@microsoft/signalr';
 import { environment } from '../../../environments/environment';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-appointment-details',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, CommonModule],
   templateUrl: './appointment-details.html',
   styleUrl: './appointment-details.scss'
 })
@@ -159,4 +159,18 @@ export class AppointmentDetails implements OnInit, OnDestroy {
       hour12: true
     });
   }
+  getStatusInArabic(status: string | null | undefined): string {
+  if (!status) return '—';
+
+  const statusMap: Record<string, string> = {
+    Confirmed: 'تم التأكيد',
+    Delayed: 'مؤجل',
+    Completed: 'مكتمل',
+    Canceled: 'ملغي',
+    missed: 'لم يحضر'
+  };
+
+  return statusMap[status] || status;
+}
+
 }

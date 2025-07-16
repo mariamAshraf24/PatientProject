@@ -10,7 +10,9 @@ $text-muted: #666;
 
   padding: 0;
   max-width: 1200px;
-  margin: 0 auto;
+   background-attachment: fixed; /* 👉 ده السطر المهم */
+  height: 100vh;
+  padding-top: 25px;
 }
 
 /* 🎯 Fixed Hero Slider */
@@ -371,6 +373,7 @@ select.form-select {
     .col-md-5, .col-md-3 {
       width: 100%;
       margin-bottom: 10px;
+
     }
   }
 }

@@ -7,7 +7,7 @@ import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule,NgClass , RouterLink],
+  imports: [ReactiveFormsModule ,NgClass ,RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
