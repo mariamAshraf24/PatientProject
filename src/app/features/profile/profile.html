@@ -1,0 +1,16 @@
+@if (patient) {
+  <div class="profile-container">
+    <h1 class="title">ملف المريض الشخصي</h1>
+
+    <div class="profile-card">
+      <div class="info-row"><span class="label">الاسم:</span> {{ patient.fName }} {{ patient.lName }}</div>
+      <div class="info-row"><span class="label">العنوان:</span> {{ patient.city }} - {{ patient.street }}, {{ patient.country }}</div>
+      <div class="info-row"><span class="label">النوع:</span> {{ patient.gender === 1 ? 'أنثى' : 'ذكر' }}</div>
+      <div class="info-row"><span class="label">العمر:</span> {{ getAge(patient.dateOfBirth) }} سنة</div>
+    </div>
+    <button class="edit-btn" routerLink="/update-profile">تعديل البيانات</button>
+
+  </div>
+} @else {
+  <div class="loading">جارٍ تحميل البيانات...</div>
+}

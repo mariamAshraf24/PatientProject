@@ -1,0 +1,377 @@
+/* doctor-list.component.scss */
+$primary: #633c84;
+$secondary: #c6a4d6;
+$light: #f8f6fb;
+$text-dark: #2e144e;
+$text-muted: #666;
+
+.medical-booking-app {
+  direction: rtl;
+
+  padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 🎯 Fixed Hero Slider */
+
+
+.hero-slider {
+  height: 500px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  position: relative;
+
+  .carousel-inner {
+    height: 100%;
+  }
+
+  .carousel-item {
+    height: 100%;
+  }
+.slider-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top right; // ✅ ده بيرفع الصورة لفوق
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+  .slider-container {
+    width: 100%;
+    height: 100%;
+    background-size: cover; // 👈 يعرض الصورة كاملة بدون قص
+    background-repeat: no-repeat;
+    background-position:right ;
+    position: relative;
+    
+
+    &.bg-1 {
+      background-image: url('/images/slider1.png');
+      
+    }
+
+    &.bg-2 {
+      background-image: url('/images/slider3.png');
+    }
+
+    &.bg-3 {
+      background-image: url('/images/slider4.jpg');
+    }
+  }
+
+  .slider-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right,#633c84,45%, rgba(249, 246, 246, 0.128));
+    z-index: 1;
+  }
+
+  .slider-content {
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    transform: translateY(-50%);
+    z-index: 2;
+    color: white;
+    text-align: right;
+    max-width: 500px;
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+
+      strong {
+        font-weight: 800;
+      }
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 25px;
+    }
+
+    .btn-book-now {
+      background: #633c84;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 1;
+
+    &-icon {
+      filter: invert(20%) sepia(15%) saturate(2000%) hue-rotate(240deg) brightness(90%) contrast(90%);
+    }
+  }
+}
+
+
+/* 🔍 Search Section */
+.search-section {
+  padding: 0 20px;
+  margin-bottom: 30px;
+
+  .search-tabs {
+    display: flex;
+    margin-bottom: 10px;
+    
+    span {
+      padding: 8px 20px;
+      cursor: pointer;
+      color: $text-muted;
+      border-bottom: 2px solid transparent;
+      
+      &.active {
+        color: $primary;
+        border-bottom: 2px solid $primary;
+        font-weight: 600;
+      }
+    }
+  }
+  
+  .search-bar-glass {
+    background: white;
+    border-radius: 12px;
+    padding: 15px 20px;
+    
+    box-shadow: 0 8px 24px rgba($primary, 0.1);
+    
+    .form-control, .form-select {
+      border-radius: 8px;
+      border: 1px solid rgba($primary, 0.2);
+      padding: 12px 15px;
+      
+      &::placeholder {
+        color: rgba($primary, 0.5);
+      }
+    }
+    
+    .btn-primary {
+      background: $primary;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-weight: 600;
+    }
+  }
+}
+
+.sticky-sidebar {
+  position: sticky;
+  top: 20px; /* المسافة من الأعلى - ممكن تعدليها حسب الهيدر */
+  z-index: 99;
+ box-shadow: 0 8px 24px rgba($primary, 0.5);
+  
+}
+
+/* 🧑‍⚕️ Doctors List */
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 30px 20px 20px;
+  color: $primary;
+}
+
+.doctors-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.doctor-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  img.doctor-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 2px #633c84;
+  }
+
+  .doctor-info {
+    flex-grow: 1;
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: $primary;
+    }
+
+    .specialty, .location {
+      font-size: 0.9rem;
+      color: $text-muted;
+    }
+  }
+
+  .doctor-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .book-button {
+      background: $primary;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      color: $primary;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+ 
+    }
+  }
+}
+
+.doctor-actions {
+  padding-top: 8px;
+  border-top: 1px solid #eee;
+}
+
+.doctor-actions .price-container {
+  display: flex;
+  align-items: center; // ده اللي هيخلي السعر ف نُص الزرار
+  height: 100%;
+}
+.doctor-actions .price {
+  font-size: 1rem;
+  color: $primary;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+.icon{
+  color: #633c84;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #633c84 !important;
+  box-shadow: 0 0 0 0.2rem rgba(99, 60, 132, 0.25); // ظل ناعم بلون بنفسجي
+  outline: none; // علشان نشيل البوردر الأزرق الافتراضي
+}
+select.form-select {
+  background-position: left 0.75rem center; // 🟣 السهم على الشمال
+  padding-left: 2rem; // 🟣 مساحة تمنع تداخل السهم مع النص
+  direction: rtl;
+ color: #633c84;
+}
+
+/* 🔢 Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+  gap: 10px;
+  
+  button {
+    border: none;
+    background: white;
+    color: $primary;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    
+    &.active {
+      background: $primary;
+      color: white;
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.verified-doctors-badge {
+  text-align: center;
+  margin: 30px 0;
+  color: $primary;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-slider {
+    height: 300px;
+    
+    .slider-content {
+      right: 5%;
+      width: 90%;
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  .doctors-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .search-bar-glass {
+    .row {
+      flex-wrap: wrap;
+    }
+    
+    .col-md-1 {
+      display: none;
+    }
+    
+    .col-md-5, .col-md-3 {
+      width: 100%;
+      margin-bottom: 10px;
+
+    }
+  }
+}

@@ -1,0 +1,228 @@
+<div class="container-fluid medical-booking-app">
+
+  <!-- 🎯 Hero Slider -->
+  <div id="heroSlider" class="carousel slide hero-slider"
+    data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="slider-container">
+          <img src="/images/slider4Copy.jpg" class="slider-img slider1"
+            alt="حجز بدون انتظار" />
+          <div class="slider-overlay"></div>
+          <div class="slider-content">
+            <h1>رمزك... هو تذكرتك للدخول</h1>
+            <p>رمز QR واحد على موبايلك يغنيك عن الزحمة والاستفسار... تابع دورك
+              لحظة بلحظة</p>
+            <button class="btn-book-now">احجز موعد الآن</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="slider-container">
+          <img src="/images/slider1.png" class="slider-img slider2"
+            alt="تابع دورك" />
+          <div class="slider-overlay"></div>
+          <div class="slider-content">
+            <h1>ولا ميعاد هيفوتك بعد النهارده</h1>
+            <p>هنبعتلك إشعار لو في تأجيل، الغاء أو لو معادك قرب</p>
+            <button class="btn-book-now">اعرف المزيد</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="slider-container">
+          <img src="/images/slider3.png" class="slider-img slider3"
+            alt="سهولة الحجز" />
+          <div class="slider-overlay"></div>
+          <div class="slider-content">
+            <h1>لأنك تستحق الأفضل</h1>
+            <p>نخبة من الأطباء المتخصصين في بيئة طبية محترفة وآمنة</p>
+            <button class="btn-book-now">جرب الآن</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button"
+      data-bs-target="#heroSlider" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button"
+      data-bs-target="#heroSlider" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <!-- 🔍 Search Section -->
+  <div class="search-section py-4">
+    <div class="search-bar-glass">
+      <div class="row align-items-center g-2">
+        <div class="col-md-1 col-2 text-center">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="col-md-5 col-10">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="filters.name"
+            (input)="onFilterChange()"
+            placeholder="ابحث عن دكتور..." />
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" [(ngModel)]="filters.specializationId"
+            (change)="onFilterChange()">
+            <option value>اختر التخصص</option>
+            @for (spec of specializations; track spec.id) {
+            <option [value]="spec.id">{{ spec.name }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-primary w-100"
+            (click)="getDoctors()">بحث</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📋 Main Content -->
+  <div class="row">
+    <!-- 🧭 Sidebar Filters -->
+    <div class="col-md-3">
+      <div
+        class="filters-container p-3 rounded shadow-sm bg-white sticky-sidebar">
+        <h5 class="mb-3" style="color: #633c84;">
+          <i class="fas fa-sliders-h me-2"></i>فلترة النتائج
+        </h5>
+
+        <!-- المحافظة -->
+        <div class="mb-3">
+          <label for="city" class="form-label">المحافظة</label>
+          <select id="city" class="form-select" [(ngModel)]="filters.city"
+            (change)="onFilterChange()">
+            <option value>كل المحافظات</option>
+            @for (city of cities; track city) {
+            <option [value]="city">{{ city }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- المنطقة -->
+        <div class="mb-3">
+          <label for="street" class="form-label">المنطقة</label>
+          <input
+            type="text"
+            id="street"
+            class="form-control"
+            placeholder="اسم المنطقة"
+            [(ngModel)]="filters.street"
+            (input)="onFilterChange()" />
+        </div>
+
+        <!-- النوع -->
+        <div class="mb-3">
+          <label for="gender" class="form-label">النوع</label>
+          <select id="gender" class="form-select" [(ngModel)]="filters.gender"
+            (change)="onFilterChange()">
+            <option value>الكل</option>
+            <option value="0">ذكر</option>
+            <option value="1">أنثى</option>
+          </select>
+        </div>
+
+        <!-- السعر -->
+        <div class="mb-3">
+          <label class="form-label">نطاق السعر (جنيه)</label>
+          <div class="d-flex align-items-center gap-2">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="من"
+              [(ngModel)]="filters.minPrice"
+              (input)="onFilterChange()" />
+            <span class="mx-1">إلى</span>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="إلى"
+              [(ngModel)]="filters.maxPrice"
+              (input)="onFilterChange()" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 👨‍⚕️ Doctors List -->
+    <div class="col-md-9">
+      <h3 class="section-title mt-3">نتائج البحث</h3>
+     <div class="doctors-grid">
+  @for (doctor of doctors; track doctor.id) {
+    <div class="doctor-card">
+      <img
+        [src]="doctor.imageUrl || '/images/default-doctor.png'"
+        alt="صورة الدكتور"
+        class="doctor-photo" />
+
+      <div class="doctor-info">
+        <h3>د. {{ doctor.name }}</h3>
+        <p class="specialty">
+          <i class="fas fa-stethoscope me-1 icon"></i>
+          {{ doctor.specialization }}
+        </p>
+
+        <p class="location">
+          <i class="fas fa-map-marker-alt me-1 icon"></i>
+          {{ doctor.city }}، {{ doctor.street }}
+        </p>
+      </div>
+
+      <div class="doctor-actions mt-2">
+        <div class="d-flex align-items-center flex-row-reverse gap-3">
+          <button
+            class="btn book-button"
+            [routerLink]="['/doctorProfile', doctor.id]"
+            [queryParams]="{ date: todayDate }">
+            احجز الآن
+          </button>
+
+          <div class="price-container">
+            <span class="price">{{ doctor.bookingPrice }} جنيه</span>
+          </div>
+        </div>
+      </div>
+    </div> <!-- ✅ غلق الكارد هنا -->
+  } <!-- ✅ غلق اللوب هنا -->
+</div>
+
+
+        <!-- 🔢 Pagination -->
+        @if (totalPages > 1) {
+        <div class="pagination my-4">
+          <button
+            [disabled]="filters.pageNumber === 1"
+            (click)="changePage(filters.pageNumber - 1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          @for (page of pages; track page) {
+          <button
+            [class.active]="filters.pageNumber === page"
+            (click)="changePage(page)">
+            {{ page }}
+          </button>
+          }
+          <button
+            [disabled]="filters.pageNumber === totalPages"
+            (click)="changePage(filters.pageNumber + 1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        </div>
+        }
+
+        <div class="verified-doctors-badge text-center mt-4">
+
+        </div>
+      </div>
+    </div>
+  </div>
