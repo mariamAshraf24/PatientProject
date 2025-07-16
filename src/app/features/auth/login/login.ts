@@ -41,7 +41,7 @@ export class Login implements OnInit{
 
         if (res.isSuccess && res.token) {
           this._authService.saveToken(res.token);
-          alert('تم التسجيل بنجاح!');
+          // alert('تم التسجيل بنجاح!');
           this.loginForm.reset();
 
           // localStorage.setItem('roles', res.roles);
@@ -52,7 +52,7 @@ export class Login implements OnInit{
           // }
           setTimeout(() => {
             this._Router.navigate(['/home']);
-          }, 1000)
+          }, 10)
         } else {
           alert('حدث خطأ أثناء التسجيل');
         }
