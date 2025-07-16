@@ -27,7 +27,8 @@ export class AppointmentDetails implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private _http: HttpClient,
     private ngZone: NgZone,
-    private _router: Router
+    private _router: Router,
+    
   ) {}
 
   ngOnInit(): void {
@@ -172,5 +173,7 @@ export class AppointmentDetails implements OnInit, OnDestroy {
 
   return statusMap[status] || status;
 }
+
+
 
 }

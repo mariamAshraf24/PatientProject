@@ -3,17 +3,17 @@
   background-size: cover;
   background-position: contain;
   background-repeat: no-repeat;
-  background-attachment: fixed; /* 👉 ده السطر المهم */
+  background-attachment: fixed;
   height: 100vh;
-  padding-top: 25px; /* أو margin-top للكونتينر */
+  padding-top: 25px;
 }
 
 .appointment-details {
- font-family: 'Cairo', sans-serif;
+  font-family: 'Cairo', sans-serif;
   background-color: #fff;
   border-radius: 12px;
   max-width: 850px;
-  margin: 0 auto 0 auto; /* ← أضفنا margin-top = 30px */
+  margin: 0 auto;
   height: 610px;
   box-shadow: 0 4px 12px rgba(100, 60, 132, 0.2);
   overflow: hidden;
@@ -35,9 +35,9 @@
   }
 
   .top-section {
-   padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  position: relative;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    position: relative;
   }
 
   .info-section {
@@ -106,31 +106,33 @@
     color: #1864ab;
     border: none;
   }
+
+  .current-turn-box {
+    background-color: #f4ebfa;
+    color: #633c84;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border: 2px solid #e0cffe;
+    border-radius: 50%;
+    padding: 0.5rem 1.5rem;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(99, 60, 132, 0.1);
+    animation: pulse 1.5s infinite;
+  }
 }
+
 .vertical-divider {
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 520px; /* عدّل حسب عرض الـ QR + padding */
+  right: 520px;
   width: 1px;
   background-color: #6c757d;
 }
 
-.btn{
-   background-color: #633c84;
-   color: white;
-}
-.current-turn-box {
-  background-color: #f4ebfa;
-  color: #633c84;
-  font-size: 1.5rem;
-  font-weight: 700;
-  border: 2px solid #e0cffe;
-  border-radius: 50%;
-  padding: 0.5rem 1.5rem;
-  display: inline-block;
-  box-shadow: 0 0 10px rgba(99, 60, 132, 0.1);
-  animation: pulse 1.5s infinite;
+.btn {
+  background-color: #633c84;
+  color: white;
 }
 
 @keyframes pulse {
