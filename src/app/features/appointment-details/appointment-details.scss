@@ -1,63 +1,72 @@
-
+.main-content {
+  background-image: url('/images/qrcodeback.png');
+  background-size: cover;
+  background-position: contain;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* 👉 ده السطر المهم */
+  height: 100vh;
+  padding-top: 25px; /* أو margin-top للكونتينر */
+}
 
 .appointment-details {
-  font-family: 'Cairo', sans-serif;
+ font-family: 'Cairo', sans-serif;
   background-color: #fff;
   border-radius: 12px;
-  max-width: 800px;
-  margin: 0 auto;
-  box-shadow: 0 4px 12px rgba(100, 60, 132, 0.685); 
+  max-width: 850px;
+  margin: 0 auto 0 auto; /* ← أضفنا margin-top = 30px */
+  height: 610px;
+  box-shadow: 0 4px 12px rgba(100, 60, 132, 0.2);
+  overflow: hidden;
 
-/* الخط الطولي بين بيانات الدكتور و QR */
-.vertical-divider {
-  border-left: 3px solid #ccc;
-  height: 100%;
-}
-
-/* الخط الأفقي بين صف الدكتور و صف المعاد */
-.horizontal-divider {
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
-}
-
-/* الخط بين نوع المعاد و التاريخ */
-.inner-vertical-divider {
-  border-left: 2px solid #ddd;
-}
-
-/* ضبط حجم الصورة */
-.qr-code-img {
-  width: 120px;
-  height: 120px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-
-
- .card-header {
-       background-color: #633c84;
+  .card-header {
+    background-color: #633c84;
     border-radius: 12px 12px 0 0;
     height: 100px;
-    display: flex
-;
-    flex-wrap: wrap;
+    display: flex;
     justify-content: center;
     align-items: center;
-    margin-block-end: 25px;
+    margin-bottom: 20px;
 
     h3 {
-      color: white; // عشان النص يبان على الخلفية الغامقة
+      color: white;
       font-size: 1.5rem;
       font-weight: 700;
     }
   }
 
-  h4 {
-    color: #333;
-    font-size: 1.25rem;
-    font-weight: 700;
+  .top-section {
+   padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  position: relative;
+  }
+
+  .info-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .qr-section {
+    min-width: 150px;
+  }
+
+  .qr-code-img {
+    width: 230px;
+    height: 230px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .horizontal-divider {
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  .border-start-custom {
+    border-left: 3px solid #ccc;
+  }
+
+  .border-end-custom {
+    border-left: 2px solid #ddd;
   }
 
   .text-muted {
@@ -67,41 +76,74 @@
 
   .fw-semibold {
     font-weight: 600;
-    color: #333;
     font-size: 1rem;
-    margin-top: 2px;
+    color: #333;
+    margin-top: 4px;
   }
 
-  img {
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  }
-
-  .alert {
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    border: none;
-    background-color: #e7f5ff;
-    color: #1864ab;
+  h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #333;
   }
 
   .btn {
     min-width: 140px;
     transition: all 0.2s;
     border-width: 2px;
-    
+
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
     }
   }
 
-  .border-bottom {
-    border-bottom: 1px solid #eee !important;
+  .alert {
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    background-color: #e7f5ff;
+    color: #1864ab;
+    border: none;
   }
 }
-.col-6 {
-    flex: 0 0 auto;
-    width: 40%;
+.vertical-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 520px; /* عدّل حسب عرض الـ QR + padding */
+  width: 1px;
+  background-color: #6c757d;
+}
+
+.btn{
+   background-color: #633c84;
+   color: white;
+}
+.current-turn-box {
+  background-color: #f4ebfa;
+  color: #633c84;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border: 2px solid #e0cffe;
+  border-radius: 50%;
+  padding: 0.5rem 1.5rem;
+  display: inline-block;
+  box-shadow: 0 0 10px rgba(99, 60, 132, 0.1);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(99, 60, 132, 0.4);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 10px rgba(99, 60, 132, 0.3);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(99, 60, 132, 0.4);
+  }
 }
