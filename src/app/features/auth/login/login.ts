@@ -16,7 +16,7 @@ export class Login implements OnInit{
   private readonly _authService = inject(Auth);
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _Router = inject(Router);
-
+  serverErrorMessage: string | null = null; 
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
       userName: [null, [Validators.required, Validators.pattern(/^[\u0600-\u06FFa-zA-Z ]+$/)]],
@@ -41,7 +41,7 @@ export class Login implements OnInit{
 
         if (res.isSuccess && res.token) {
           this._authService.saveToken(res.token);
-          alert('تم التسجيل بنجاح!');
+          // alert('تم التسجيل بنجاح!');
           this.loginForm.reset();
 
           // localStorage.setItem('roles', res.roles);
@@ -52,15 +52,25 @@ export class Login implements OnInit{
           // }
           setTimeout(() => {
             this._Router.navigate(['/home']);
-          }, 1000)
+          }, 10)
         } else {
           alert('حدث خطأ أثناء التسجيل');
         }
       },
       error: (err: HttpErrorResponse) => {
-        console.error(err);
-        alert('حدث خطأ أثناء التسجيل');
+        if (err.status === 400 && err.error?.message) {
+          const message = err.error.message;
+
+          
+          if (message === 'Invalid email or password.') {
+            this.serverErrorMessage = 'كلمة المرور غير صحيحة أو لا تطابق اسم المستخدم';
+          } else {
+            this.serverErrorMessage = 'حدث خطأ غير متوقع. حاول مرة أخرى.';
+          }
+        } else {
+          this.serverErrorMessage = 'فشل في الاتصال بالخادم. حاول لاحقاً.';
+        }
       }
-    });
+    }); 
   }
 }

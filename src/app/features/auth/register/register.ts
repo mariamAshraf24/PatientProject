@@ -8,12 +8,13 @@ import { Auth } from './../../../core/services/auth';
 import { Component, OnInit } from '@angular/core';
 import { FirebaseMessaging } from '../../../core/services/firebase-messaging';
 import { cities } from '../../../core/constants/cities';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule,RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, NgSelectModule],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
@@ -26,7 +27,8 @@ export class Register implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: Auth,
-    private _FirebaseMessaging: FirebaseMessaging
+    private _FirebaseMessaging: FirebaseMessaging,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -119,17 +121,30 @@ export class Register implements OnInit {
         }
 
         alert('succesful');
-        // this._router.navigate(['/home']);
+        this._router.navigate(['/home']);
       } else {
         alert('حدث خطأ أثناء التسجيل');
       }
     } catch (err: any) {
       console.error('❌ Error during registration:', err);
-
+      const message = err.error?.message;
       if (err.error?.message?.includes('Username already exists')) {
         this.usernameError = 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر';
         this.registerForm.get('userName')?.setErrors({ notUnique: true });
         this.registerForm.get('userName')?.markAsTouched();
+      } else if (
+        message?.includes('Username') &&
+        message?.includes('is invalid')
+      ) {
+        this.usernameError =
+          'اسم المستخدم غير صالح، يجب أن يحتوي فقط على حروف انجليزي أو أرقام';
+        this.registerForm.get('userName')?.setErrors({ invalidFormat: true });
+        this.registerForm.get('userName')?.markAsTouched();
+      } 
+      else if (message?.includes('Email') && message?.includes('taken')) {
+        this.usernameError = 'الايميل موجود بالفعل، يرجى كتابه ايميل آخر';
+        this.registerForm.get('Email')?.setErrors({ emailTaken: true });
+        this.registerForm.get('Email')?.markAsTouched();
       } else {
         alert('❌ حدث خطأ أثناء التسجيل');
       }
