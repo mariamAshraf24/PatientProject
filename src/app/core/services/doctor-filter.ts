@@ -63,11 +63,12 @@ export class DoctorFilter {
     );
   }
 
-  getDoctorSlots(doctorId: string, date: string): Observable<{ slotTime: string }[]> {
-  return this._httpClient.get<{ slotTime: string }[]>(
-    `${environment.apiBaseUrl}/DoctorSchedules/${doctorId}/slots?date=${date}`
-  );
-}
-
-  
+  getDoctorSlots(
+    doctorId: string,
+    date: string
+  ): Observable<{ slotTime: string }[]> {
+    return this._httpClient.get<{ slotTime: string }[]>(
+      `${environment.apiBaseUrl}/DoctorSchedules/${doctorId}/slots?date=${date}`
+    );
+  }
 }
