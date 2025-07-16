@@ -1,0 +1,8 @@
+export interface Notification {
+  id?: string;
+  type: 'reminder' | 'cancelled' | 'rescheduled';
+  doctorName: string;
+  date?: string; // For reminder type
+  oldDate?: string; // For rescheduled type
+  newDate?: string; // For rescheduled type
+}

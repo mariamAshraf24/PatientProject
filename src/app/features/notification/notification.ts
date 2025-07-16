@@ -1,18 +1,34 @@
-import { PatientService } from './../../core/services/patient-service';
-import { notification} from './../../core/models/INotification';
 import { Component, OnInit } from '@angular/core';
+import { PatientService } from './../../core/services/patient-service';
+import { notification } from './../../core/models/INotification';
+import { CommonModule } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {
+  faBell,
+  faXmark,
+  faClock,
+  faCalendarDays,
+  faQuestion
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-notification',
-  imports: [],
   templateUrl: './notification.html',
-  styleUrl: './notification.scss'
+  styleUrls: ['./notification.scss'],
+  standalone: true,
+  imports: [CommonModule, FontAwesomeModule]
 })
-export class Notification implements OnInit{
-   allNotifications: notification[] = [];
-   visibleNotifications: notification[] = [];
-   notificationsPerPage = 15;
-   currentPage = 0;
+export class Notification implements OnInit {
+  allNotifications: notification[] = [];
+  visibleNotifications: notification[] = [];
+  notificationsPerPage = 4;
+  currentPage = 0;
+iconReminder = faBell;           // تذكير
+iconBooking = faCalendarDays;    // حجز
+iconCancel = faXmark;            // إلغاء
+iconDelay = faClock;             // تأجيل
+iconUnknown = faQuestion;        // غير معروف
+
 
   constructor(private _PatientService: PatientService) {}
 
@@ -36,11 +52,33 @@ export class Notification implements OnInit{
 
   getTypeLabel(type: number): string {
     switch (type) {
-      case 0: return 'تذكير';
+      case 0: return 'تذكيرك بموعد طبى';
       case 1: return 'حجز';
-      case 2: return 'إلغاء';
-      case 3: return 'تأجيل';
+      case 2: return 'الغاء موعد طبى';
+      case 3: return 'تأجيل موعد طبى';
       default: return 'غير معروف';
     }
   }
+
+  getFaIcon(type: number) {
+    switch (type) {
+     case 0: return this.iconReminder;  // تذكير
+    case 1: return this.iconBooking;   // حجز
+    case 2: return this.iconCancel;    // إلغاء
+    case 3: return this.iconDelay;     // تأجيل
+    default: return this.iconUnknown;  // غير معروف
+    }
+  }
+  getOldAndNewTime(message: string): { oldTime: string; newTime: string } | null {
+  const regex = /من\s(.*?)\sإلى\s(.*)/;
+  const match = message.match(regex);
+  if (match) {
+    return {
+      oldTime: match[1],  // الموعد القديم
+      newTime: match[2],  // الموعد الجديد
+    };
+  }
+  return null;
+}
+
 }

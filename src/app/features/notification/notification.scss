@@ -1,60 +1,140 @@
-.notifications-wrapper {
+@keyframes backgroundPulse {
+  0% {
+    background-size: 100%;
+  }
+  50% {
+    background-size: 110%;
+  }
+  100% {
+    background-size: 100%;
+  }
+}
+
+
+
+.main {
+  background-image:
+    linear-gradient(to left, rgba(248, 245, 255, 0.635), rgba(224, 214, 255, 0.9)),
+    url(/images/notification3.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  padding-top: 60px;
+
+  animation: backgroundPulse 8s ease-in-out infinite;
+}
+
+
+
+.notifications-container {
   max-width: 600px;
   margin: auto;
-  padding: 1rem;
-  background: #fefefe;
+  background-color: #643c8451;
+  padding: 20px;
+  border-radius: 20px;
+  font-family: 'Cairo', sans-serif;
+ 
+}
+
+.title {
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+  color: #633c84;
+  margin-bottom: 20px;
+}
+
+.notification-card {
+  display: flex;
+  background-color: #fdfcff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  margin-bottom: 15px;
+  align-items: center;
+    transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s ease;
+
+}
+.notification-card:hover {
+  background-color: #f2ebf8;
+  transform: scale(1.02); // تكبير خفيف
+  box-shadow: 0 8px 16px #643c8462; // ظل خفيف بلون موف
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  direction: rtl;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 16px;
+  background-color: #633c84;
+  font-size: 24px;
+}
+.fa-icon {
+  flex-shrink: 0;
+  font-size: 24px;
+  color: #633c84;             // لون موف
+  background-color: #e0d6ff;  // خلفية فاتحة
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 16px;
+}
 
-  h2 {
-    font-family: 'Cairo', sans-serif;
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    color: #4b3f72;
+
+.notification-content {
+  flex-grow: 1;
+}
+
+.type {
+   font-size: 20px;
+  font-weight: bold;
+  color: #633c84;
+  margin-bottom: 4px;
+}
+
+.message,
+.doctor {
+  font-size: 14px;
+  color: #000000;
+  margin: 2px 0;
+}
+
+.load-more {
+  display: block;
+  margin: 20px auto 0;
+  background-color: #633c84;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+
+  transition:
+    background-color 0.3s ease,
+    transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1); // ⬅️ الحركة بطيئة وناعمة
+
+  &:hover {
+    transform: scale(1.05);
   }
+}
+.old-time {
+  text-decoration: line-through;
+  color: #9ca3af; // رمادي باهت
+  margin: 0 4px;
+}
 
-  .notification-card {
-    background-color: #f3f0ff;
-    padding: 1rem;
-    margin-bottom: 0.8rem;
-    border-radius: 8px;
-    border-right: 4px solid #6a5acd;
-    transition: 0.3s;
-
-    &:hover {
-      background-color: #e8e4fc;
-    }
-
-    .type {
-      font-weight: bold;
-      color: #6a5acd;
-    }
-
-    .message {
-      margin: 0.4rem 0;
-    }
-
-    .doctor {
-      font-size: 0.9rem;
-      color: #777;
-    }
-  }
-
-  .load-more {
-    display: block;
-    margin: 1rem auto;
-    padding: 0.5rem 1.5rem;
-    background-color: #6a5acd;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-family: 'Cairo';
-    cursor: pointer;
-    transition: background 0.3s;
-
-    &:hover {
-      background-color: #5a4bbd;
-    }
-  }
+.new-time {
+  font-weight: bold;
+  color:#633c84;
+  margin: 0 4px;
+  font-size: 18px;
 }
