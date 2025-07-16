@@ -1,82 +1,102 @@
-<div class="appointment-details" dir="rtl">
-  <!-- العنوان -->
-  <div class="card-header border-bottom-0 pt-4 pb-3 shadow-sm">
-    <h3 class="text-center fw-bold mb-0">تفاصيل الحجز الطبي</h3>
-  </div>
+<div class="main-content">
 
-  <!-- القسم الأعلى: بيانات + QR -->
-  <div class="px-4 pt-3 pb-3 border-bottom">
-    <div class="row">
-      <!-- بيانات الطبيب والمريض -->
-      <div class="col-md-9 pe-3 vertical-divider d-flex flex-column justify-content-between">
-        <!-- صف 1 -->
-        <div class="horizontal-divider">
-          <h4 class="fw-bold mb-1">{{ appointment?.doctorName }}</h4>
-          <small class="text-muted d-block">{{ appointment?.doctorSpecialization }}</small>
-          <p class="mb-0 mt-2">{{ appointment?.patientName }}</p>
+  <div class="appointment-details" dir="rtl">
+    <!-- العنوان -->
+    <div class="card-header">
+      <h3 class="text-center fw-bold mb-0">تفاصيل الحجز الطبي</h3>
+    </div>
+
+    <!-- القسم الأعلى: بيانات + QR -->
+    <div class="top-section d-flex position-relative">
+      <!-- بيانات الدكتور والمريض -->
+      <div class="info-section flex-grow-1 pe-4">
+        <!-- صف الدكتور -->
+        <div class="pb-3 mb-3">
+          <h4 class="fw-bold mb-1">د.{{ appointment?.doctorName }}</h4>
+          <small class="text-muted d-block">{{ appointment?.doctorSpecialization
+            }}</small>
+          <p class="mb-0 mt-2">مع {{ appointment?.patientName }}</p>
         </div>
+        <hr style="width: 90%;  border-top: 2px solid #633c84;" />
 
-        <!-- صف 2 -->
-        <div class="row">
-          <div class="col-6 inner-vertical-divider">
+        <!-- صف النوع والتاريخ -->
+        <div class="d-flex">
+          <div class="flex-fill">
             <div class="text-muted small">نوع المعاد</div>
-            <div class="fw-semibold">{{ getAppointmentTypeArabic(appointment?.appointmentType) }}</div>
+            <div class="fw-semibold " style="color: #633c84;">{{
+              getAppointmentTypeArabic(appointment?.appointmentType) }}</div>
           </div>
-          <div class="col-6 ps-3">
+          <div class="flex-fill ps-3">
             <div class="text-muted small">تاريخ المعاد</div>
-            <div class="fw-semibold">{{ appointment?.date | date: 'fullDate' }}</div>
+            <div class="fw-semibold"  style="color: #633c84;">{{ appointment?.date | date: 'fullDate'
+              }}</div>
           </div>
         </div>
       </div>
 
-      <!-- QR Code -->
-      <div class="col-md-3 d-flex justify-content-center align-items-center ps-3">
+      <!-- QR -->
+      <div
+        class="qr-section ps-4 d-flex justify-content-center align-items-center">
         <img
           [src]="'data:image/png;base64,' + appointment.qrImage"
           alt="رمز الاستجابة السريعة"
-          class="qr-code-img"
-        />
+          class="qr-code-img" />
+      </div>
+      <div class="vertical-divider"></div>
+    </div>
+
+    <hr
+      style="width: 90%; margin-inline: 40px; border-top: 2px solid #633c84;" />
+
+    <!-- حالة الحجز + نوع الخدمة -->
+    <div class="px-5 py-3">
+      <div class="row">
+        <div class="col-6">
+          <div class="text-muted small">حالة الحجز</div>
+          <div class="fw-semibold"  style="color: #633c84;">{{ getStatusInArabic(appointment?.status)
+            }}</div>
+        </div>
+        <div class="col-6">
+          <div class="text-muted small">نوع الخدمة</div>
+          <div class="fw-semibold"  style="color: #633c84;">{{
+            getAppointmentTypeArabic(appointment?.appointmentType) }}</div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- الدور الحالي -->
-  <div class="px-4 py-3 border-bottom">
-    <div class="row">
-      <div class="col-6">
-        <div class="text-muted small">الدور الحالي</div>
-        <div class="fw-semibold">{{ appointment?.turnNumber }}</div>
+    <hr
+      style="width: 90%; margin-inline: 40px; border-top: 2px solid #633c84;" />
+
+    <!-- الدور الحالي + زر الإلغاء في صف واحد -->
+    <!-- الدور الحالي + زر الإلغاء في صف واحد -->
+    <div class="px-5 py-3">
+      <div class="row align-items-center">
+        <!-- الدور الحالي -->
+        <div class="col-6">
+          <div class="text-muted small">الدور الحالي</div>
+          <div class="current-turn-box pulse mt-1">
+            {{ appointment?.turnNumber }}
+          </div>
+        </div>
+
+        <!-- زر إلغاء الحجز -->
+        @if (appointment?.id) {
+        <div class="col-6 d-flex justify-content-end pe-5">
+          <button class="btn px-4 py-2  rounded-3" (click)="cancelBooking()">
+            إلغاء الحجز
+          </button>
+        </div>
+
+        }
       </div>
     </div>
-  </div>
 
-  <!-- حالة الحجز + نوع الخدمة -->
-  <div class="px-4 py-3 border-bottom">
-    <div class="row">
-      <div class="col-6 border-end">
-        <div class="text-muted small">حالة الحجز</div>
-        <div class="fw-semibold">{{ getStatusInArabic(appointment?.status) }}</div>
-      </div>
-      <div class="col-6">
-        <div class="text-muted small">نوع الخدمة</div>
-        <div class="fw-semibold">{{ getAppointmentTypeArabic(appointment?.appointmentType) }}</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- تنبيه الدور -->
-  @if (updatedTurnNumber !== null) {
-    <div class="alert alert-info text-center fw-semibold my-3 mx-4 py-2 rounded-3">
+    <!-- تنبيه -->
+    @if (updatedTurnNumber !== null) {
+    <div
+      class="alert alert-info text-center fw-semibold my-3 mx-4 py-2 rounded-3">
       تم تحديث دورك إلى: <strong>{{ updatedTurnNumber }}</strong>
     </div>
-  }
+    }
 
-  <!-- زر الإلغاء -->
-  @if (appointment?.id) {
-    <div class="text-center px-4 pb-4 pt-3">
-      <button class="btn btn-outline-danger px-4 py-2 fw-semibold rounded-3" (click)="cancelBooking()">
-        إلغاء الحجز
-      </button>
-    </div>
-  }
-</div>
+  </div>

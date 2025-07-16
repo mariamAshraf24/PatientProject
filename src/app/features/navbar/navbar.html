@@ -1,40 +1,26 @@
 <nav class="navbar">
-  <ul>
-    <span class="nav-left">
-      <li routerLinkActive="active-link" >
-        <a routerLink="/home">الرئيسية</a>
-      </li>
-      <li routerLinkActive="active-link">
-        <a routerLink="/contact">تواصل معنا</a>
-      </li>
-    </span>
+  <!-- لوجو -->
+  <div class="logo">
+    <img src="/images/nazzem logo (1).png" alt="Logo" />
+  </div>
 
-    <span class="nav-right">
-      @if (!isLoggedIn()) {
-        <li routerLinkActive="active-link">
-          <a routerLink="/login">تسجيل دخول</a>
-        </li>
-      } @else {
-        <li routerLinkActive="active-link">
-          <a routerLink="/notification" class="user-icon">
-            <i class="fa-solid fa-bell"></i>
-          </a>
-        </li>
-        <li routerLinkActive="active-link">
-          <a routerLink="/userAppointment">حجوزاتك</a>
-        </li>
-        <li routerLinkActive="active-link">
-          <a routerLink="/appointmentDetails">QR CODE</a>
-        </li>
-        <li routerLinkActive="active-link">
-          <a routerLink="/profile" class="user-icon">
-            <i class="fa fa-user-circle"></i>
-          </a>
-        </li>
-        <li>
-          <a (click)="logout()">تسجيل خروج</a>
-        </li>
-      }
-    </span>
+  <!-- روابط -->
+  <ul class="nav-links d-flex">
+    <li routerLinkActive="active-link"><a routerLink="/home">الرئيسية</a></li>
+    <li routerLinkActive="active-link"><a routerLink="/contact">تواصل معنا</a></li>
+
+    @if (!isLoggedIn()) {
+      <li routerLinkActive="active-link"><a routerLink="/login">تسجيل دخول</a></li>
+    } @else {
+      <li routerLinkActive="active-link">
+        <a routerLink="/notification" class="user-icon"><i class="fa-solid fa-bell"></i></a>
+      </li>
+      <li routerLinkActive="active-link"><a routerLink="/userAppointment">حجوزاتك</a></li>
+      <li routerLinkActive="active-link"><a routerLink="/appointmentDetails">QR CODE</a></li>
+      <li routerLinkActive="active-link">
+        <a routerLink="/profile" class="user-icon"><i class="fa fa-user-circle"></i></a>
+      </li>
+      <li><a (click)="logout()">تسجيل خروج</a></li>
+    }
   </ul>
 </nav>
