@@ -57,6 +57,16 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+ .avatar {
+    background-color:  rgb(99,60,132);
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
 .form-label {
   font-size: 0.875rem;
   color: #6b7280;
