@@ -1,0 +1,67 @@
+.error-page {
+    min-height: 100vh;
+    background-color: #633c84;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.error-container {
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 40px 20px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.error-code {
+    font-size: 10rem;
+    font-weight: 900;
+    background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0.5));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pulse 2s infinite;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+p.lead {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-glass {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    transform: scale(1.05);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
