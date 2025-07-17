@@ -178,3 +178,18 @@
 .nav-links li a i.fa-bell {
   margin-left: 6px;
 }
+
+.notification-wrapper {
+  position: relative;
+
+  .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: rgb(255, 255, 108);
+    color: #633c84;
+    font-size: 12px;
+    border-radius: 50%;
+    padding: 2px 6px;
+  }
+}

@@ -1,29 +1,35 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common'; // ضروري عشان *ngIf
+import { CommonModule } from '@angular/common';
 import { Auth } from '../../core/services/auth';
-import { PatientService } from '../../core/services/patient-service'; // تأكد من المسار الصحيح
-import { IPatient } from '../../core/models/IPatient'; // تأكد من المسار الصحيح
+import { PatientService } from '../../core/services/patient-service';
+import { IPatient } from '../../core/models/IPatient';
 
 @Component({
   selector: 'app-navbar',
+  standalone: true,
   imports: [RouterLink, RouterModule, CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
-  standalone: true, // لو بتستخدم Angular standalone components
 })
-export class Navbar {
+export class Navbar implements OnInit {
   showProfileDropdown = false;
   patient: IPatient | null = null;
+  unreadCount = 0;
 
   constructor(
     private router: Router,
     private authService: Auth,
-    private _PatientService: PatientService
+    private _patientService: PatientService
   ) {}
 
   ngOnInit(): void {
-    this._PatientService.getPatientProfile().subscribe({
+    this.loadPatientProfile();
+    this.loadUnreadNotifications();
+  }
+
+  loadPatientProfile() {
+    this._patientService.getPatientProfile().subscribe({
       next: (res: any) => {
         if (res.success) {
           this.patient = res.data;
@@ -32,6 +38,16 @@ export class Navbar {
       error: (err: any) => {
         console.error('فشل تحميل بيانات المريض', err);
       },
+    });
+  }
+
+  loadUnreadNotifications() {
+    this._patientService.getNotifications().subscribe((res) => {
+      if (res.success) {
+        const all = res.data;
+        const readIds = this._patientService.getReadNotificationIds();
+        this.unreadCount = all.filter((n) => !readIds.includes(n.id!)).length;
+      }
     });
   }
 

@@ -25,7 +25,32 @@
       <li routerLinkActive="active-link"><a routerLink="/login">تسجيل دخول</a></li>
     } @else {
 
+      <li routerLinkActive="active-link">
+      <a routerLink="/userAppointment">حجوزاتك</a>
+    </li>
+    <li routerLinkActive="active-link">
+      <a routerLink="/appointmentDetails">QR CODE</a>
+    </li>
+    <!-- <li routerLinkActive="active-link">
+      <a routerLink="/notification" class="user-icon"
+        ><i class="fa-solid fa-bell"></i
+      ></a>
+    </li> -->
+    <li routerLinkActive="active-link" class="notification-wrapper">
+      <a routerLink="/notification" class="user-icon">
+        <i class="fa-solid fa-bell"></i>
+        @if (unreadCount > 0) {
+        <span class="badge">{{ unreadCount }}</span>
+        }
+      </a>
+    </li>
 
+    <li routerLinkActive="active-link">
+      <a routerLink="/profile" class="user-icon"
+        ><i class="fa fa-user-circle"></i
+      ></a>
+    </li>
+    <li><a (click)="logout()">تسجيل خروج</a></li>
       <li class="profile-dropdown" (click)="toggleProfileDropdown($event)">
         <a class="user-icon"><i class="fa fa-user-circle"></i></a>
         <div class="profile-popup" *ngIf="showProfileDropdown">

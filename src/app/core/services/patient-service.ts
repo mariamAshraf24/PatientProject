@@ -30,4 +30,27 @@ export class PatientService {
       `${environment.apiBaseUrl}/Patient/Get Notifications`
     );
   }
+
+  private storageKey = 'readNotificationIds';
+
+  getReadNotificationIds(): number[] {
+    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+  }
+
+  markAsRead(id: number): void {
+    const current = this.getReadNotificationIds();
+    if (!current.includes(id)) {
+      current.push(id);
+      localStorage.setItem(this.storageKey, JSON.stringify(current));
+    }
+  }
+
+  markAllAsRead(ids: number[]): void {
+    localStorage.setItem(this.storageKey, JSON.stringify(ids));
+  }
+
+  isRead(id: number): boolean {
+    return this.getReadNotificationIds().includes(id);
+  }
+
 }
