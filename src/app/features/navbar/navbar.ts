@@ -21,7 +21,12 @@ export class Navbar implements OnInit {
     private router: Router,
     private authService: Auth,
     private _patientService: PatientService
-  ) {}
+  ) {
+    // نتابع تغيّر الراوت علشان نعيد تحميل عدد الإشعارات
+    this.router.events.subscribe(() => {
+      this.loadUnreadNotifications();
+    });
+  }
 
   ngOnInit(): void {
     this.loadPatientProfile();
@@ -41,7 +46,24 @@ export class Navbar implements OnInit {
     });
   }
 
+  // loadUnreadNotifications() {
+  //   this._patientService.getNotifications().subscribe((res) => {
+  //     if (res.success) {
+  //       const all = res.data;
+  //       const readIds = this._patientService.getReadNotificationIds();
+  //       this.unreadCount = all.filter((n) => !readIds.includes(n.id!)).length;
+  //     }
+  //   });
+  // }
+
   loadUnreadNotifications() {
+    const isInNotificationPage = this.router.url.includes('/notification');
+    if (isInNotificationPage) {
+      // لو المستخدم جوه صفحة الإشعارات، اعتبر الكل مقروء
+      this.unreadCount = 0;
+      return;
+    }
+
     this._patientService.getNotifications().subscribe((res) => {
       if (res.success) {
         const all = res.data;
@@ -56,7 +78,10 @@ export class Navbar implements OnInit {
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
       age--;
     }
     return age;

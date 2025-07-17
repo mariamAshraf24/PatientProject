@@ -23,6 +23,8 @@ export class Notification implements OnInit {
   visibleNotifications: notification[] = [];
   notificationsPerPage = 4;
   currentPage = 0;
+   readNotificationIds: number[] = [];
+
   iconReminder = faBell; // تذكير
   iconBooking = faCalendarDays; // حجز
   iconCancel = faXmark; // إلغاء
@@ -36,12 +38,25 @@ export class Notification implements OnInit {
     this._PatientService.getNotifications().subscribe((res) => {
       if (res.success) {
         // this.allNotifications = res.data;
-         this.allNotifications = res.data.sort((a, b) => b.id - a.id);
+        this.allNotifications = res.data.sort((a, b) => b.id - a.id);
 
-        const readIds = this._PatientService.getReadNotificationIds();
+        const readFromStorage = localStorage.getItem('readNotificationIds');
+        this.readNotificationIds = readFromStorage
+          ? JSON.parse(readFromStorage)
+          : [];
+
+        // احسبي عدد الغير مقروءة
         this.unreadCount = this.allNotifications.filter(
-          (n) => !readIds.includes(n.id!)
+          (n) => !this.readNotificationIds.includes(n.id)
         ).length;
+
+        // const readIds = this._PatientService.getReadNotificationIds();
+        // this.unreadCount = this.allNotifications.filter(
+        //   (n) => !readIds.includes(n.id!)
+        // ).length;
+
+          const allIds = this.allNotifications.map(n => n.id);
+      localStorage.setItem('readNotificationIds', JSON.stringify(allIds));
 
         this.loadMore();
       }

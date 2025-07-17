@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AmPmPipe } from '../../shared/am-pm-pipe';
+import { MatIconModule } from '@angular/material/icon';
 import { Footer } from "../footer/footer"; 
 
 
@@ -26,6 +27,7 @@ import { Footer } from "../footer/footer";
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
     Footer
 ],
   templateUrl: './doctor-profile.html',

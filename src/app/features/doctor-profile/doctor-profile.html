@@ -41,16 +41,22 @@
       </div>
     </div>
 
-     <!-- المواعيد المتاحة -->
+    <!-- المواعيد المتاحة -->
     <div class="section">
       <p class="section-title">
         المواعيد المتاحة
-        <ng-container *ngIf="formattedDate === 'اليوم'; else otherDay">اليوم</ng-container>
+        <ng-container *ngIf="formattedDate === 'اليوم'; else otherDay"
+          >اليوم</ng-container
+        >
         <ng-template #otherDay> لـ {{ formattedDate }}</ng-template>
       </p>
       <div class="slots-wrapper">
         @for (slot of availableSlots; track slot) {
-        <span class="slot-box" [class.selected]="slot === selectedSlot" (click)="selectedSlot = slot">
+        <span
+          class="slot-box"
+          [class.selected]="slot === selectedSlot"
+          (click)="selectedSlot = slot"
+        >
           {{ slot | amPm }}
         </span>
         }
@@ -92,16 +98,16 @@
           </button>
 
           <button class="btn btn-outline" (click)="showCalendarModal = true">
-            اختر تاريخ آخر
+            <i class="fa fa-calendar-days"></i>
+            <span>اختر تاريخ آخر</span>
           </button>
         </div>
-
       </div>
     </div>
   </div>
 </main>
 
-<div
+<!-- <div
   class="calendar-overlay"
   *ngIf="showCalendarModal"
   (click)="closeCalendarModal()"
@@ -119,6 +125,48 @@
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
+  </div>
+</div> -->
+
+<div
+  class="calendar-overlay"
+  *ngIf="showCalendarModal"
+  (click)="closeCalendarModal()"
+>
+  <div class="calendar-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>اختر تاريخًا جديدًا</h3>
+      <button
+        title="اغلاق"
+        aria-label="إغلاق"
+        class="close-btn"
+        (click)="closeCalendarModal()"
+      >
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="selectedDate"
+          (dateChange)="onDateChange($event)"
+          placeholder="اختر التاريخ"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon>calendar_today</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="picker.open()">
+        <i class="fa fa-calendar-alt"></i> فتح التقويم
+      </button>
+    </div>
   </div>
 </div>
 
