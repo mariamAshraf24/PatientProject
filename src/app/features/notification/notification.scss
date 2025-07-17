@@ -16,14 +16,15 @@
   background-image:
     linear-gradient(to left, rgba(248, 245, 255, 0.635), rgba(224, 214, 255, 0.9)),
     url(/images/notification3.png);
-  background-size: contain;
-  background-position: center;
+  background-size: cover; /* كان contain */
+  background-position: center bottom; /* نضمن الدمج مع الفوتر */
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: scroll; /* بدل fixed */
   padding-top: 60px;
 
   animation: backgroundPulse 8s ease-in-out infinite;
 }
+
 
 
 

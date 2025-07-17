@@ -12,7 +12,8 @@ import { AmPmPipe } from '../../shared/am-pm-pipe';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core'; // ✅ هذا هو المهم
+import { MatNativeDateModule } from '@angular/material/core';
+import { Footer } from "../footer/footer"; // ✅ هذا هو المهم
 
 
 
@@ -24,7 +25,8 @@ import { MatNativeDateModule } from '@angular/material/core'; // ✅ هذا هو
     AmPmPipe,
     MatDatepickerModule,
     MatNativeDateModule,
-  ],
+    Footer
+],
   templateUrl: './doctor-profile.html',
   styleUrl: './doctor-profile.scss',
 })

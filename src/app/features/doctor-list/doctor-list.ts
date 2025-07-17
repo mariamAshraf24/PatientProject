@@ -3,10 +3,11 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { cities } from './../../core/constants/cities'; // عدّل المسار حسب مكان الملف
 import { RouterLink } from '@angular/router';
+import { Footer } from "../footer/footer";
 
 @Component({
   selector: 'app-doctor-list',
-  imports: [FormsModule , RouterLink],
+  imports: [FormsModule, RouterLink, Footer],
   templateUrl: './doctor-list.html',
   styleUrl: './doctor-list.scss'
 })
