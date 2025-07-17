@@ -1,46 +1,88 @@
 @if (!loading) {
   <div class="update-container">
-    <h1 class="title">تعديل البيانات الشخصية</h1>
+   
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="update-form">
+
+       <div class="form-title">
+    <h1 class="title">تعديل البيانات الشخصية</h1>
+  </div>
+      <div class="form-row">
+       <div class="form-group">
+        <label for="fName">اسم المستخدم</label>
+        <input id="username" type="text" formControlName="username" />
+        @if (form.get('username')?.touched && form.get('username')?.invalid) {
+          <div class="error-msg">اسم المستخدم مطلوب</div>
+        }
+      </div>
+     
+
       <div class="form-group">
         <label for="fName">الاسم الأول</label>
         <input id="fName" type="text" formControlName="fName" />
-        <div *ngIf="form.get('fName')?.touched && form.get('fName')?.invalid" class="error-msg">
-          الاسم الأول مطلوب
-        </div>
+        @if (form.get('fName')?.touched && form.get('fName')?.invalid) {
+          <div class="error-msg">الاسم الأول مطلوب</div>
+        }
+      </div>
       </div>
 
+      <div class="form-row">
       <div class="form-group">
         <label for="lName">اسم العائلة</label>
         <input id="lName" type="text" formControlName="lName" />
-        <div *ngIf="form.get('lName')?.touched && form.get('lName')?.invalid" class="error-msg">
-          اسم العائلة مطلوب
-        </div>
+        @if (form.get('lName')?.touched && form.get('lName')?.invalid) {
+          <div class="error-msg">اسم العائلة مطلوب</div>
+        }
       </div>
+
+       <div class="form-group">
+        <label for="phoneNumber">رقم الهاتف</label>
+        <input id="phoneNumber" type="text" formControlName="phoneNumber" />
+        @if (form.get('phoneNumber')?.touched && form.get('phoneNumber')?.invalid) {
+          <div class="error-msg">يجب إدخال رقم هاتف مصري صحيح</div>
+        }
+      </div>
+</div>
+
+
+<div class="form-row">
+      <div class="form-group">
+        <label for="street">الشارع</label>
+        <input id="street" type="text" formControlName="street" />
+      </div>
+
 
       <div class="form-group">
         <label for="city">المدينة</label>
         <input id="city" type="text" formControlName="city" />
       </div>
 
-      <div class="form-group">
-        <label for="street">الشارع</label>
-        <input id="street" type="text" formControlName="street" />
-      </div>
+     
+</div>
+
 
       <div class="form-group">
-        <label for="phoneNumber">رقم الهاتف</label>
-        <input id="phoneNumber" type="text" formControlName="phoneNumber" />
-        <div *ngIf="form.get('phoneNumber')?.touched && form.get('phoneNumber')?.invalid" class="error-msg">
-          يجب إدخال رقم هاتف مصري صحيح
-        </div>
+        <label for="email">البريد الإلكتروني</label>
+        <input id="email" type="email" formControlName="email" />
+        @if (form.get('email')?.touched && form.get('email')?.invalid) {
+          <div class="error-msg">
+            @if (form.get('email')?.errors?.['required']) {
+              البريد الإلكتروني مطلوب
+            } @else if (form.get('email')?.errors?.['email']) {
+              صيغة البريد الإلكتروني غير صحيحة
+            }
+          </div>
+        }
       </div>
 
-      <button type="submit" class="submit-btn">تحديث البيانات</button>
-      <button type="button" [routerLink]="['/profile']" class="submit-btn">إلغاء</button>
+    <div class="form-actions">
+  <button type="submit" class="submit-btn">تحديث</button>
+  <button type="button" [routerLink]="['/home']" class="cancel-btn">إلغاء</button>
+</div>
+
     </form>
   </div>
 } @else {
   <div class="loading">جاري تحميل البيانات...</div>
 }
+<app-footer></app-footer>

@@ -120,11 +120,12 @@ export class Register implements OnInit {
           }
         }
 
-        alert('succesful');
+        // alert('succesful');
         this._router.navigate(['/home']);
-      } else {
-        alert('حدث خطأ أثناء التسجيل');
-      }
+       } 
+      //  else {
+      //   alert('حدث خطأ أثناء التسجيل');
+      // }
     } catch (err: any) {
       console.error('❌ Error during registration:', err);
       const message = err.error?.message;
