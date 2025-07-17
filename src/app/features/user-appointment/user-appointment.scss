@@ -1,3 +1,31 @@
+.appointment-card {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.appointment-card:hover {
+  transform: scale(1.02);
+}
+
+.doctor-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border: 2px solid white;
+}
+.highlight {
+  animation: flashHighlight 1s ease-in-out 0s 2;
+  border: 2px solid #00c853;
+  box-shadow: 0 0 10px rgba(0, 200, 83, 0.6);
+}
+
+@keyframes flashHighlight {
+  0%   { background-color: #e8f5e9; }
+  50%  { background-color: #c8e6c9; }
+  100% { background-color: #e8f5e9; }
+}
+
 body, .container, .user-appointment-bg {
   background: unset !important;
 }

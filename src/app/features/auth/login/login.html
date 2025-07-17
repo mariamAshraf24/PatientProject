@@ -4,10 +4,10 @@
     <div class="login-card glass-card p-4 w-100">
       <!-- اللوجو -->
       <div class="text-center mb-3">
-        <div class="logo-circle mx-auto">
-          <i class="bi bi-person-circle text-white fs-3"></i>
+          <div class="avatar mx-auto mb-3">
+            <i class="fa-solid fa-user fa-3x text-white"></i>
+          </div>
         </div>
-      </div>
 
       <h4 class="text-center fw-bold mb-2 text-purple">مرحبًا بعودتك</h4>
       <p class="text-center text-muted mb-4">سجّل الدخول إلى حسابك</p>
@@ -17,10 +17,7 @@
         <div class="mb-3">
           <label for="name" class="form-label">اسم المستخدم</label>
           <input type="text" id="name" formControlName="userName"
-            [ngClass]="{
-              'is-valid': !loginForm.get('userName')?.errors && loginForm.get('userName')?.touched,
-              'is-invalid': loginForm.get('userName')?.errors && loginForm.get('userName')?.touched
-            }"
+            
             class="form-control form-input" />
           @if (loginForm.get('userName')?.touched && loginForm.get('userName')?.invalid) {
             <div class="form-error">
@@ -56,6 +53,11 @@
               }
             </div>
           }
+            @if (serverErrorMessage && loginForm.get('password')?.touched) {
+                                <div class="invalid-feedback d-block">
+                                    <span>{{serverErrorMessage}}</span>
+                                </div>
+                                }
         </div>
 
         <!-- هل نسيت كلمة المرور؟ -->
@@ -68,9 +70,17 @@
       </form>
 
       <p class="text-center mt-3 mb-0">
-        ليس لديك حساب؟ <a href="#" class="text-decoration-none text-purple fw-bold" routerLink="/register">أنشئ حسابًا</a>
+        ليس لديك حساب؟ <a  class="text-decoration-none text-purple fw-bold" routerLink="/register">أنشئ حسابًا</a>
       </p>
 
     </div>
   </div>
 </div>
+            <!-- [ngClass]="{
+              'is-valid': !loginForm.get('password')?.errors && loginForm.get('password')?.touched,
+              'is-invalid': loginForm.get('password')?.errors && loginForm.get('password')?.touched
+            }" -->
+            <!-- [ngClass]="{
+              'is-valid': !loginForm.get('userName')?.errors && loginForm.get('userName')?.touched,
+              'is-invalid': loginForm.get('userName')?.errors && loginForm.get('userName')?.touched
+            }" -->

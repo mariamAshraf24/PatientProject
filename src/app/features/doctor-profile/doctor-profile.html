@@ -2,8 +2,11 @@
 <main class="doctor-profile-full-page">
   <div class="profile-card">
     <div class="top-section">
-      <img [src]="doctor.imageUrl" alt="{{ doctor.fullName }}"
-        class="doctor-img" />
+      <img
+        [src]="doctor.imageUrl"
+        alt="{{ doctor.fullName }}"
+        class="doctor-img"
+      />
       <div class="info">
         <h2 class="doctor-name">د.{{ doctor.fullName }}</h2>
 
@@ -12,8 +15,7 @@
         </p>
 
         <p class="doctor-price">
-          <i class="fa-solid fa-coins"></i> {{ doctor.bookingPrice }}
-          ج.م
+          <i class="fa-solid fa-coins"></i> {{ doctor.bookingPrice }} ج.م
         </p>
 
         <p class="doctor-address">
@@ -21,9 +23,9 @@
         </p>
 
         <p class="doctor-age">
-         <i class="fa-solid fa-cake-candles"></i> {{ getAge(doctor.dateOfBirth) }} سنة
+          <i class="fa-solid fa-cake-candles"></i>
+          {{ getAge(doctor.dateOfBirth) }} سنة
         </p>
-
       </div>
     </div>
 
@@ -32,7 +34,7 @@
       <p class="section-title">أيام العمل</p>
       <div class="days-wrapper">
         @for (schedule of sortedSchedules; track schedule.dayOfWeek) {
-        <span class="day-box">{{ getArabicDay(schedule.dayOfWeek) }}</span>
+          <span class="day-box">{{ getArabicDay(schedule.dayOfWeek) }}</span>
         }
       </div>
     </div>
@@ -42,39 +44,177 @@
       <p class="section-title">المواعيد المتاحة اليوم</p>
       <div class="slots-wrapper">
         @for (slot of availableSlots; track slot) {
-        <span class="slot-box" [class.selected]="slot === selectedSlot"
-          (click)="selectedSlot = slot">{{ slot }}</span>
+          <span
+            class="slot-box"
+            [class.selected]="slot === selectedSlot"
+            (click)="selectedSlot = slot"
+            >{{ slot | amPm }}</span
+          >
         }
       </div>
     </div>
 
-<!-- نوع الزيارة + زر الحجز في نفس السطر -->
-<div class="section horizontal-booking">
-  <p class="section-title">نوع الزيارة</p>
-  <div class="visit-type-and-button">
-    <div class="visit-type-wrapper">
-      <label>
-        <input type="radio" name="type" [(ngModel)]="selectedType" [value]="0" />
-        <span>متابعة</span>
-      </label>
-      <label>
-        <input type="radio" name="type" [(ngModel)]="selectedType" [value]="1" />
-        <span>استشارة</span>
-      </label>
-    </div>
+    <!-- نوع الزيارة + زر الحجز في نفس السطر -->
+    <div class="section horizontal-booking">
+      <p class="section-title">نوع الزيارة</p>
+      <div class="visit-type-and-button">
+        <div class="visit-type-wrapper">
+          <label>
+            <input
+              type="radio"
+              name="type"
+              [(ngModel)]="selectedType"
+              [value]="0"
+            />
+            <span>متابعة</span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="type"
+              [(ngModel)]="selectedType"
+              [value]="1"
+            />
+            <span>استشارة</span>
+          </label>
+        </div>
 
-    <div class="btn-wrapper inline">
-      <button
-        class="btn btn-primary"
-        [disabled]="!selectedSlot || selectedType === null"
-        (click)="bookNow()"
-      >
-        احجز الآن
-      </button>
+        <div class="btn-wrapper inline">
+          <button
+            class="btn btn-primary"
+            [disabled]="!selectedSlot || selectedType === null"
+            (click)="bookNow()"
+          >
+            احجز الآن
+          </button>
+          <!-- الزر اللي يفتح الـ calendar -->
+          <button class="btn btn-outline" (click)="picker.open()">
+            اختر تاريخ آخر
+          </button>
+
+          <!-- input مخفي مربوط بالـ calendar -->
+          <input
+            type="text"
+            style="display: none"
+            [matDatepicker]="picker"
+            [(ngModel)]="selectedDate"
+          />
+
+          <mat-datepicker #picker (dateChange)="onDateChange($event)">
+          </mat-datepicker>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</main>
+}
 
+<main class="doctor-profile-full-page">
+  <div class="profile-card">
+    <div class="top-section">
+      <img
+        [src]="doctor.imageUrl"
+        alt="{{ doctor.fullName }}"
+        class="doctor-img"
+      />
+      <div class="info">
+        <h2 class="doctor-name">د.{{ doctor.fullName }}</h2>
+
+        <p class="doctor-specialty">
+          <i class="fa fa-stethoscope icon"></i> {{ doctor.specializationName }}
+        </p>
+
+        <p class="doctor-price">
+          <i class="fa-solid fa-coins"></i> {{ doctor.bookingPrice }} ج.م
+        </p>
+
+        <p class="doctor-address">
+          <i class="fa fa-map-marker-alt icon"></i> {{ doctor.address }}
+        </p>
+
+        <p class="doctor-age">
+          <i class="fa-solid fa-cake-candles"></i>
+          {{ getAge(doctor.dateOfBirth) }} سنة
+        </p>
+      </div>
+    </div>
+
+    <!-- أيام العمل -->
+    <div class="section">
+      <p class="section-title">أيام العمل</p>
+      <div class="days-wrapper">
+        @for (schedule of sortedSchedules; track schedule.dayOfWeek) {
+          <span class="day-box">{{ getArabicDay(schedule.dayOfWeek) }}</span>
+        }
+      </div>
+    </div>
+
+    <!-- المواعيد المتاحة -->
+    <div class="section">
+      <p class="section-title">المواعيد المتاحة اليوم</p>
+      <div class="slots-wrapper">
+        @for (slot of availableSlots; track slot) {
+          <span
+            class="slot-box"
+            [class.selected]="slot === selectedSlot"
+            (click)="selectedSlot = slot"
+            >{{ slot | amPm }}</span
+          >
+        }
+      </div>
+    </div>
+
+    <!-- نوع الزيارة + زر الحجز في نفس السطر -->
+    <div class="section horizontal-booking">
+      <p class="section-title">نوع الزيارة</p>
+      <div class="visit-type-and-button">
+        <div class="visit-type-wrapper">
+          <label>
+            <input
+              type="radio"
+              name="type"
+              [(ngModel)]="selectedType"
+              [value]="0"
+            />
+            <span>متابعة</span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="type"
+              [(ngModel)]="selectedType"
+              [value]="1"
+            />
+            <span>استشارة</span>
+          </label>
+        </div>
+
+        <div class="btn-wrapper inline">
+          <button
+            class="btn btn-primary"
+            [disabled]="!selectedSlot || selectedType === null"
+            (click)="bookNow()"
+          >
+            احجز الآن
+          </button>
+          <!-- الزر اللي يفتح الـ calendar -->
+          <button class="btn btn-outline" (click)="picker.open()">
+            اختر تاريخ آخر
+          </button>
+
+          <!-- input مخفي مربوط بالـ calendar -->
+          <input
+            type="text"
+            style="display: none"
+            [matDatepicker]="picker"
+            [(ngModel)]="selectedDate"
+          />
+
+          <mat-datepicker #picker (dateChange)="onDateChange($event)">
+          </mat-datepicker>
+        </div>
+      </div>
+    </div>
   </div>
 </main>
 }

@@ -1,15 +1,44 @@
-<div class="notifications-wrapper">
-  <h2>الإشعارات</h2>
-  @for (notification of visibleNotifications; track notification) {
-    <div class="notification-card">
-      <span class="type">{{ getTypeLabel(notification.type) }}</span>
-      <p class="message">{{ notification.message }}</p>
-      <p class="doctor">د. {{ notification.doctorName }}</p>
-    </div>
-  }
-  @if (visibleNotifications.length < allNotifications.length) {
-    <button class="load-more" (click)="loadMore()">
-      تحميل المزيد
-    </button>
-  }
+<div class="main">
+  <div class="notifications-container">
+    <h2 class="title">الإشعارات</h2>
+
+    @for (notification of visibleNotifications; track notification) {
+      <div class="notification-card">
+        <!-- أيقونة حسب نوع الإشعار -->
+        <fa-icon [icon]="getFaIcon(notification.type)" class="fa-icon"></fa-icon>
+
+        <div class="notification-content">
+          <!-- نوع الإشعار -->
+          <p class="type">{{ getTypeLabel(notification.type) }}</p>
+
+          <!-- نص الإشعار العادي -->
+          <p class="message" *ngIf="notification.type !== 3">
+            {{ notification.message }}
+          </p>
+
+          <!-- حالة رسالة تأجيل الموعد -->
+          <div class="message" *ngIf="notification.type === 3">
+            تم تأجيل الموعد من
+            <span class="old-time">
+              {{ getOldAndNewTime(notification.message)?.oldTime }}
+            </span>
+            إلى
+            <span class="new-time">
+              {{ getOldAndNewTime(notification.message)?.newTime }}
+            </span>
+          </div>
+
+          <!-- اسم الطبيب -->
+          <p class="doctor">عند د. {{ notification.doctorName }}</p>
+        </div>
+      </div>
+    }
+
+    <!-- زر تحميل المزيد -->
+    @if (visibleNotifications.length < allNotifications.length) {
+      <button class="load-more" (click)="loadMore()">
+        تحميل المزيد
+      </button>
+    }
+  </div>
 </div>

@@ -1,7 +1,13 @@
 <nav class="navbar">
-  <ul>
-    <span class="nav-left">
-      <li routerLinkActive="active-link" >
+  <!-- الشعار -->
+  <div class="logo">
+    <img src="/images/nazzem logo (1).png" alt="Logo" />
+  </div>
+
+  <!-- روابط التنقل -->
+  <ul class="nav-links d-flex justify-content-between w-100">
+    <span class="nav-left d-flex">
+      <li routerLinkActive="active-link">
         <a routerLink="/home">الرئيسية</a>
       </li>
       <li routerLinkActive="active-link">
@@ -9,22 +15,22 @@
       </li>
     </span>
 
-    <span class="nav-right">
+    <span class="nav-right d-flex">
       @if (!isLoggedIn()) {
         <li routerLinkActive="active-link">
           <a routerLink="/login">تسجيل دخول</a>
         </li>
       } @else {
         <li routerLinkActive="active-link">
-          <a routerLink="/notification" class="user-icon">
-            <i class="fa-solid fa-bell"></i>
-          </a>
-        </li>
-        <li routerLinkActive="active-link">
           <a routerLink="/userAppointment">حجوزاتك</a>
         </li>
         <li routerLinkActive="active-link">
           <a routerLink="/appointmentDetails">QR CODE</a>
+        </li>
+        <li routerLinkActive="active-link">
+          <a routerLink="/notification" class="user-icon">
+            <i class="fa-solid fa-bell"></i>
+          </a>
         </li>
         <li routerLinkActive="active-link">
           <a routerLink="/profile" class="user-icon">

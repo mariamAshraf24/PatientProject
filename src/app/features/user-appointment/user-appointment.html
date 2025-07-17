@@ -4,6 +4,7 @@
     <span>حجوزاتي الطبية</span>
   </div>
 
+  <!-- إحصائيات الحالات -->
   <div class="stats-cards mb-4 d-flex gap-3 justify-content-end">
     <div class="stat-card text-center" [class.active]="selectedStatus === null" (click)="selectStatus(null)" style="cursor:pointer;">
       <i class="fas fa-list fa-lg mb-1"></i>
@@ -37,6 +38,7 @@
     </div>
   </div>
 
+  <!-- شريط البحث والتصفية -->
   <div class="search-filter-section mb-4 d-flex flex-wrap gap-3 justify-content-end align-items-center">
     <div class="search-box position-relative">
       <i class="fas fa-search position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);"></i>
@@ -50,46 +52,35 @@
     </div>
   </div>
 
+  <!-- عرض الحجوزات -->
   @if (filteredAppointments.length === 0) {
     <p class="empty-message">لا توجد حجوزات مسجلة حالياً</p>
   } @else {
     @for (appointment of filteredAppointments; track appointment.id) {
       <div
-        class="pro-modern-card mb-5"
+        class="card mb-4 shadow-sm rounded-4 px-3 py-3 appointment-card"
         (click)="goToDetails(appointment.id)"
         [ngClass]="{ 'highlight': appointment.id === highlightedId }"
-        style="cursor: pointer; direction: rtl;"
+        style="cursor: pointer;"
       >
-        <div class="pro-modern-card-topbar"></div>
-        <div class="pro-modern-avatar-wrapper">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="text-start">
+            <h6 class="fw-bold mb-1">{{ appointment.doctorName }}</h6>
+            <small class="text-muted">{{ appointment.specialization || '' }}</small>
+          </div>
           <img
             [src]="appointment.doctorImage || 'https://cdn-icons-png.flaticon.com/512/387/387561.png'"
             alt="صورة الطبيب"
-            class="pro-modern-avatar"
+            class="rounded-circle doctor-img"
+            width="50"
+            height="50"
           />
         </div>
-        <div class="pro-modern-card-content">
-          <div class="pro-modern-card-header d-flex align-items-center justify-content-end mb-3">
-            <span class="pro-modern-type-badge d-flex align-items-center gap-2">
-              <i *ngIf="appointment.appointmentType == 0 || appointment.appointmentType == '0'" class="fas fa-stethoscope ms-1"></i>
-              <i *ngIf="appointment.appointmentType == 1 || appointment.appointmentType == '1'" class="fas fa-sync-alt ms-1"></i>
-              {{ getAppointmentTypeText(appointment.appointmentType) }}
-            </span>
-          </div>
-          <div class="pro-modern-doctor-name mb-2 d-flex align-items-center gap-2">
-            <i class="fas fa-user-md ms-1"></i>
-            {{ appointment.doctorName }}
-          </div>
-          <div class="pro-modern-info-grid">
-            <div class="pro-modern-info-item">
-              <i class="far fa-calendar-alt me-1"></i>
-              {{ getFormattedDate(appointment.date) }}
-            </div>
-            <div class="pro-modern-info-item">
-              <i class="far fa-clock me-1"></i>
-              {{ getFormattedTime(appointment.startTime) }}
-            </div>
-          </div>
+
+        <div class="date-box mt-2 text-end">
+          <i class="far fa-calendar-alt me-2"></i>
+          {{ getFormattedDate(appointment.date) }} -
+          {{ getFormattedTime(appointment.startTime) }}
         </div>
       </div>
     }

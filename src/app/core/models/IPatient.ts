@@ -9,6 +9,7 @@ export interface IPatient {
   age: number;
   gender: number;
 }
+
 export interface PatientProfileResponse {
   success: boolean;
   message: string;

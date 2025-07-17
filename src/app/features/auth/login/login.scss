@@ -15,9 +15,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
- background-blend-mode: overlay; /* تأثير خلط الألوان */
- background-image: url("/images/backgroundLogin.jpg");
-
+  background-blend-mode: overlay; /* تأثير خلط الألوان */
+  background-image: url("/images/backgroundLogin.jpg");
 }
 
 .form-section {
@@ -39,7 +38,7 @@ body {
 
 .glass-card {
   background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px); /* تم تفعيل التأثير */
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   padding: 2rem;
@@ -48,13 +47,23 @@ body {
 .logo-circle {
   width: 60px;
   height: 60px;
-  background: rgb(99,60,132);
+  background: rgb(99, 60, 132);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.avatar {
+  background-color: rgb(99, 60, 132);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .form-label {
@@ -83,7 +92,7 @@ body {
 }
 
 .gradient-button {
-  background: rgb(99,60,132);
+  background: rgb(99, 60, 132);
   border: none;
   border-radius: 0.5rem;
   transition: 0.3s;

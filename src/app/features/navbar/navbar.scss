@@ -1,18 +1,29 @@
-
 .navbar {
-  // background: linear-gradient(to left, #633c84, #42196e);
-
-     padding: 0.5rem 2rem;
-    box-shadow: 0 2px 8px rgba(100, 60, 132, 0.2509803922);
-    margin-bottom: 2rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    height: 65px;
- 
+  direction: rtl;
+  background-color: white;
+  padding: 0.5rem 2rem;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(100, 60, 132, 0.25);
+  position: relative;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
 
+// شعار اللوجو
+.logo {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  img {
+    height: 100px;
+  }
+}
 
+// روابط التنقل
 .navbar ul {
   list-style: none;
   display: flex;
@@ -20,48 +31,34 @@
   margin: 0;
   padding: 0;
   justify-content: space-between;
+  width: 100%;
 }
 
-.navbar .nav-left {
+.navbar .nav-left,
+.navbar .nav-right {
   display: flex;
   align-items: center;
   gap: 1.5rem;
 }
 
 .navbar .nav-right {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
   margin-left: auto;
 }
+
+// تصميم العنصر داخل القائمة
 .navbar li {
- 
-    margin-left: 1.5rem;
-    height: 44px;
-    border-radius: 12px;
-    display: flex
-;
-    flex-wrap: wrap;
-    align-items: center;
-        justify-content: center;
-    width: 100px;
-}
-
-.active-link {
-  background-color: #633c84;
-  color: white !important;
-  font-weight: bold;
+  margin-left: 1.5rem;
+  height: 44px;
+  width: 110px;
   border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
 }
 
-
-.active-link a {
-  color: white !important;
-}
-
-.navbar li:hover{
+.navbar li:hover {
   background-color: #633c84;
-  color: white;
 }
 
 .navbar a {
@@ -69,20 +66,24 @@
   text-decoration: none;
   font-weight: 500;
   font-size: 1.1rem;
-  transition: color 0.5s ease;
+  transition: color 0.3s ease;
 }
 
-.navbar a:hover,
-.navbar a.user-icon:hover {
-  color: white;
-  
-}.navbar li:hover a {
+.navbar li:hover a {
   color: white !important;
-
-
 }
 
+// الرابط النشط
+.active-link {
+  background-color: #633c84;
+  border-radius: 12px;
+}
 
+.active-link a {
+  color: white !important;
+}
+
+// أيقونة المستخدم
 .user-icon {
   display: flex;
   align-items: center;
@@ -94,6 +95,7 @@
   margin-right: 0.5rem;
 }
 
+// أيقونة الإشعار
 .notification-icon {
   position: relative;
   background: none;

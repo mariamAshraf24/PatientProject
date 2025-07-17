@@ -7,60 +7,69 @@ import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule,NgClass],
+  imports: [ReactiveFormsModule, NgClass, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
-export class Login implements OnInit{
- loginForm!: FormGroup;
+export class Login implements OnInit {
+  loginForm!: FormGroup;
+  serverErrorMessage: string | null = null;
+
   private readonly _authService = inject(Auth);
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _Router = inject(Router);
 
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
-      userName: [null, [Validators.required, Validators.pattern(/^[\u0600-\u06FFa-zA-Z ]+$/)]],
-      password: [null, [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/)
-      ]],
-
+      userName: [
+        null,
+        [Validators.required, Validators.pattern(/^[\u0600-\u06FFa-zA-Z ]+$/)]
+      ],
+      password: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/)
+        ]
+      ]
     });
   }
 
   loginSubmit(): void {
-
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
     }
+
     const formData = this.loginForm.value;
+
     this._authService.login(formData).subscribe({
       next: (res) => {
-
         if (res.isSuccess && res.token) {
           this._authService.saveToken(res.token);
-          alert('تم التسجيل بنجاح!');
           this.loginForm.reset();
-
-          // localStorage.setItem('roles', res.roles);
-          // if (this._authService.isAdmin()) {
-          //   this._Router.navigate(['/admin']);
-          // } else {
-          //   this._Router.navigate(['/doctor']);
-          // }
           setTimeout(() => {
             this._Router.navigate(['/home']);
-          }, 1000)
+          }, 1000);
         } else {
           alert('حدث خطأ أثناء التسجيل');
         }
       },
       error: (err: HttpErrorResponse) => {
-        console.error(err);
-        alert('حدث خطأ أثناء التسجيل');
+        if (err.status === 400 && err.error?.message) {
+          const message = err.error.message;
+
+          if (message === 'Invalid email or password.') {
+            this.serverErrorMessage = 'كلمة المرور غير صحيحة أو لا تطابق اسم المستخدم';
+          } else {
+            this.serverErrorMessage = 'حدث خطأ غير متوقع. حاول مرة أخرى.';
+          }
+        } else {
+          this.serverErrorMessage = 'فشل في الاتصال بالخادم. حاول لاحقاً.';
+        }
       }
     });
   }
 }
+

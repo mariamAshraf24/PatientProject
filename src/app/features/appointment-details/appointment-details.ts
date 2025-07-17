@@ -27,7 +27,8 @@ export class AppointmentDetails implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private _http: HttpClient,
     private ngZone: NgZone,
-    private _router: Router
+    private _router: Router,
+    
   ) {}
 
   ngOnInit(): void {
@@ -173,21 +174,6 @@ export class AppointmentDetails implements OnInit, OnDestroy {
   return statusMap[status] || status;
 }
 
-getStatusArabic(status: string): string {
-  switch (status?.toLowerCase()) {
-    case 'confirmed':
-      return 'حجز قادم';
-    case 'delayed':
-      return 'مؤجل';
-    case 'completed':
-      return 'مكتمل';
-    case 'canceled':
-      return 'ملغي';
-    case 'missed':
-      return 'لم يحضر';
-    default:
-      return status || '';
-  }
-}
+
 
 }

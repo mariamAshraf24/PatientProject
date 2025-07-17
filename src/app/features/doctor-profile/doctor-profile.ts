@@ -1,17 +1,26 @@
-// import { ActivatedRoute, Router } from '@angular/router';
 import { IDoctor, Schedule } from '../../core/models/IDoctor';
 import { DoctorFilter } from './../../core/services/doctor-filter';
-import { Booking } from './../../core/services/booking'; // ✅ تأكد من المسار الصحيح
+import { Booking } from './../../core/services/booking';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppointmentNotifierService } from './../../core/services/appointment-notifier';
-import { ReplaceAmPmPipe } from "../../shared/replace-am-pm-pipe";
+import { AmPmPipe } from '../../shared/am-pm-pipe';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-doctor-profile',
-  imports: [CommonModule, FormsModule, ReplaceAmPmPipe],
+  imports: [
+    CommonModule,
+    FormsModule,
+    AmPmPipe,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
   templateUrl: './doctor-profile.html',
   styleUrl: './doctor-profile.scss',
 })
@@ -20,10 +29,17 @@ export class DoctorProfile implements OnInit {
   availableSlots: string[] = [];
   selectedSlot: string | null = null;
   selectedType: number | null = null;
-
+  openDatePicker: boolean = false;
+  selectedDate: Date = new Date();
 
   weekOrder: string[] = [
-    'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+    'Saturday',
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
   ];
 
   private doctorId: string = '';
@@ -35,11 +51,12 @@ export class DoctorProfile implements OnInit {
     private route: ActivatedRoute,
     private _Router: Router,
     private _notifier: AppointmentNotifierService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.doctorId = this.route.snapshot.paramMap.get('id') || '';
-    this.date = this.route.snapshot.queryParamMap.get('date') || this.getTodayDate();
+    this.date =
+      this.route.snapshot.queryParamMap.get('date') || this.getTodayDate();
 
     if (this.doctorId) {
       this._DoctorFilter.getDoctorProfile(this.doctorId).subscribe({
@@ -49,22 +66,7 @@ export class DoctorProfile implements OnInit {
         error: (err) => console.error('فشل تحميل بيانات الدكتور', err),
       });
 
-      this._DoctorFilter.getDoctorSlots(this.doctorId, this.date).subscribe({
-        next: (res) => {
-this.availableSlots = res
-  .filter(slot => {
-    const now = new Date();
-    const [hours, minutes, seconds] = slot.slotTime.split(':').map(Number);
-
-    const slotTime = new Date();
-    slotTime.setHours(hours, minutes, seconds || 0, 0);
-
-    return slotTime.getTime() >= now.getTime();
-  })
-  .map(slot => slot.slotTime); // هنا بنرجّع الوقت فقط بدون تاريخ
-        },
-        error: (err) => console.error('فشل تحميل مواعيد الدكتور', err),
-      });
+      this.loadAvailableSlots();
     }
   }
 
@@ -78,7 +80,10 @@ this.availableSlots = res
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
       age--;
     }
     return age;
@@ -104,9 +109,35 @@ this.availableSlots = res
       .filter((s): s is Schedule => !!s);
   }
 
+  onDateChange(event: any): void {
+    const dateObj: Date = event.value || event;
+    this.date = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
+    this.loadAvailableSlots();
+    this.openDatePicker = false;
+  }
+
+  loadAvailableSlots(): void {
+    this._DoctorFilter.getDoctorSlots(this.doctorId, this.date).subscribe({
+      next: (res) => {
+        this.availableSlots = res
+          .filter((slot) => {
+            const now = new Date();
+            const [hours, minutes, seconds] = slot.slotTime
+              .split(':')
+              .map(Number);
+            const slotTime = new Date();
+            slotTime.setHours(hours, minutes, seconds || 0, 0);
+            return slotTime.getTime() >= now.getTime();
+          })
+          .map((slot) => slot.slotTime);
+      },
+      error: (err) => console.error('فشل تحميل مواعيد الدكتور', err),
+    });
+  }
+
   bookNow() {
     if (!this.selectedSlot || this.selectedType === null) {
-      alert("يرجى اختيار موعد ونوع الكشف");
+      alert('يرجى اختيار موعد ونوع الكشف');
       return;
     }
 
@@ -119,26 +150,21 @@ this.availableSlots = res
 
     this._Booking.bookAppointment(bookingData).subscribe({
       next: (res) => {
-        console.log(" Booking Response:", res);
-
+        console.log('Booking Response:', res);
         const appointmentId = res.appointment?.appointment?.id;
         if (!appointmentId) {
-          alert("لم يتم استلام رقم الحجز!");
+          alert('لم يتم استلام رقم الحجز!');
           return;
         }
 
-        alert(" تم الحجز بنجاح");
+        alert('تم الحجز بنجاح');
         this._Router.navigate(['/appointmentDetails', appointmentId]);
         this._notifier.notifyNewAppointment(appointmentId);
-
-
       },
       error: (err) => {
-        console.error(' فشل في الحجز', err);
+        console.error('فشل في الحجز', err);
         alert('حدث خطأ أثناء محاولة الحجز');
-      }
+      },
     });
   }
-
-
 }

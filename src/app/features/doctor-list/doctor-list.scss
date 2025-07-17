@@ -7,15 +7,15 @@ $text-muted: #666;
 
 .medical-booking-app {
   direction: rtl;
-
   padding: 0;
   max-width: 1200px;
   margin: 0 auto;
+  background-attachment: fixed; /* 👉 ده السطر المهم */
+  height: 100vh;
+  padding-top: 25px;
 }
 
 /* 🎯 Fixed Hero Slider */
-
-
 .hero-slider {
   height: 500px;
   border-radius: 16px;
@@ -30,28 +30,27 @@ $text-muted: #666;
   .carousel-item {
     height: 100%;
   }
-.slider-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: top right; // ✅ ده بيرفع الصورة لفوق
-  position: absolute;
-  top: 0;
-  left: 0;
-}
+
+  .slider-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: top right;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 
   .slider-container {
     width: 100%;
     height: 100%;
-    background-size: cover; // 👈 يعرض الصورة كاملة بدون قص
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position:right ;
+    background-position: right;
     position: relative;
-    
 
     &.bg-1 {
       background-image: url('/images/slider1.png');
-      
     }
 
     &.bg-2 {
@@ -69,7 +68,7 @@ $text-muted: #666;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right,#633c84,45%, rgba(249, 246, 246, 0.128));
+    background: linear-gradient(to right, #633c84 45%, rgba(249, 246, 246, 0.128));
     z-index: 1;
   }
 
@@ -130,7 +129,6 @@ $text-muted: #666;
   }
 }
 
-
 /* 🔍 Search Section */
 .search-section {
   padding: 0 20px;
@@ -139,13 +137,13 @@ $text-muted: #666;
   .search-tabs {
     display: flex;
     margin-bottom: 10px;
-    
+
     span {
       padding: 8px 20px;
       cursor: pointer;
       color: $text-muted;
       border-bottom: 2px solid transparent;
-      
+
       &.active {
         color: $primary;
         border-bottom: 2px solid $primary;
@@ -153,24 +151,24 @@ $text-muted: #666;
       }
     }
   }
-  
+
   .search-bar-glass {
     background: white;
     border-radius: 12px;
     padding: 15px 20px;
-    
     box-shadow: 0 8px 24px rgba($primary, 0.1);
-    
-    .form-control, .form-select {
+
+    .form-control,
+    .form-select {
       border-radius: 8px;
       border: 1px solid rgba($primary, 0.2);
       padding: 12px 15px;
-      
+
       &::placeholder {
         color: rgba($primary, 0.5);
       }
     }
-    
+
     .btn-primary {
       background: $primary;
       border: none;
@@ -183,10 +181,9 @@ $text-muted: #666;
 
 .sticky-sidebar {
   position: sticky;
-  top: 20px; /* المسافة من الأعلى - ممكن تعدليها حسب الهيدر */
+  top: 20px;
   z-index: 99;
- box-shadow: 0 8px 24px rgba($primary, 0.5);
-  
+  box-shadow: 0 8px 24px rgba($primary, 0.5);
 }
 
 /* 🧑‍⚕️ Doctors List */
@@ -211,7 +208,7 @@ $text-muted: #666;
   display: flex;
   align-items: center;
   gap: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
   img.doctor-photo {
     width: 100px;
@@ -230,7 +227,8 @@ $text-muted: #666;
       color: $primary;
     }
 
-    .specialty, .location {
+    .specialty,
+    .location {
       font-size: 0.9rem;
       color: $text-muted;
     }
@@ -257,7 +255,6 @@ $text-muted: #666;
       font-weight: 700;
       font-size: 1rem;
       display: flex;
- 
     }
   }
 }
@@ -269,9 +266,10 @@ $text-muted: #666;
 
 .doctor-actions .price-container {
   display: flex;
-  align-items: center; // ده اللي هيخلي السعر ف نُص الزرار
+  align-items: center;
   height: 100%;
 }
+
 .doctor-actions .price {
   font-size: 1rem;
   color: $primary;
@@ -280,21 +278,24 @@ $text-muted: #666;
   padding: 0;
   line-height: 1;
 }
-.icon{
+
+.icon {
   color: #633c84;
 }
+
 input:focus,
 select:focus,
 textarea:focus {
   border-color: #633c84 !important;
-  box-shadow: 0 0 0 0.2rem rgba(99, 60, 132, 0.25); // ظل ناعم بلون بنفسجي
-  outline: none; // علشان نشيل البوردر الأزرق الافتراضي
+  box-shadow: 0 0 0 0.2rem rgba(99, 60, 132, 0.25);
+  outline: none;
 }
+
 select.form-select {
-  background-position: left 0.75rem center; // 🟣 السهم على الشمال
-  padding-left: 2rem; // 🟣 مساحة تمنع تداخل السهم مع النص
+  background-position: left 0.75rem center;
+  padding-left: 2rem;
   direction: rtl;
- color: #633c84;
+  color: #633c84;
 }
 
 /* 🔢 Pagination */
@@ -303,7 +304,7 @@ select.form-select {
   justify-content: center;
   margin: 40px 0;
   gap: 10px;
-  
+
   button {
     border: none;
     background: white;
@@ -315,13 +316,13 @@ select.form-select {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
     &.active {
       background: $primary;
       color: white;
     }
-    
+
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
@@ -340,38 +341,38 @@ select.form-select {
 @media (max-width: 768px) {
   .hero-slider {
     height: 300px;
-    
+
     .slider-content {
       right: 5%;
       width: 90%;
-      
+
       h1 {
         font-size: 2rem;
       }
-      
+
       p {
         font-size: 1rem;
       }
     }
   }
-  
+
   .doctors-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .search-bar-glass {
     .row {
       flex-wrap: wrap;
     }
-    
+
     .col-md-1 {
       display: none;
     }
-    
-    .col-md-5, .col-md-3 {
+
+    .col-md-5,
+    .col-md-3 {
       width: 100%;
       margin-bottom: 10px;
-
     }
   }
 }

@@ -3,12 +3,12 @@
   background-color: #f7f5fb;
   direction: rtl;
   font-family: 'Cairo', sans-serif;
+  margin-block-start: 33px;
 }
 
 .profile-card {
   background: #fff;
   border-radius: 20px;
-
   box-shadow: 0 4px 12px rgba(99, 60, 132, 0.15);
 }
 
@@ -21,7 +21,7 @@
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 20px;
-background: linear-gradient(to left, #633c84, #42196e);
+  background: linear-gradient(to left, #633c84, #42196e);
 }
 
 .doctor-img {
@@ -48,8 +48,7 @@ background: linear-gradient(to left, #633c84, #42196e);
 .doctor-specialty {
   font-size: 14px;
   color: white;
-   margin-bottom: 6px;
-
+  margin-bottom: 6px;
 }
 
 .doctor-price,
@@ -72,16 +71,13 @@ background: linear-gradient(to left, #633c84, #42196e);
   margin-bottom: 10px;
 }
 
-.days-wrapper
-{
+.days-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.day-box
-
-{
+.day-box {
   padding: 8px 16px;
   color: white;
   background-color: #633c84;
@@ -89,23 +85,22 @@ background: linear-gradient(to left, #633c84, #42196e);
   font-weight: 500;
   transition: all 0.2s ease-in-out;
   border: 1px solid transparent;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
 
-}.slots-wrapper {
+.slots-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  max-height: calc(3 * 50px + 20px); /* ارتفاع 3 صفوف + margin بسيط */
+  max-height: calc(3 * 50px + 20px);
   overflow-y: auto;
   padding: 10px;
-   /* ↓↓ التعديلات الجديدة ↓↓ */
-  max-width: 900px;        
-  
+  max-width: 900px;
 }
 
 .slot-box {
-  width: calc((100% - 70px) / 8); /* 8 في الصف مع 10px gap */
-  min-width: 80px; /* تمنع الضغط الشديد في الشاشات الصغيرة */
+  width: calc((100% - 70px) / 8);
+  min-width: 80px;
   padding: 8px 12px;
   background-color: white;
   color: #633c84;
@@ -118,7 +113,7 @@ background: linear-gradient(to left, #633c84, #42196e);
 }
 
 .slot-box:hover {
-  background-color: #e4d6f2; /* لون بنفسجي فاتح كمثال */
+  background-color: #e4d6f2;
   color: #42196e;
   border: 1px solid #42196e;
 }
@@ -136,8 +131,7 @@ background: linear-gradient(to left, #633c84, #42196e);
   gap: 10px;
 
   .visit-type-and-button {
-   display: flex
-;
+    display: flex;
     align-items: center;
     gap: 40px;
     flex-wrap: wrap;
@@ -154,7 +148,6 @@ background: linear-gradient(to left, #633c84, #42196e);
     }
   }
 }
-
 
 .visit-type-wrapper {
   display: flex;
@@ -197,7 +190,9 @@ background: linear-gradient(to left, #633c84, #42196e);
 .btn-primary:disabled {
   background-color: #ccc;
   cursor: not-allowed;
-}@media (max-width: 768px) {
+}
+
+@media (max-width: 768px) {
   .top-section {
     flex-direction: column;
     align-items: center;
@@ -226,6 +221,7 @@ background: linear-gradient(to left, #633c84, #42196e);
     font-size: 14px;
   }
 }
+
 @media (max-width: 768px) {
   .section {
     margin: 20px;
@@ -236,6 +232,7 @@ background: linear-gradient(to left, #633c84, #42196e);
     font-size: 16px;
   }
 }
+
 @media (max-width: 768px) {
   .horizontal-booking .visit-type-and-button {
     flex-direction: column;
@@ -252,6 +249,7 @@ background: linear-gradient(to left, #633c84, #42196e);
     }
   }
 }
+
 @media (max-width: 480px) {
   .doctor-name {
     font-size: 20px;

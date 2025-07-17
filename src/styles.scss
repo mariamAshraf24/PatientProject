@@ -1,3 +1,54 @@
-*{
-    font-family: 'Cairo';
+/* استخدام خط Cairo لتصميم عربي متناسق */
+* {
+  font-family: 'Cairo', sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  direction: rtl; /* دعم اللغة العربية من اليمين لليسار */
+  background-color: #f9f9f9; /* خلفية ناعمة */
+  color: #333; /* لون الخط الأساسي */
+}
+
+/* تحسين شكل الروابط */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* إزالة الـ outline عند النقر على الأزرار */
+button, input, textarea {
+  outline: none;
+}
+
+/* مثال على تحسين عرض البادجات أو الحالات */
+.badge-upcoming {
+  background-color: #17a2b8; /* أزرق */
+  color: #fff;
+}
+
+.badge-delayed {
+  background-color: #ffc107; /* أصفر */
+  color: #000;
+}
+
+.badge-completed {
+  background-color: #28a745; /* أخضر */
+  color: #fff;
+}
+
+.badge-canceled {
+  background-color: #dc3545; /* أحمر */
+  color: #fff;
+}
+
+.badge-missed {
+  background-color: #6c757d; /* رمادي */
+  color: #fff;
+}
+
+.badge-unknown {
+  background-color: #999;
+  color: #fff;
 }
