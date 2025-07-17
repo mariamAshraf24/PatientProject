@@ -9,7 +9,8 @@ export interface IPatient {
   age: number;
   gender: number;
   phone:string;
-  
+  email : string;
+
 }
 export interface PatientProfileResponse {
   success: boolean;

@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 export class Auth {
   private tokenKey = 'token';
 
-  constructor(private _HttpClient: HttpClient) {}
+  constructor(private _HttpClient: HttpClient) { }
 
   register(data: any): Observable<any> {
     return this._HttpClient.post(
@@ -51,4 +51,8 @@ export class Auth {
   logout() {
     localStorage.removeItem(this.tokenKey);
   }
+  isPatient(): boolean {
+    return localStorage.getItem('roles') === 'Patient';
+  }
+
 }

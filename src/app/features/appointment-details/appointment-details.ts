@@ -8,11 +8,12 @@ import {
 } from '@microsoft/signalr';
 import { environment } from '../../../environments/environment';
 import { CommonModule, DatePipe } from '@angular/common';
+import { Footer } from "../footer/footer";
 
 @Component({
   selector: 'app-appointment-details',
   standalone: true,
-  imports: [DatePipe, CommonModule],
+  imports: [DatePipe, CommonModule, Footer],
   templateUrl: './appointment-details.html',
   styleUrl: './appointment-details.scss'
 })

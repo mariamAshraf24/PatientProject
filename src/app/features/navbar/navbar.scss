@@ -22,6 +22,7 @@
 
 }
 
+
 .nav-links {
   list-style: none;
   margin: 0;
@@ -68,7 +69,114 @@
 }
 
 .user-icon {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #633c84;
+  transition: transform 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    color: #4b2b63;
+    transform: scale(1.1);
+  }
+}
+
+.profile-popup {
+  position: absolute;
+  top: 55px;
+  right: -30px;
+  width: 300px;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f8f4fc, #fdfbff);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(99, 60, 132, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  animation: slideDownFade 0.3s ease-in-out;
+  z-index: 999;
+  direction: rtl;
+
+  .profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: #4b2b63;
+
+    .profile-icon {
+      width: 60px;
+      height: 60px;
+      background-color: #e4d8ee;
+      color: #633c84;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 2rem;
+      box-shadow: 0 4px 12px rgba(99, 60, 132, 0.2);
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #5b2b8c;
+      margin: 0;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      text-align: center;
+
+      strong {
+        color: #633c84;
+        font-weight: 600;
+      }
+    }
+
+    button {
+      background-color: #633c84;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 8px 20px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: #4b2b63;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(99, 60, 132, 0.4);
+      }
+    }
+  }
+}
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.center-links, .right-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.center-links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.right-links {
+  position: absolute;
+  right: 2rem;
+}
+.nav-links li a i.fa-bell {
+  margin-left: 6px;
 }
 
 .notification-wrapper {

@@ -25,7 +25,7 @@
                 <span>الاسم مطلوب</span>
               }
               @if (loginForm.get('userName')?.errors?.['pattern']) {
-                <span>الاسم يجب أن يحتوي على حروف فقط</span>
+                <span>الاسم يجب أن يحتوي على حروف و ارقام</span>
               }
             </div>
           }
@@ -35,10 +35,7 @@
         <div class="mb-3">
           <label for="password" class="form-label">كلمة المرور</label>
           <input type="password" id="password" formControlName="password"
-            [ngClass]="{
-              'is-valid': !loginForm.get('password')?.errors && loginForm.get('password')?.touched,
-              'is-invalid': loginForm.get('password')?.errors && loginForm.get('password')?.touched
-            }"
+        
             class="form-control form-input" />
           @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
             <div class="form-error">

@@ -5,15 +5,23 @@ $light: #f8f6fb;
 $text-dark: #2e144e;
 $text-muted: #666;
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
 .medical-booking-app {
+    display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   direction: rtl;
 
   padding: 0;
   max-width: 1200px;
    background-attachment: fixed; /* 👉 ده السطر المهم */
-  height: 100vh;
+
   padding-top: 25px;
 }
+
 
 /* 🎯 Fixed Hero Slider */
 
@@ -337,6 +345,16 @@ select.form-select {
   color: $primary;
   font-weight: 600;
 }
+
+app-footer {
+  width: 100%;
+ 
+  color: white;
+  padding: 15px;
+  text-align: center;
+  z-index: 999;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

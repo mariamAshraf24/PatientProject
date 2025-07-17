@@ -1,22 +1,31 @@
 <nav class="navbar">
-  <!-- لوجو -->
   <div class="logo">
     <img src="/images/nazzem logo (1).png" alt="Logo" />
   </div>
 
-  <!-- روابط -->
   <ul class="nav-links d-flex">
-    <li routerLinkActive="active-link"><a routerLink="/home">الرئيسية</a></li>
-    <li routerLinkActive="active-link">
-      <a routerLink="/contact">تواصل معنا</a>
-    </li>
+ <div class="center-links d-flex">
+  <li routerLinkActive="active-link">
+    <a routerLink="/home">الرئيسية</a>
+  </li>
 
+  <li routerLinkActive="active-link">
+    <a routerLink="/userAppointment">حجوزاتك</a>
+  </li>
+
+  <li routerLinkActive="active-link">
+    <a routerLink="/notification">
+      <i class="fa-solid fa-bell"></i> الإشعارات
+    </a>
+  </li>
+</div>
+
+  <div class="right-links d-flex">
     @if (!isLoggedIn()) {
-    <li routerLinkActive="active-link">
-      <a routerLink="/login">تسجيل دخول</a>
-    </li>
+      <li routerLinkActive="active-link"><a routerLink="/login">تسجيل دخول</a></li>
     } @else {
-    <li routerLinkActive="active-link">
+
+      <li routerLinkActive="active-link">
       <a routerLink="/userAppointment">حجوزاتك</a>
     </li>
     <li routerLinkActive="active-link">
@@ -42,6 +51,27 @@
       ></a>
     </li>
     <li><a (click)="logout()">تسجيل خروج</a></li>
+      <li class="profile-dropdown" (click)="toggleProfileDropdown($event)">
+        <a class="user-icon"><i class="fa fa-user-circle"></i></a>
+        <div class="profile-popup" *ngIf="showProfileDropdown">
+          @if (patient) {
+            <div class="profile-card">
+              <div class="profile-icon">
+                <i class="fas fa-user"></i>
+              </div>
+              <h3>{{ patient.fName }} {{ patient.lName }}</h3>
+              <p><i class="fas fa-map-marker-alt"></i> {{ patient.city }} - {{ patient.street }}, {{ patient.country }}</p>
+              <p><i class="fas fa-phone-alt"></i> {{ patient.phone }}</p>
+              <p><i class="fas fa-envelope"></i> {{ patient.email }}</p>
+              <button routerLink="/update-profile">تعديل البيانات</button>
+            </div>
+          } @else {
+            <div class="loading">جاري تحميل البيانات...</div>
+          }
+        </div>
+      </li>
+
+      <li><a (click)="logout()">تسجيل خروج</a></li>
     }
-  </ul>
-</nav>
+  </div>
+</ul>
