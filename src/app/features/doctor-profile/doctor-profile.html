@@ -1,6 +1,7 @@
 @if (doctor) {
 <main class="doctor-profile-full-page">
   <div class="profile-card">
+    <!-- Top Info -->
     <div class="top-section">
       <img
         [src]="doctor.imageUrl"
@@ -40,17 +41,18 @@
       </div>
     </div>
 
-    <!-- المواعيد المتاحة -->
+     <!-- المواعيد المتاحة -->
     <div class="section">
-      <p class="section-title">المواعيد المتاحة اليوم</p>
+      <p class="section-title">
+        المواعيد المتاحة
+        <ng-container *ngIf="formattedDate === 'اليوم'; else otherDay">اليوم</ng-container>
+        <ng-template #otherDay> لـ {{ formattedDate }}</ng-template>
+      </p>
       <div class="slots-wrapper">
         @for (slot of availableSlots; track slot) {
-        <span
-          class="slot-box"
-          [class.selected]="slot === selectedSlot"
-          (click)="selectedSlot = slot"
-          >{{ slot | amPm }}</span
-        >
+        <span class="slot-box" [class.selected]="slot === selectedSlot" (click)="selectedSlot = slot">
+          {{ slot | amPm }}
+        </span>
         }
       </div>
     </div>
@@ -88,24 +90,36 @@
           >
             احجز الآن
           </button>
-          <!-- الزر اللي يفتح الـ calendar -->
-          <button class="btn btn-outline" (click)="picker.open()">
+
+          <button class="btn btn-outline" (click)="showCalendarModal = true">
             اختر تاريخ آخر
           </button>
-
-          <!-- input مخفي مربوط بالـ calendar -->
-          <input
-            type="text"
-            style="display: none"
-            [matDatepicker]="picker"
-            [(ngModel)]="selectedDate"
-          />
-
-          <mat-datepicker #picker (dateChange)="onDateChange($event)">
-          </mat-datepicker>
         </div>
+
       </div>
     </div>
   </div>
 </main>
+
+<div
+  class="calendar-overlay"
+  *ngIf="showCalendarModal"
+  (click)="closeCalendarModal()"
+>
+  <div class="calendar-modal" (click)="$event.stopPropagation()">
+    <h3>اختر تاريخًا جديدًا</h3>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [(ngModel)]="selectedDate"
+        (dateChange)="onDateChange($event)"
+        placeholder="اختر التاريخ"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div>
+
 }

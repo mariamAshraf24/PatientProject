@@ -22,11 +22,20 @@
     <li routerLinkActive="active-link">
       <a routerLink="/appointmentDetails">QR CODE</a>
     </li>
-    <li routerLinkActive="active-link">
+    <!-- <li routerLinkActive="active-link">
       <a routerLink="/notification" class="user-icon"
         ><i class="fa-solid fa-bell"></i
       ></a>
+    </li> -->
+    <li routerLinkActive="active-link" class="notification-wrapper">
+      <a routerLink="/notification" class="user-icon">
+        <i class="fa-solid fa-bell"></i>
+        @if (unreadCount > 0) {
+        <span class="badge">{{ unreadCount }}</span>
+        }
+      </a>
     </li>
+
     <li routerLinkActive="active-link">
       <a routerLink="/profile" class="user-icon"
         ><i class="fa fa-user-circle"></i

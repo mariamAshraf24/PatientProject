@@ -31,6 +31,7 @@ export class DoctorList {
 
   todayDate = new Date().toISOString().split('T')[0];
   
+  
   constructor(private _HttpClient: HttpClient) { }
 
   ngOnInit(): void {
