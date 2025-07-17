@@ -3,28 +3,31 @@
   <div class="profile-card">
     <div class="top-section">
       <img
-        [src]="doctor.imageUrl"
-        alt="{{ doctor.fullName }}"
+        [src]="doctor?.imageUrl"
+        alt="{{ doctor?.fullName }}"
         class="doctor-img"
       />
       <div class="info">
-        <h2 class="doctor-name">د.{{ doctor.fullName }}</h2>
+        <h2 class="doctor-name">د.{{ doctor?.fullName }}</h2>
 
         <p class="doctor-specialty">
-          <i class="fa fa-stethoscope icon"></i> {{ doctor.specializationName }}
-        </p>
-
-        <p class="doctor-price">
-          <i class="fa-solid fa-coins"></i> {{ doctor.bookingPrice }} ج.م
+          <i class="fa-solid fa-stethoscope"></i> {{ doctor?.specializationName }}
         </p>
 
         <p class="doctor-address">
-          <i class="fa fa-map-marker-alt icon"></i> {{ doctor.address }}
+          <i class="fa-solid fa-location-dot"></i> {{ doctor?.address }}
+        </p>
+
+        <p class="doctor-price">
+          <i class="fa-solid fa-coins"></i> {{ doctor?.bookingPrice }} ج.م
         </p>
 
         <p class="doctor-age">
           <i class="fa-solid fa-cake-candles"></i>
-          {{ getAge(doctor.dateOfBirth) }} سنة
+          <ng-container *ngIf="doctor && doctor.dateOfBirth; else noAge">
+            {{ getAge(doctor.dateOfBirth) }} سنة
+          </ng-container>
+          <ng-template #noAge></ng-template>
         </p>
       </div>
     </div>
@@ -113,28 +116,31 @@
   <div class="profile-card">
     <div class="top-section">
       <img
-        [src]="doctor.imageUrl"
-        alt="{{ doctor.fullName }}"
+        [src]="doctor?.imageUrl"
+        alt="{{ doctor?.fullName }}"
         class="doctor-img"
       />
       <div class="info">
-        <h2 class="doctor-name">د.{{ doctor.fullName }}</h2>
+        <h2 class="doctor-name">د.{{ doctor?.fullName }}</h2>
 
         <p class="doctor-specialty">
-          <i class="fa fa-stethoscope icon"></i> {{ doctor.specializationName }}
-        </p>
-
-        <p class="doctor-price">
-          <i class="fa-solid fa-coins"></i> {{ doctor.bookingPrice }} ج.م
+          <i class="fa-solid fa-stethoscope"></i> {{ doctor?.specializationName }}
         </p>
 
         <p class="doctor-address">
-          <i class="fa fa-map-marker-alt icon"></i> {{ doctor.address }}
+          <i class="fa-solid fa-location-dot"></i> {{ doctor?.address }}
+        </p>
+
+        <p class="doctor-price">
+          <i class="fa-solid fa-coins"></i> {{ doctor?.bookingPrice }} ج.م
         </p>
 
         <p class="doctor-age">
           <i class="fa-solid fa-cake-candles"></i>
-          {{ getAge(doctor.dateOfBirth) }} سنة
+          <ng-container *ngIf="doctor && doctor.dateOfBirth; else noAge">
+            {{ getAge(doctor.dateOfBirth) }} سنة
+          </ng-container>
+          <ng-template #noAge></ng-template>
         </p>
       </div>
     </div>
@@ -217,4 +223,4 @@
     </div>
   </div>
 </main>
-}
+

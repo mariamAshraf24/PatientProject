@@ -14,6 +14,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-doctor-profile',
+  standalone:  true,
   imports: [
     CommonModule,
     FormsModule,

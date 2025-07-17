@@ -1,33 +1,15 @@
-.appointment-card {
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  color: #fff;
-  transition: transform 0.3s ease;
-}
-
-.appointment-card:hover {
-  transform: scale(1.02);
-}
-
-.doctor-img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border: 2px solid white;
-}
-.highlight {
-  animation: flashHighlight 1s ease-in-out 0s 2;
-  border: 2px solid #00c853;
-  box-shadow: 0 0 10px rgba(0, 200, 83, 0.6);
-}
-
-@keyframes flashHighlight {
-  0%   { background-color: #e8f5e9; }
-  50%  { background-color: #c8e6c9; }
-  100% { background-color: #e8f5e9; }
-}
-
 body, .container, .user-appointment-bg {
   background: unset !important;
+}
+
+.user-appointment-container {
+  max-width: 900px;
+  margin: 0 auto;
+  direction: rtl;
+  font-family: 'Cairo', Arial, sans-serif;
+  background: #faf7fc;
+  min-height: 100vh;
+  padding-bottom: 40px;
 }
 
 .appointment-card.new-design {
@@ -417,4 +399,74 @@ body, .container, .user-appointment-bg {
   color: #633c84;
   margin-right: 12px;
   margin-left: 0;
+}
+
+.appointments-header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.filter-bar-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: auto;
+  margin: 0;
+  text-align: center;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin: 0;
+  min-width: 220px;
+}
+
+.card-row-between {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.stat-value {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.stats-cards, .stats-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
 }
