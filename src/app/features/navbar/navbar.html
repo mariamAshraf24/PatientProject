@@ -4,74 +4,58 @@
   </div>
 
   <ul class="nav-links d-flex">
- <div class="center-links d-flex">
-  <li routerLinkActive="active-link">
-    <a routerLink="/home">الرئيسية</a>
-  </li>
-
-  <li routerLinkActive="active-link">
-    <a routerLink="/userAppointment">حجوزاتك</a>
-  </li>
-
-  <li routerLinkActive="active-link">
-    <a routerLink="/notification">
-      <i class="fa-solid fa-bell"></i> الإشعارات
-    </a>
-  </li>
-</div>
-
-  <div class="right-links d-flex">
-    @if (!isLoggedIn()) {
-      <li routerLinkActive="active-link"><a routerLink="/login">تسجيل دخول</a></li>
-    } @else {
+    <div class="center-links d-flex">
+      <li routerLinkActive="active-link">
+        <a routerLink="/home">الرئيسية</a>
+      </li>
+      @if (isLoggedIn()) {
 
       <li routerLinkActive="active-link">
-      <a routerLink="/userAppointment">حجوزاتك</a>
-    </li>
-    <li routerLinkActive="active-link">
-      <a routerLink="/appointmentDetails">QR CODE</a>
-    </li>
-    <!-- <li routerLinkActive="active-link">
-      <a routerLink="/notification" class="user-icon"
-        ><i class="fa-solid fa-bell"></i
-      ></a>
-    </li> -->
-    <li routerLinkActive="active-link" class="notification-wrapper">
-      <a routerLink="/notification" class="user-icon">
-        <i class="fa-solid fa-bell"></i>
-        @if (unreadCount > 0) {
-        <span class="badge">{{ unreadCount }}</span>
-        }
-      </a>
-    </li>
+        <a routerLink="/userAppointment">حجوزاتك</a>
+      </li>
+      <li routerLinkActive="active-link" class="notification-wrapper">
+        <a routerLink="/notification" class="user-icon">
+          <i class="fa-solid fa-bell"></i> الإشعارات @if (unreadCount > 0) {
+          <span class="badge">{{ unreadCount }}</span>
+          }
+        </a>
+      </li>
 
-    <li routerLinkActive="active-link">
-      <a routerLink="/profile" class="user-icon"
-        ><i class="fa fa-user-circle"></i
-      ></a>
-    </li>
-    <li><a (click)="logout()">تسجيل خروج</a></li>
+      }
+    </div>
+
+    <div class="right-links d-flex">
+      @if (!isLoggedIn()) {
+      <li routerLinkActive="active-link">
+        <a routerLink="/login">تسجيل دخول</a>
+      </li>
+      } @else {
+
       <li class="profile-dropdown" (click)="toggleProfileDropdown($event)">
         <a class="user-icon"><i class="fa fa-user-circle"></i></a>
         <div class="profile-popup" *ngIf="showProfileDropdown">
           @if (patient) {
-            <div class="profile-card">
-              <div class="profile-icon">
-                <i class="fas fa-user"></i>
-              </div>
-              <h3>{{ patient.fName }} {{ patient.lName }}</h3>
-              <p><i class="fas fa-map-marker-alt"></i> {{ patient.city }} - {{ patient.street }}, {{ patient.country }}</p>
-              <p><i class="fas fa-phone-alt"></i> {{ patient.phone }}</p>
-              <p><i class="fas fa-envelope"></i> {{ patient.email }}</p>
-              <button routerLink="/update-profile">تعديل البيانات</button>
+          <div class="profile-card">
+            <div class="profile-icon">
+              <i class="fas fa-user"></i>
             </div>
+            <h3>{{ patient.fName }} {{ patient.lName }}</h3>
+            <p>
+              <i class="fas fa-map-marker-alt"></i> {{ patient.city }} -
+              {{ patient.street }}, {{ patient.country }}
+            </p>
+            <p><i class="fas fa-phone-alt"></i> {{ patient.phone }}</p>
+            <p><i class="fas fa-envelope"></i> {{ patient.email }}</p>
+            <button routerLink="/update-profile">تعديل البيانات</button>
+          </div>
           } @else {
-            <div class="loading">جاري تحميل البيانات...</div>
+          <div class="loading">جاري تحميل البيانات...</div>
           }
         </div>
       </li>
 
       <li><a (click)="logout()">تسجيل خروج</a></li>
-    }
-  </div>
-</ul>
+      }
+    </div>
+  </ul>
+</nav>

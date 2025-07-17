@@ -1,4 +1,8 @@
-
+.container{
+  border-radius: 18px;
+  padding-block: 20px;
+  width: 650px;
+}
 .form-label {
     font-size: 0.875rem;
     color: #6b7280;
@@ -41,10 +45,10 @@
     transition: all 0.3s ease;
   }
   .female-button {
-    color: rgb(192 132 252);
+    color:  #633c84;
   }
   .female-button.active {
-    border: 2px solid rgb(192 132 252);
+    border: 2px solid #633c84;
   }
   .male-button {
     color: rgb(59 130 246);
@@ -54,18 +58,18 @@
     background-color: rgb(239 246 255);
   }
   .gradient-button {
-    background:  rgb(99,60,132);
+    background:   #633c84;
     transition: all 0.3s ease;
+    width: 400px;
   }
   .gradient-button:hover {
-    background: linear-gradient(135deg, hsl(272 87% 67%) 20%, hsl(217 91% 60%) 80%);
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   .avatar {
     background-color:  rgb(99,60,132);
-    width: 90px;
-    height: 90px;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
     display: flex;
     align-items: center;
