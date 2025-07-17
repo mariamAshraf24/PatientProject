@@ -1,8 +1,7 @@
 /* خلفية الصفحة */
 body {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+ 
+  
   font-family: 'Cairo', sans-serif;
   direction: rtl;
   margin: 0;
@@ -13,17 +12,29 @@ body {
 }
 /* الفورم الشفاف */
 .update-container {
-  
-  background-image: url('/images/notification.png');
+  background-position: center;
+  background-repeat: no-repeat;
+   background-size: cover;
+  // background-image: url('/images/updatebackground.jpg');
 }
 
 /* العنوان */
-.title {
+
+.form-title {
+  background-color: rgb(99,60,132); /* اللون اللي طلبتيه */
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 16px;
   text-align: center;
-  font-size: 26px;
-  margin-bottom: 25px;
-  color: #5c014d;
+  margin: -30px -30px 20px -30px; /* تشيل البادينج بتاع الفورم وتغطي العرض كله */
 }
+
+.title {
+  margin: 0;
+  font-size: 24px;
+  color: white;
+}
+
 
 /* الفورم */
 .update-form {
@@ -31,7 +42,7 @@ body {
    backdrop-filter: blur(4px); /* 👈 يعطي تأثير زجاجي ناعم */
 
   animation: fadeInUp 1s ease; /* أنيميشن دخول */
-   background: rgba(255, 255, 255, 0.2); /* شفافية */
+   background: rgba(255, 255, 255,0.8); /* شفافية */
   padding: 30px;
  margin: 50px auto;
   border-radius: 20px;
@@ -52,39 +63,60 @@ body {
 .form-group label {
   font-weight: bold;
   margin-bottom: 6px;
-  color: #444;
+  color:rgb(99,60,132);
 }
 
 .form-group input {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 0.5px solid #eadce8;
   border-radius: 10px;
   font-size: 16px;
   transition: border-color 0.3s;
 }
 
 .form-group input:focus {
-  border-color: #53024b;
+  border-color:  rgb(198, 163, 228);
   outline: none;
 }
 
 /* الأزرار */
-.submit-btn {
-  padding: 12px;
-  background-color: #48033e;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  margin-top: 10px;
+.form-actions {
+  display: flex;
+  justify-content: center; /* توسيط الأزرار */
+  gap: 10px;
+  margin-top: 15px;
 }
 
-.submit-btn:hover {
-  background-color: #5f0352;
-  transform: translateY(-2px);
+.submit-btn,
+.cancel-btn {
+  padding: 8px 16px; /* تصغير حجم الزر */
+  font-size: 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
 }
+
+/* لون زر التحديث */
+.submit-btn {
+  background-color: rgb(99,60,132);
+  color: white;
+}
+.submit-btn:hover {
+ 
+  transform: translateY(-1px);
+}
+
+/* لون زر الإلغاء */
+.cancel-btn {
+  background-color: #ddd;
+  color: #333;
+}
+.cancel-btn:hover {
+  background-color: #bbb;
+  transform: translateY(-1px);
+}
+
 
 /* اللودينج */
 .loading {
@@ -105,6 +137,19 @@ body {
     transform: translateY(0);
   }
 }
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+}
+
 
 .error-msg {
   font-size: 14px;
