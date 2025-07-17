@@ -36,23 +36,35 @@ export class UpdateProfile {
   }
 
   loadCurrentData(): void {
-    this.loading = true;
-    this._PatientService.getPatientProfile().subscribe({
-      next: (res) => {
-        if (res.success) {
-          this.form.patchValue(res.data);
-        }
-        this.loading = false;
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error('❌ Error loading profile:', err);
-        this.loading = false;
-      },
-    });
-  }
+  this.loading = true;
+  this._PatientService.getPatientProfile().subscribe({
+    next: (res) => {
+      console.log('🔍 Patient Data:', res.data); // أضيفي دي
+
+      if (res.success) {
+        this.form.patchValue({
+          fName: res.data.fName,
+          lName: res.data.lName,
+          city: res.data.city,
+          street: res.data.street,
+          country: res.data.country || 'Egypt',
+          phoneNumber: res.data.phone || res.data.phone, // لو الاسم phone فقط
+                      // لو الاسم mail فقط
+        });
+      }
+      this.loading = false;
+    },
+    error: (err: HttpErrorResponse) => {
+      console.error('❌ Error loading profile:', err);
+      this.loading = false;
+    },
+  });
+}
+
   
   onSubmit(): void {
     if (this.form.invalid) {
+      console.log("error appear")
       this.form.markAllAsTouched();
       return;
     }

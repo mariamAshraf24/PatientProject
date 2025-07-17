@@ -8,6 +8,8 @@ export interface IPatient {
   dateOfBirth: string;
   age: number;
   gender: number;
+  phone:string;
+  
 }
 export interface PatientProfileResponse {
   success: boolean;

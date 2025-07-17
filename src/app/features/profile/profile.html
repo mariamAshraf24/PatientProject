@@ -1,15 +1,35 @@
 @if (patient) {
   <div class="profile-container">
-    <h1 class="title">ملف المريض الشخصي</h1>
+    <div class="profile-card animated-card">
+      <div class="profile-header">
+  <div class="profile-avatar avatar-icon">
+    <i class="fa-solid fa-user fa-3x"></i>
+  </div>
+  <h2 class="profile-name">{{ patient.fName }} {{ patient.lName }}</h2>
+</div>
 
-    <div class="profile-card">
-      <div class="info-row"><span class="label">الاسم:</span> {{ patient.fName }} {{ patient.lName }}</div>
-      <div class="info-row"><span class="label">العنوان:</span> {{ patient.city }} - {{ patient.street }}, {{ patient.country }}</div>
-      <div class="info-row"><span class="label">النوع:</span> {{ patient.gender === 1 ? 'أنثى' : 'ذكر' }}</div>
-      <div class="info-row"><span class="label">العمر:</span> {{ getAge(patient.dateOfBirth) }} سنة</div>
+
+      <div class="info-group">
+        <div class="info-item">
+          <span class="label">العنوان:</span>
+          {{ patient.city }} - {{ patient.street }}, {{ patient.country }}
+        </div>
+        <div class="info-item">
+          <span class="label">النوع:</span>
+          {{ patient.gender === 1 ? 'أنثى' : 'ذكر' }}
+        </div>
+        <div class="info-item">
+          <span class="label">العمر:</span>
+          {{ getAge(patient.dateOfBirth) }} سنة
+        </div>
+         <div class="info-item">
+          <span class="label">رقم الهاتف:</span>
+          {{ patient.phone }} 
+        </div>
+      </div>
+
+      <button class="edit-btn" routerLink="/update-profile">تعديل البيانات</button>
     </div>
-    <button class="edit-btn" routerLink="/update-profile">تعديل البيانات</button>
-
   </div>
 } @else {
   <div class="loading">جارٍ تحميل البيانات...</div>
