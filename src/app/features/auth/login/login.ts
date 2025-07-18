@@ -17,7 +17,7 @@ export class Login implements OnInit {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _Router = inject(Router);
   serverErrorMessage: string | null = null;
-
+  successMessage: string | null = null;
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
       userName: [
@@ -53,7 +53,8 @@ export class Login implements OnInit {
             this._authService.saveToken(res.token);
             localStorage.setItem('roles', res.roles);
 
-            alert('تم تسجيل الدخول بنجاح!');
+            this.successMessage = 'تم تسجيل الدخول بنجاح!';
+            this.serverErrorMessage = null;
             this.loginForm.reset();
             this._Router.navigate(['/home']);
           } else {

@@ -12,7 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AmPmPipe } from '../../shared/am-pm-pipe';
 import { MatIconModule } from '@angular/material/icon';
-import { Footer } from "../footer/footer"; 
+import { Footer } from "../footer/footer";
 
 
 
@@ -29,7 +29,7 @@ import { Footer } from "../footer/footer";
     MatInputModule,
     MatIconModule,
     Footer
-],
+  ],
   templateUrl: './doctor-profile.html',
   styleUrl: './doctor-profile.scss',
 })
@@ -40,7 +40,8 @@ export class DoctorProfile implements OnInit {
   selectedType: number | null = null;
   selectedDate: Date = new Date();
   showCalendarModal: boolean = false;
-
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
   weekOrder: string[] = [
     'Saturday',
     'Sunday',
@@ -60,7 +61,7 @@ export class DoctorProfile implements OnInit {
     private route: ActivatedRoute,
     private _Router: Router,
     private _notifier: AppointmentNotifierService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.doctorId = this.route.snapshot.paramMap.get('id') || '';
@@ -126,7 +127,7 @@ export class DoctorProfile implements OnInit {
       error: (err) => console.error('فشل تحميل مواعيد الدكتور', err),
     });
   }
-  
+
   getAge(dateOfBirth: string): number {
     const birthDate = new Date(dateOfBirth);
     const today = new Date();
@@ -161,15 +162,16 @@ export class DoctorProfile implements OnInit {
       .filter((s): s is Schedule => !!s);
   }
 
-  
+
   closeCalendarModal() {
     this.showCalendarModal = false;
   }
 
   bookNow() {
     if (!this.selectedSlot || this.selectedType === null) {
-      alert('يرجى اختيار موعد ونوع الكشف');
-      return;
+     this.errorMessage = 'يرجى اختيار موعد ونوع الكشف';
+    this.successMessage = null;
+    return;
     }
 
     const bookingData = {
@@ -185,17 +187,22 @@ export class DoctorProfile implements OnInit {
 
         const appointmentId = res.appointment?.appointment?.id;
         if (!appointmentId) {
-          alert('لم يتم استلام رقم الحجز!');
+          this.errorMessage = 'لم يتم استلام رقم الحجز!';
+        this.successMessage = null;
           return;
         }
 
-        alert(' تم الحجز بنجاح');
+         this.successMessage = 'تم الحجز بنجاح';
+      this.errorMessage = null;
+        setTimeout(() => {
         this._Router.navigate(['/appointmentDetails', appointmentId]);
         this._notifier.notifyNewAppointment(appointmentId);
+      }, 2000);
       },
       error: (err) => {
-        console.error(' فشل في الحجز', err);
-        alert('حدث خطأ أثناء محاولة الحجز');
+       console.error('فشل في الحجز', err);
+      this.errorMessage = 'حدث خطأ أثناء محاولة الحجز';
+      this.successMessage = null;
       },
     });
   }

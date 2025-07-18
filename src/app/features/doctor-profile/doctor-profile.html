@@ -1,3 +1,17 @@
+
+<!-- ✅ رسالة نجاح -->
+@if (successMessage) {
+  <div class="alert alert-success text-center fw-semibold my-3">
+    {{ successMessage }}
+  </div>
+}
+
+<!-- ❌ رسالة خطأ -->
+@if (errorMessage) {
+  <div class="alert alert-danger text-center fw-semibold my-3">
+    {{ errorMessage }}
+  </div>
+}
 @if (doctor) {
 <main class="doctor-profile-full-page">
   <div class="profile-card">
