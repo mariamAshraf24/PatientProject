@@ -3,7 +3,7 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common'; // ضروري عشان *ngIf
 import { Auth } from '../../core/services/auth';
 import { PatientService } from '../../core/services/patient-service'; // تأكد من المسار الصحيح
-import { IPatient } from '../../core/models/IPatient'; // تأكد من المسار الصحيح
+import { IPatient } from '../../core/models/IPatient'; 
 
 @Component({
   selector: 'app-navbar',

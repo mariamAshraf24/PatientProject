@@ -140,12 +140,8 @@ export class Register implements OnInit {
           'اسم المستخدم غير صالح، يجب أن يحتوي فقط على حروف انجليزي أو أرقام';
         this.registerForm.get('userName')?.setErrors({ invalidFormat: true });
         this.registerForm.get('userName')?.markAsTouched();
-      } 
-      else if (message?.includes('Email') && message?.includes('taken')) {
-        this.usernameError = 'الايميل موجود بالفعل، يرجى كتابه ايميل آخر';
-        this.registerForm.get('Email')?.setErrors({ emailTaken: true });
-        this.registerForm.get('Email')?.markAsTouched();
-      } else {
+      }
+     else {
         alert('❌ حدث خطأ أثناء التسجيل');
       }
     }
