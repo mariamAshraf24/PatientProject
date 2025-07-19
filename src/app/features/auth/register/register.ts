@@ -128,7 +128,7 @@ export class Register implements OnInit {
           }
         }
         this._router.navigate(['/home']);
-       } 
+       }
        else {
         this.errorMessage = '❌ حدث خطأ أثناء التسجيل';
       }
@@ -147,13 +147,15 @@ export class Register implements OnInit {
           'اسم المستخدم غير صالح، يجب أن يحتوي فقط على حروف انجليزي أو أرقام';
         this.registerForm.get('userName')?.setErrors({ invalidFormat: true });
         this.registerForm.get('userName')?.markAsTouched();
-      } 
+      }
+      else if (message?.includes('Email') && message?.includes('taken')) {
+      }
       else if (message?.includes('An error occurred while saving the entity changes')) {
         this.usernameError = 'الايميل موجود بالفعل، يرجى كتابه ايميل آخر';
         this.registerForm.get('Email')?.setErrors({ emailTaken: true });
         this.registerForm.get('Email')?.markAsTouched();
       } else {
-        this.errorMessage = '❌ حدث خطأ أثناء التسجيل';
+        alert('❌ حدث خطأ أثناء التسجيل');
       }
     }
   }

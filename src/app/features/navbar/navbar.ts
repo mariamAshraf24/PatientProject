@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../core/services/auth';
-import { PatientService } from '../../core/services/patient-service';
+import { PatientService } from '../../core/services/patient-service'; // تأكد من المسار الصحيح
 import { IPatient } from '../../core/models/IPatient';
 
 @Component({
