@@ -1,5 +1,5 @@
 export interface IPatient {
-    id: string;
+  id: string;
   fName: string;
   lName: string;
   city: string;
@@ -10,7 +10,8 @@ export interface IPatient {
   gender: number;
   phone:string;
   email : string;
-
+  username:string
+  
 }
 export interface PatientProfileResponse {
   success: boolean;

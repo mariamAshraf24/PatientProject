@@ -8,11 +8,14 @@ import { Profile } from './features/profile/profile';
 import { UpdateProfile } from './features/update-profile/update-profile';
 import { Notification } from './features/notification/notification';
 import { UserAppointment } from './features/user-appointment/user-appointment';
+import { NotFound } from './features/not-found/not-found';
+import { Component } from '@angular/core';
+import { ForgotPassword } from './features/auth/forgot-password/forgot-password';
 
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: DoctorList }, // Home page = doctor list
+  { path: 'home', component: DoctorList },
   { path: 'doctorProfile/:id', component: DoctorProfile },
   { path: 'login', component: Login },
   { path: 'register', component: Register },
@@ -20,5 +23,7 @@ export const routes: Routes = [
   { path: 'userAppointment', component: UserAppointment},
   { path:  'appointmentDetails/:id', component: AppointmentDetails},
   { path: 'update-profile', component: UpdateProfile },
-  { path: 'notification', component: Notification }
+  { path: 'notification', component: Notification },
+  {path : 'forget' , component : ForgotPassword},
+  { path: '**', component: NotFound }
 ];

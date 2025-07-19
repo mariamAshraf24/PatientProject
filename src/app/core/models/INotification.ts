@@ -1,4 +1,5 @@
 export interface notification {
+  id:number,
   message: string;
   type: number;
   doctorName: string;

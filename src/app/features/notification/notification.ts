@@ -8,7 +8,7 @@ import {
   faXmark,
   faClock,
   faCalendarDays,
-  faQuestion
+  faQuestion,
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -16,26 +16,48 @@ import {
   templateUrl: './notification.html',
   styleUrls: ['./notification.scss'],
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule]
+  imports: [CommonModule, FontAwesomeModule],
 })
 export class Notification implements OnInit {
   allNotifications: notification[] = [];
   visibleNotifications: notification[] = [];
   notificationsPerPage = 4;
   currentPage = 0;
-iconReminder = faBell;           // تذكير
-iconBooking = faCalendarDays;    // حجز
-iconCancel = faXmark;            // إلغاء
-iconDelay = faClock;             // تأجيل
-iconUnknown = faQuestion;        // غير معروف
+   readNotificationIds: number[] = [];
 
+  iconReminder = faBell; // تذكير
+  iconBooking = faCalendarDays; // حجز
+  iconCancel = faXmark; // إلغاء
+  iconDelay = faClock; // تأجيل
+  iconUnknown = faQuestion; // غير معروف
+  unreadCount: number = 0;
 
   constructor(private _PatientService: PatientService) {}
 
   ngOnInit(): void {
     this._PatientService.getNotifications().subscribe((res) => {
       if (res.success) {
-        this.allNotifications = res.data;
+        // this.allNotifications = res.data;
+        this.allNotifications = res.data.sort((a, b) => b.id - a.id);
+
+        const readFromStorage = localStorage.getItem('readNotificationIds');
+        this.readNotificationIds = readFromStorage
+          ? JSON.parse(readFromStorage)
+          : [];
+
+        // احسبي عدد الغير مقروءة
+        this.unreadCount = this.allNotifications.filter(
+          (n) => !this.readNotificationIds.includes(n.id)
+        ).length;
+
+        // const readIds = this._PatientService.getReadNotificationIds();
+        // this.unreadCount = this.allNotifications.filter(
+        //   (n) => !readIds.includes(n.id!)
+        // ).length;
+
+          const allIds = this.allNotifications.map(n => n.id);
+      localStorage.setItem('readNotificationIds', JSON.stringify(allIds));
+
         this.loadMore();
       }
     });
@@ -52,33 +74,44 @@ iconUnknown = faQuestion;        // غير معروف
 
   getTypeLabel(type: number): string {
     switch (type) {
-      case 0: return 'تذكيرك بموعد طبى';
-      case 1: return 'حجز';
-      case 2: return 'الغاء موعد طبى';
-      case 3: return 'تأجيل موعد طبى';
-      default: return 'غير معروف';
+      case 0:
+        return 'تذكيرك بموعد طبى';
+      case 1:
+        return 'حجز';
+      case 2:
+        return 'الغاء موعد طبى';
+      case 3:
+        return 'تأجيل موعد طبى';
+      default:
+        return 'غير معروف';
     }
   }
 
   getFaIcon(type: number) {
     switch (type) {
-     case 0: return this.iconReminder;  // تذكير
-    case 1: return this.iconBooking;   // حجز
-    case 2: return this.iconCancel;    // إلغاء
-    case 3: return this.iconDelay;     // تأجيل
-    default: return this.iconUnknown;  // غير معروف
+      case 0:
+        return this.iconReminder; // تذكير
+      case 1:
+        return this.iconBooking; // حجز
+      case 2:
+        return this.iconCancel; // إلغاء
+      case 3:
+        return this.iconDelay; // تأجيل
+      default:
+        return this.iconUnknown; // غير معروف
     }
   }
-  getOldAndNewTime(message: string): { oldTime: string; newTime: string } | null {
-  const regex = /من\s(.*?)\sإلى\s(.*)/;
-  const match = message.match(regex);
-  if (match) {
-    return {
-      oldTime: match[1],  // الموعد القديم
-      newTime: match[2],  // الموعد الجديد
-    };
+  getOldAndNewTime(
+    message: string
+  ): { oldTime: string; newTime: string } | null {
+    const regex = /من\s(.*?)\sإلى\s(.*)/;
+    const match = message.match(regex);
+    if (match) {
+      return {
+        oldTime: match[1], // الموعد القديم
+        newTime: match[2], // الموعد الجديد
+      };
+    }
+    return null;
   }
-  return null;
-}
-
 }

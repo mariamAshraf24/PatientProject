@@ -1,34 +1,108 @@
 <div class="container p-4 text-center">
-  <h4 class="mb-4 fw-bold">حجوزاتي الطبية</h4>
+  <div class="align">
+  <div class="main-title-modern ">
+    <span>حجوزاتي الطبية</span>
+  </div>
 
-  @if (appointments.length === 0) {
+  <div class="stats-cards mb-4 d-flex gap-3 justify-content-end">
+    <div class="stat-card text-center" [class.active]="selectedStatus === null" (click)="selectStatus(null)" style="cursor:pointer;">
+      <div class="stat-row">
+        <i class="fas fa-list fa-lg"></i>
+        <span class="stat-value">{{ appointments.length }}</span>
+      </div>
+      <small>الكل</small>
+    </div>
+    <div class="stat-card text-center" [class.active]="selectedStatus === 'قادمة'" (click)="selectStatus('قادمة')" style="cursor:pointer;">
+      <div class="stat-row">
+        <i class="fas fa-calendar-check fa-lg"></i>
+        <span class="stat-value">{{ countUpcoming }}</span>
+      </div>
+      <small>مواعيد قادمة</small>
+    </div>
+    <div class="stat-card text-center" [class.active]="selectedStatus === 'مكتملة'" (click)="selectStatus('مكتملة')" style="cursor:pointer;">
+      <div class="stat-row">
+        <i class="fas fa-history fa-lg"></i>
+        <span class="stat-value">{{ countCompleted }}</span>
+      </div>
+      <small>مكتملة</small>
+    </div>
+    <div class="stat-card text-center" [class.active]="selectedStatus === 'ملغاة'" (click)="selectStatus('ملغاة')" style="cursor:pointer;">
+      <div class="stat-row">
+        <i class="fas fa-calendar-times fa-lg"></i>
+        <span class="stat-value">{{ countCancelled }}</span>
+      </div>
+      <small>ملغاة</small>
+    </div>
+    <div class="stat-card text-center" [class.active]="selectedStatus === 'مؤجلة'" (click)="selectStatus('مؤجلة')" style="cursor:pointer;">
+      <div class="stat-row">
+        <i class="fas fa-user-clock fa-lg"></i>
+        <span class="stat-value">{{ countPostponed }}</span>
+      </div>
+      <small>مؤجلة</small>
+    </div>
+    <div class="stat-card text-center" [class.active]="selectedStatus === 'لم يحضر'" (click)="selectStatus('لم يحضر')" style="cursor:pointer;">
+      <div class="stat-row">
+        <i class="fas fa-user-slash fa-lg"></i>
+        <span class="stat-value">{{ countNoShow }}</span>
+      </div>
+      <small>لم يحضر</small>
+    </div>
+  </div>
+  </div>
+
+  <div class="search-filter-section mb-4 d-flex flex-wrap gap-3 justify-content-end align-items-center">
+    <div class="search-box position-relative">
+      <i class="fas fa-search position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);"></i>
+      <input type="text" class="form-control ps-5" placeholder="ابحث عن طبيب..." [(ngModel)]="searchTerm">
+    </div>
+    <div class="filter-buttons d-flex gap-2">
+      <button class="filter-btn" [class.active]="selectedFilter === 'الكل'" (click)="selectedFilter = 'الكل'">الكل</button>
+      <button class="filter-btn" [class.active]="selectedFilter === 'اليوم'" (click)="selectedFilter = 'اليوم'">اليوم</button>
+      <button class="filter-btn" [class.active]="selectedFilter === 'الأسبوع'" (click)="selectedFilter = 'الأسبوع'">هذا الأسبوع</button>
+      <button class="filter-btn" [class.active]="selectedFilter === 'الشهر'" (click)="selectedFilter = 'الشهر'">هذا الشهر</button>
+    </div>
+  </div>
+
+  @if (filteredAppointments.length === 0) {
     <p class="empty-message">لا توجد حجوزات مسجلة حالياً</p>
   } @else {
-    @for (appointment of appointments; track appointment.id) {
+    @for (appointment of filteredAppointments; track appointment.id) {
       <div
-        class="card mb-4 shadow-sm rounded-4 px-3 py-3 appointment-card"
+        class="pro-modern-card mb-5"
         (click)="goToDetails(appointment.id)"
         [ngClass]="{ 'highlight': appointment.id === highlightedId }"
-        style="cursor: pointer;"
+        style="cursor: pointer; direction: rtl;"
       >
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="text-start">
-            <h6 class="fw-bold mb-1">{{ appointment.doctorName }}</h6>
-            <small class="text-muted">{{ appointment.specialization || '' }}</small>
-          </div>
+        <div class="pro-modern-card-topbar"></div>
+        <div class="pro-modern-avatar-wrapper">
           <img
-            [src]="appointment.doctorImage"
+            [src]="appointment.doctorImage || 'https://cdn-icons-png.flaticon.com/512/387/387561.png'"
             alt="صورة الطبيب"
-            class="rounded-circle doctor-img"
-            width="50"
-            height="50"
+            class="pro-modern-avatar"
           />
         </div>
-
-        <div class="date-box mt-2 text-end">
-          <i class="far fa-calendar-alt me-2"></i>
-          {{ getFormattedDate(appointment.date) }} -
-          {{ getFormattedTime(appointment.startTime) }}
+        <div class="pro-modern-card-content">
+          <div class="card-row-between">
+            <span class="pro-modern-type-badge d-flex align-items-center gap-2">
+              <i *ngIf="appointment.appointmentType == 0 || appointment.appointmentType == '0'" class="fas fa-stethoscope ms-1"></i>
+              <i *ngIf="appointment.appointmentType == 1 || appointment.appointmentType == '1'" class="fas fa-sync-alt ms-1"></i>
+              {{ getAppointmentTypeText(appointment.appointmentType) }}
+            </span>
+            <span class="pro-modern-doctor-name d-flex align-items-center gap-2">
+              <i class="fas fa-user-md ms-1"></i>
+              {{ appointment.doctorName }}
+            </span>
+          </div>
+          <div class="pro-modern-info-grid">
+            <div class="pro-modern-info-item">
+              <i class="far fa-calendar-alt me-1"></i>
+              {{ getFormattedDate(appointment.date) }}
+            </div>
+            <div class="pro-modern-info-item">
+              <i class="far fa-clock me-1"></i>
+              {{ getFormattedTime(appointment.startTime) }}
+            </div>
+          </div>
         </div>
       </div>
     }

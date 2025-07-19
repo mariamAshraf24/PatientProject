@@ -8,11 +8,12 @@ import {
 } from '@microsoft/signalr';
 import { environment } from '../../../environments/environment';
 import { CommonModule, DatePipe } from '@angular/common';
+import { Footer } from "../footer/footer";
 
 @Component({
   selector: 'app-appointment-details',
   standalone: true,
-  imports: [DatePipe, CommonModule],
+  imports: [DatePipe, CommonModule, Footer],
   templateUrl: './appointment-details.html',
   styleUrl: './appointment-details.scss'
 })
@@ -22,14 +23,16 @@ export class AppointmentDetails implements OnInit, OnDestroy {
   updatedTurnNumber: number | null = null;
   pendingTurnNumber: number | null = null;
   hubConnection!: HubConnection;
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private _http: HttpClient,
     private ngZone: NgZone,
     private _router: Router,
-    
-  ) {}
+
+  ) { }
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -81,7 +84,7 @@ export class AppointmentDetails implements OnInit, OnDestroy {
   startSignalR() {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(`${environment.signalRHubUrl
-}`, {
+        }`, {
         accessTokenFactory: () => localStorage.getItem('token') || ''
       })
       .withAutomaticReconnect()
@@ -123,22 +126,26 @@ export class AppointmentDetails implements OnInit, OnDestroy {
       .delete(`${environment.apiBaseUrl}/Booking/${this.appointment.id}`)
       .subscribe({
         next: () => {
-          alert('تم إلغاء الحجز بنجاح.');
-          const doctorId = this.appointment?.doctorId;
-          if (doctorId) {
-            this._router.navigate(['/doctorProfile', doctorId]);
-          } else {
-            this._router.navigate(['/home']);
-          }
+          this.successMessage = 'تم إلغاء الحجز بنجاح.';
+          this.errorMessage = null;
+          setTimeout(() => {
+            const doctorId = this.appointment?.doctorId;
+            if (doctorId) {
+              this._router.navigate(['/doctorProfile', doctorId]);
+            } else {
+              this._router.navigate(['/home']);
+            }
+          }, 2000);
         },
         error: (err) => {
           console.error('فشل في إلغاء الحجز', err);
-          alert('حدث خطأ أثناء محاولة إلغاء الحجز.');
+        this.errorMessage = 'حدث خطأ أثناء محاولة إلغاء الحجز.';
+        this.successMessage = null;
         }
       });
   }
 
-  
+
   getAppointmentTypeArabic(type: string): string {
     switch (type?.toLowerCase()) {
       case 'checkup':
@@ -161,18 +168,18 @@ export class AppointmentDetails implements OnInit, OnDestroy {
     });
   }
   getStatusInArabic(status: string | null | undefined): string {
-  if (!status) return '—';
+    if (!status) return '—';
 
-  const statusMap: Record<string, string> = {
-    Confirmed: 'تم التأكيد',
-    Delayed: 'مؤجل',
-    Completed: 'مكتمل',
-    Canceled: 'ملغي',
-    missed: 'لم يحضر'
-  };
+    const statusMap: Record<string, string> = {
+      Confirmed: 'تم التأكيد',
+      Delayed: 'مؤجل',
+      Completed: 'مكتمل',
+      Canceled: 'ملغي',
+      missed: 'لم يحضر'
+    };
 
-  return statusMap[status] || status;
-}
+    return statusMap[status] || status;
+  }
 
 
 

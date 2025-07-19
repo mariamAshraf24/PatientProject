@@ -1,6 +1,21 @@
+
+<!-- ✅ رسالة نجاح -->
+@if (successMessage) {
+  <div class="alert alert-success text-center fw-semibold my-3">
+    {{ successMessage }}
+  </div>
+}
+
+<!-- ❌ رسالة خطأ -->
+@if (errorMessage) {
+  <div class="alert alert-danger text-center fw-semibold my-3">
+    {{ errorMessage }}
+  </div>
+}
 @if (doctor) {
 <main class="doctor-profile-full-page">
   <div class="profile-card">
+    <!-- Top Info -->
     <div class="top-section">
       <img
         [src]="doctor.imageUrl"
@@ -42,15 +57,22 @@
 
     <!-- المواعيد المتاحة -->
     <div class="section">
-      <p class="section-title">المواعيد المتاحة اليوم</p>
+      <p class="section-title">
+        المواعيد المتاحة
+        <ng-container *ngIf="formattedDate === 'اليوم'; else otherDay"
+          >اليوم</ng-container
+        >
+        <ng-template #otherDay> لـ {{ formattedDate }}</ng-template>
+      </p>
       <div class="slots-wrapper">
         @for (slot of availableSlots; track slot) {
         <span
           class="slot-box"
           [class.selected]="slot === selectedSlot"
           (click)="selectedSlot = slot"
-          >{{ slot | amPm }}</span
         >
+          {{ slot | amPm }}
+        </span>
         }
       </div>
     </div>
@@ -88,24 +110,79 @@
           >
             احجز الآن
           </button>
-          <!-- الزر اللي يفتح الـ calendar -->
-          <button class="btn btn-outline" (click)="picker.open()">
-            اختر تاريخ آخر
+
+          <button class="btn btn-outline" (click)="showCalendarModal = true">
+            <i class="fa fa-calendar-days"></i>
+            <span>اختر تاريخ آخر</span>
           </button>
-
-          <!-- input مخفي مربوط بالـ calendar -->
-          <input
-            type="text"
-            style="display: none"
-            [matDatepicker]="picker"
-            [(ngModel)]="selectedDate"
-          />
-
-          <mat-datepicker #picker (dateChange)="onDateChange($event)">
-          </mat-datepicker>
         </div>
       </div>
     </div>
   </div>
 </main>
+
+<!-- <div
+  class="calendar-overlay"
+  *ngIf="showCalendarModal"
+  (click)="closeCalendarModal()"
+>
+  <div class="calendar-modal" (click)="$event.stopPropagation()">
+    <h3>اختر تاريخًا جديدًا</h3>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [(ngModel)]="selectedDate"
+        (dateChange)="onDateChange($event)"
+        placeholder="اختر التاريخ"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div> -->
+
+<div
+  class="calendar-overlay"
+  *ngIf="showCalendarModal"
+  (click)="closeCalendarModal()"
+>
+  <div class="calendar-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>اختر تاريخًا جديدًا</h3>
+      <button
+        title="اغلاق"
+        aria-label="إغلاق"
+        class="close-btn"
+        (click)="closeCalendarModal()"
+      >
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="selectedDate"
+          (dateChange)="onDateChange($event)"
+          placeholder="اختر التاريخ"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon>calendar_today</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="picker.open()">
+        <i class="fa fa-calendar-alt"></i> فتح التقويم
+      </button>
+    </div>
+  </div>
+</div>
+
 }
+<app-footer></app-footer>

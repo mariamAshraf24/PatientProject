@@ -1,0 +1,182 @@
+/* أنماط الفوتر الأساسية */
+.clinic-footer {
+  position: relative;
+  color: #fff;
+  font-family: 'Cairo', sans-serif;
+
+  padding-top: 0;
+  overflow: hidden;
+}
+
+/* تنسيق الموجات */
+.clinic-footer .wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* محتوى الفوتر */
+.footer-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+    justify-items: center;
+}
+/* أقسام الفوتر */
+.footer-section {
+    padding: 0 15px;
+    display: flex
+;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.footer-about {
+  text-align: right;
+}
+
+.footer-logo img {
+    height: 100px;
+  margin-bottom: -10px;
+}
+
+.footer-description {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.footer-heading {
+  font-size: 1.2rem;
+      margin-bottom: 165px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: block;
+  padding: 5px 0;
+  font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+  color: #b999dc;
+  padding-right: 5px;
+}
+
+.footer-contact
+.footer-contact address p {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+  font-size: 0.95rem;
+}
+
+.footer-contact i {
+  color: #b999dc;
+  font-size: 1rem;
+  min-width: 20px;
+  text-align: center;
+}
+
+.footer-contact a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-contact a:hover {
+  color: #b999dc;
+}
+
+/* الجزء السفلي من الفوتر */
+.footer-bottom {
+  grid-column: 1 / -1;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+ margin-block: 15px;
+}
+
+.footer-social a {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.footer-social a:hover {
+  background-color: #633c84;
+  transform: translateY(-3px);
+}
+
+.copyright {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* التنسيق للجوال */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 2rem 1rem;
+    gap: 25px;
+  }
+  
+  .footer-about,
+  .footer-contact address p {
+    text-align: center;
+  }
+  
+  .footer-heading::after {
+    right: 50%;
+    transform: translateX(50%);
+  }
+  
+  .footer-links a:hover {
+    padding-right: 0;
+  }
+  
+  .footer-contact address p {
+    justify-content: center;
+  }
+}
+
+/* التأكد من ظهور الأيقونات */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');

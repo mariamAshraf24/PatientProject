@@ -23,6 +23,8 @@ export class Register implements OnInit {
   selectedImage: File | null = null;
   usernameError: string = '';
   Cities = cities;
+  errorMessage: string = '';
+
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -58,8 +60,8 @@ export class Register implements OnInit {
         null,
         [Validators.required, Validators.pattern(/^[\u0600-\u06FFa-zA-Z ]+$/)],
       ],
-      City: [''],
-      Street: ['', [Validators.pattern(/^[\u0600-\u06FFa-zA-Z0-9\s\-]*$/)]],
+      City: ['',Validators.required],
+      Street: ['', [Validators.required,Validators.pattern(/^[\u0600-\u06FFa-zA-Z0-9\s\-]*$/)]],
       Country: ['مصر'],
       DateOfBirth: [null, [Validators.required]],
       gender: [null, Validators.required],
@@ -79,6 +81,7 @@ export class Register implements OnInit {
 
   async registerSubmit(): Promise<void> {
     this.usernameError = '';
+    this.errorMessage = '';
 
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
@@ -117,18 +120,19 @@ export class Register implements OnInit {
             console.log('✅ FCM token sent to backend');
           } catch (error) {
             console.error('❌ Error sending FCM token:', error);
+            this.errorMessage = '❌ Error sending FCM token:';
+
           }
         }
-
-        alert('succesful');
         this._router.navigate(['/home']);
-      } else {
-        alert('حدث خطأ أثناء التسجيل');
+       }
+       else {
+        this.errorMessage = '❌ حدث خطأ أثناء التسجيل';
       }
     } catch (err: any) {
       console.error('❌ Error during registration:', err);
       const message = err.error?.message;
-      if (err.error?.message?.includes('Username already exists')) {
+      if (message?.includes('Username already exists')) {
         this.usernameError = 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر';
         this.registerForm.get('userName')?.setErrors({ notUnique: true });
         this.registerForm.get('userName')?.markAsTouched();
@@ -141,7 +145,11 @@ export class Register implements OnInit {
         this.registerForm.get('userName')?.setErrors({ invalidFormat: true });
         this.registerForm.get('userName')?.markAsTouched();
       }
-     else {
+      else if (message?.includes('Email') && message?.includes('taken')) {
+        this.usernameError = 'الايميل موجود بالفعل، يرجى كتابه ايميل آخر';
+        this.registerForm.get('Email')?.setErrors({ emailTaken: true });
+        this.registerForm.get('Email')?.markAsTouched();
+      } else {
         alert('❌ حدث خطأ أثناء التسجيل');
       }
     }
