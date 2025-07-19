@@ -1,14 +1,14 @@
-@keyframes backgroundPulse {
-  0% {
-    background-size: 100%;
-  }
-  50% {
-    background-size: 110%;
-  }
-  100% {
-    background-size: 100%;
-  }
-}
+// @keyframes backgroundPulse {
+//   0% {
+//     background-size: 100%;
+//   }
+//   50% {
+//     background-size: 110%;
+//   }
+//   100% {
+//     background-size: 100%;
+//   }
+// }
 
 
 
@@ -19,7 +19,7 @@
   background-size: cover; /* كان contain */
   background-position: center bottom; /* نضمن الدمج مع الفوتر */
   background-repeat: no-repeat;
-  background-attachment: scroll; /* بدل fixed */
+  // background-attachment: scroll; /* بدل fixed */
   padding-top: 60px;
 
   animation: backgroundPulse 8s ease-in-out infinite;

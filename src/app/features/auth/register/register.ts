@@ -111,6 +111,9 @@ export class Register implements OnInit {
 
       if (res.isSuccess && res.token) {
         this._authService.saveToken(res.token);
+        // if (res.roles) {
+        //     localStorage.setItem('roles', res.roles);
+        //   }
         this.registerForm.reset();
         if (fcmToken) {
           try {
@@ -145,7 +148,7 @@ export class Register implements OnInit {
         this.registerForm.get('userName')?.setErrors({ invalidFormat: true });
         this.registerForm.get('userName')?.markAsTouched();
       } 
-      else if (message?.includes('Email') && message?.includes('taken')) {
+      else if (message?.includes('An error occurred while saving the entity changes')) {
         this.usernameError = 'الايميل موجود بالفعل، يرجى كتابه ايميل آخر';
         this.registerForm.get('Email')?.setErrors({ emailTaken: true });
         this.registerForm.get('Email')?.markAsTouched();
