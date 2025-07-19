@@ -25,7 +25,6 @@ export class Register implements OnInit {
   Cities = cities;
   errorMessage: string = '';
 
-
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: Auth,
@@ -60,8 +59,14 @@ export class Register implements OnInit {
         null,
         [Validators.required, Validators.pattern(/^[\u0600-\u06FFa-zA-Z ]+$/)],
       ],
-      City: ['',Validators.required],
-      Street: ['', [Validators.required,Validators.pattern(/^[\u0600-\u06FFa-zA-Z0-9\s\-]*$/)]],
+      City: ['', Validators.required],
+      Street: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[\u0600-\u06FFa-zA-Z0-9\s\-]*$/),
+        ],
+      ],
       Country: ['مصر'],
       DateOfBirth: [null, [Validators.required]],
       gender: [null, Validators.required],
@@ -112,8 +117,8 @@ export class Register implements OnInit {
       if (res.isSuccess && res.token) {
         this._authService.saveToken(res.token);
         if (res.roles) {
-            localStorage.setItem('roles', res.roles);
-          }
+          localStorage.setItem('roles', res.roles);
+        }
         this.registerForm.reset();
         if (fcmToken) {
           try {
@@ -124,12 +129,10 @@ export class Register implements OnInit {
           } catch (error) {
             console.error('❌ Error sending FCM token:', error);
             this.errorMessage = '❌ Error sending FCM token:';
-
           }
         }
         this._router.navigate(['/home']);
-       }
-       else {
+      } else {
         this.errorMessage = '❌ حدث خطأ أثناء التسجيل';
       }
     } catch (err: any) {
@@ -147,15 +150,12 @@ export class Register implements OnInit {
           'اسم المستخدم غير صالح، يجب أن يحتوي فقط على حروف انجليزي أو أرقام';
         this.registerForm.get('userName')?.setErrors({ invalidFormat: true });
         this.registerForm.get('userName')?.markAsTouched();
-      }
-      else if (message?.includes('Email') && message?.includes('taken')) {
-      }
-      else if (message?.includes('An error occurred while saving the entity changes')) {
+      } else if (message?.includes('An error occurred while saving the entity changes.')) {
         this.usernameError = 'الايميل موجود بالفعل، يرجى كتابه ايميل آخر';
         this.registerForm.get('Email')?.setErrors({ emailTaken: true });
         this.registerForm.get('Email')?.markAsTouched();
       } else {
-        alert('❌ حدث خطأ أثناء التسجيل');
+        this.errorMessage = '❌ حدث خطأ أثناء التسجيل';
       }
     }
   }
