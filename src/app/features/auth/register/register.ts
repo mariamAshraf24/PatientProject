@@ -111,9 +111,9 @@ export class Register implements OnInit {
 
       if (res.isSuccess && res.token) {
         this._authService.saveToken(res.token);
-        // if (res.roles) {
-        //     localStorage.setItem('roles', res.roles);
-        //   }
+        if (res.roles) {
+            localStorage.setItem('roles', res.roles);
+          }
         this.registerForm.reset();
         if (fcmToken) {
           try {
