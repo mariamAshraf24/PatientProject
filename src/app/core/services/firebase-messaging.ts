@@ -16,6 +16,20 @@ export class FirebaseMessaging {
   constructor(private http: HttpClient) {
     const app = initializeApp(environment.firebase);
     this.messaging = getMessaging(app);
+    this.registerServiceWorker();
+  }
+  
+  private registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/firebase-messaging-sw.js')
+        .then((registration) => {
+          console.log('✅ Service Worker registered:', registration);
+        })
+        .catch((err) => {
+          console.error('❌ Service Worker registration failed:', err);
+        });
+    }
   }
 
   async requestPermissionAndGetToken(): Promise<string | null> {

@@ -123,9 +123,10 @@ export class Register implements OnInit {
         if (fcmToken) {
           try {
             await this._FirebaseMessaging
-              .sendTokenToBackend(fcmToken, res.token)
+              .sendTokenToBackend("c6dzeMf7mpTMUjkIT23toy:APA91bEWxjmDDrFRXmjNsgIA4wnusejBBn6v0K80Db2DP-DYd8XBgWDLlenDuRvePcsG0enHOskr3O0MMja-D7IByjKcOg256zE9Mb8cmoCxsdlRXzYB6Qw", res.token)
               .toPromise();
             console.log('✅ FCM token sent to backend');
+            // console.log(fcmToken,"c6dzeMf7mpTMUjkIT23toy:APA91bEWxjmDDrFRXmjNsgIA4wnusejBBn6v0K80Db2DP-DYd8XBgWDLlenDuRvePcsG0enHOskr3O0MMja-D7IByjKcOg256zE9Mb8cmoCxsdlRXzYB6Qw");
           } catch (error) {
             console.error('❌ Error sending FCM token:', error);
             this.errorMessage = '❌ Error sending FCM token:';
